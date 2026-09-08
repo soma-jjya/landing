@@ -375,12 +375,12 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--orange); outlin
   padding: 4cqw 3cqw 3cqw; border-radius: 8px; box-shadow: var(--shadow-card); transform: rotate(var(--r, -3deg));
 }
 .frame4__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2cqw; }
-.frame4__grid img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 3px; background: rgba(255, 255, 255, .1); }
+.frame4__grid img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 3px; background: rgba(255, 255, 255, .1); }
 .frame4__foot { display: flex; align-items: center; gap: 1.5cqw; margin-top: 2.6cqw; font-size: clamp(8px, 2.3cqw, 11px); font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: rgba(255, 255, 255, .8); }
 .cutout { right: 0; top: 30%; width: 46%; z-index: 3; }
-.cutout__media { position: relative; }
-.cutout__media img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 60% 10%; border-radius: 3px; }
-.cutline { position: absolute; left: 26%; right: 8%; top: 4%; bottom: 10%; border: 2px dashed var(--orange); border-radius: 46% 46% 40% 40% / 30% 30% 34% 34%; pointer-events: none; }
+.cutout__media { position: relative; aspect-ratio: 4 / 5; border-radius: 3px; background: #f1f1f1; display: flex; align-items: center; justify-content: center; }
+.cutout__media .cutout__char { width: 66%; height: auto; }
+.cutline { position: absolute; left: 12%; right: 12%; top: 12%; bottom: 14%; border: 2px dashed var(--orange); border-radius: 44% 44% 40% 40% / 36% 36% 30% 30%; pointer-events: none; }
 .scissors {
   position: absolute; z-index: 4; right: -4%; top: -6%; width: clamp(28px, 9cqw, 40px); aspect-ratio: 1; padding: 6px;
   display: flex; align-items: center; justify-content: center; background: var(--white); border: 1.5px solid var(--black); border-radius: 50%; transform: rotate(-20deg);
@@ -397,8 +397,11 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--orange); outlin
 .cut img { width: 100%; height: 100%; object-fit: cover; object-position: var(--pos, 50% 15%); }
 .cut--b { border-radius: 52% 48% 55% 45% / 45% 55% 45% 55%; }
 .cluster--frame .cut--1 { left: 44%; top: 2%; --r: 10deg; --pos: 50% 12%; }
-.cluster--frame .cut--2 { left: -3%; top: 46%; --r: -12deg; --pos: 55% 18%; }
-.cluster--frame .cut--3 { right: -3%; bottom: 13%; --r: 8deg; --pos: 60% 10%; width: clamp(48px, 16cqw, 78px); }
+.cluster--frame .cut--2 { left: -4%; top: 33%; --r: -12deg; }
+.cluster--frame .cut--3 { right: -3%; bottom: 13%; --r: 8deg; width: clamp(48px, 16cqw, 78px); }
+/* 캐릭터 스티커(투명 SVG): 덩어리 크롭·흰 테두리 없이 그대로 */
+.cut--svg { overflow: visible; background: none; box-shadow: none; border-radius: 0; aspect-ratio: 1; }
+.cut--svg img { object-fit: contain; }
 .cluster--frame .sticker { right: -2%; top: -3%; width: clamp(80px, 25cqw, 116px); background: var(--violet); color: var(--white); --r: 8deg; }
 .cluster--frame .bubble--a { left: 18%; bottom: 0; }
 .cluster--frame .logo-sticker { left: -4%; bottom: 12%; --r: -8deg; width: clamp(72px, 26cqw, 124px); }
