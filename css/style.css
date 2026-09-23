@@ -61,8 +61,8 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--orange); outlin
 .paper--gray { background-color: #f6f6f6; }
 
 /* ---------- 타이포 ---------- */
-.headline { font-size: clamp(28px, 5.4vw, 46px); font-weight: 800; line-height: 1.18; letter-spacing: -0.03em; }
-.lede { font-size: clamp(15px, 2.2vw, 18px); line-height: 1.65; color: var(--ink-55); }
+.headline { font-size: clamp(30px, 5.4vw, 46px); font-weight: 800; line-height: 1.18; letter-spacing: -0.03em; }
+.lede { font-size: clamp(16px, 2.2vw, 18px); line-height: 1.65; color: var(--ink-70); }
 .dot { color: var(--orange); }
 
 /* 형광펜 하이라이트 (오렌지 포인트) */
@@ -108,19 +108,18 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--orange); outlin
 .header .btn { display: none; }
 @media (min-width: 900px) { .header .btn { display: inline-flex; } }
 
-/* ---------- 스토어 배지 ---------- */
-.stores { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 14px; }
-.badge-play { display: inline-block; border-radius: 8px; }
-.badge-play img { height: 56px; width: auto; }
-.badge-ios {                           /* iOS: 눌리지 않는 "출시 예정" 표기 */
-  display: inline-flex; align-items: center; gap: 8px; height: 42px; padding: 0 14px; border-radius: 999px;
-  border: 1.5px dashed var(--ink-20); color: var(--ink-40); font-size: 14px; font-weight: 700; cursor: default; user-select: none;
-}
+/* ---------- 스토어 배지 (둘 다 공식 배지, 같은 높이) ---------- */
+.stores { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 12px; }
+.stores > a { display: inline-block; border-radius: 8px; order: 1; }
+.stores > a.is-primary { order: 0; }            /* 방문자 OS와 같은 스토어를 앞으로 */
+.badge-play img { height: 52px; width: auto; }
+.badge-app img { height: 47px; width: auto; }   /* Google 가이드: Play 배지가 다른 배지보다 작지 않게 (PNG 내부 여백 보정) */
+@media (min-width: 900px) { .badge-play img { height: 56px; } .badge-app img { height: 50px; } }
 .tag-soon {
   display: inline-flex; align-items: center; height: 22px; padding: 0 8px; border-radius: 999px;
   font-size: 12px; font-weight: 800; color: var(--white); background: var(--violet);
 }
-.stores__note { width: 100%; font-size: 13px; color: var(--ink-40); }
+.stores__note { width: 100%; order: 2; font-size: 14px; font-weight: 600; color: var(--ink-55); }
 
 /* =========================================================
    콜라주 부품
@@ -194,7 +193,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--orange); outlin
 .hero__inner > * { min-width: 0; }
 .hero__copy { display: flex; flex-direction: column; align-items: flex-start; gap: 18px; }
 .hero__title { font-size: clamp(40px, 10vw, 70px); font-weight: 900; line-height: 1.04; letter-spacing: -0.045em; }
-.hero__lede { font-size: clamp(16px, 2.4vw, 19px); color: var(--ink-55); line-height: 1.6; }
+.hero__lede { font-size: clamp(17px, 2.4vw, 20px); color: var(--ink-70); font-weight: 500; line-height: 1.6; }
 .hero__cta { margin-top: 6px; }
 
 /* 히어로 콜라주: 영상 프레임 + 폴라로이드 + 말풍선 + 회전 뱃지 */
@@ -248,7 +247,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--orange); outlin
 }
 .note .tape { left: 50%; top: -12px; margin-left: -40px; width: 80px; height: 24px; }
 .note h3 { font-size: 17px; font-weight: 800; line-height: 1.35; }
-.note p { margin-top: 6px; font-size: 15px; color: var(--ink-55); }
+.note p { margin-top: 6px; font-size: 16px; color: var(--ink-70); }
 .note--quote { background: transparent; box-shadow: none; border: 0; padding: 18px 0 14px; min-height: 96px; }
 .note--quote .bubble { position: relative; display: inline-block; font-size: 17px; }
 .note--quote .sticker { right: 6%; top: -6px; width: 74px; font-size: 14px; }
@@ -281,15 +280,14 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--orange); outlin
 /* 기능 1 미러링 */
 .cluster--mirror .bubble--a { right: 0; top: 0; }
 .cluster--mirror .sticker { right: 2%; bottom: 15%; }
-/* 기능 2 포즈 */
-.cluster--pose .pola--main { left: 4%; top: 5%; }
-.cluster--pose .bubble--a { right: -1%; top: 8%; }
-.cluster--pose .sticker { left: -1%; bottom: 17%; }
-/* 기능 3 1인 */
-.cluster--solo .pola--main { --ar: 1; left: 8%; top: 8%; width: 74%; }
-.cluster--solo .bubble--a { right: -1%; top: 4%; }
-.cluster--solo .sticker { right: 3%; bottom: 25%; }
-
+/* 기능 2 포즈: 실제 앱 화면 목업 2대 (이미지에 기기 프레임 포함, 투명 배경) */
+.shot { position: absolute; filter: drop-shadow(0 26px 28px rgba(0, 0, 0, .26)); transform: rotate(var(--r, 0deg)); }
+.shot img { width: 100%; height: auto; }
+.cluster--pose { aspect-ratio: 1 / 1.12; }
+.cluster--pose .shot--main { right: 1%; top: 3%; width: 54%; z-index: 3; }
+.cluster--pose .shot--sub { left: 1%; top: 9%; width: 46%; z-index: 2; }
+.cluster--pose .bubble--a { left: 4%; top: 0; z-index: 4; }
+.cluster--pose .sticker { right: -2%; bottom: 6%; z-index: 4; }
 @media (min-width: 900px) {
   .feature { padding: 120px 0; }
   .feature__inner { grid-template-columns: 1fr 1fr; gap: 72px; }
@@ -304,11 +302,10 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--orange); outlin
 .install__inner { display: grid; gap: 40px; align-items: center; }
 .install__inner > * { min-width: 0; }
 .install .headline { color: var(--white); }
-.install .lede { color: rgba(255, 255, 255, .6); }
+.install .lede { color: rgba(255, 255, 255, .75); }
 .install__copy { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; }
 .install .stores { margin-top: 8px; }
-.install .badge-ios { border-color: rgba(255, 255, 255, .25); color: rgba(255, 255, 255, .5); }
-.install .stores__note { color: rgba(255, 255, 255, .45); }
+.install .stores__note { color: rgba(255, 255, 255, .6); }
 .install__side { display: none; }
 @media (min-width: 900px) {
   .install { padding: 128px 0; }
@@ -364,19 +361,16 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--orange); outlin
 .logo-sticker img { width: 100%; height: auto; }
 .collage .logo-sticker { right: 34%; top: 51%; --r: -10deg; width: clamp(68px, 24cqw, 118px); }
 .notes .logo-sticker { right: -2%; top: -22px; --r: 6deg; width: clamp(84px, 24cqw, 130px); }
-.cluster--pose .logo-sticker { right: -3%; bottom: 3%; --r: -6deg; }
-.cluster--solo .logo-sticker { left: -3%; top: 0; --r: -9deg; }
+.cluster--pose .logo-sticker { left: -3%; bottom: 3%; --r: -6deg; }
 .install__side .logo-sticker { right: 0; bottom: 0; --r: 5deg; width: 140px; }
 
 /* ---------- 기능 4: 나만의 프레임 (네컷 + 누끼 카드) ---------- */
 .cluster--frame { aspect-ratio: 1 / 1.14; }
-.frame4 {
-  position: absolute; left: 2%; top: 5%; width: 58%; z-index: 2; background: var(--black); color: var(--white);
-  padding: 4cqw 3cqw 3cqw; border-radius: 8px; box-shadow: var(--shadow-card); transform: rotate(var(--r, -3deg));
+.fourcut {
+  position: absolute; left: 2%; top: 4%; width: 58%; z-index: 2; border-radius: 10px; overflow: hidden;
+  box-shadow: var(--shadow-card); transform: rotate(var(--r, -3deg)); background: var(--white);
 }
-.frame4__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2cqw; }
-.frame4__grid img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 3px; background: rgba(255, 255, 255, .1); }
-.frame4__foot { display: flex; align-items: center; gap: 1.5cqw; margin-top: 2.6cqw; font-size: clamp(8px, 2.3cqw, 11px); font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: rgba(255, 255, 255, .8); }
+.fourcut img { width: 100%; height: auto; }
 .cutout { right: 0; top: 30%; width: 46%; z-index: 3; }
 .cutout__media { position: relative; aspect-ratio: 4 / 5; border-radius: 3px; background: #f1f1f1; display: flex; align-items: center; justify-content: center; }
 .cutout__media .cutout__char { width: 80%; height: auto; }
@@ -395,16 +389,16 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--orange); outlin
 }
 .cut img { width: 100%; height: 100%; object-fit: cover; object-position: var(--pos, 50% 15%); }
 .cut--b { border-radius: 52% 48% 55% 45% / 45% 55% 45% 55%; }
-.cluster--frame .cut--1 { left: 44%; top: 2%; --r: 10deg; --pos: 50% 12%; }
+.cluster--frame .cut--1 { left: 46%; top: 1%; --r: 10deg; }
 .cluster--frame .cut--2 { left: -4%; top: 33%; --r: -12deg; }
 .cluster--frame .cut--3 { right: -3%; bottom: 13%; --r: 8deg; width: clamp(48px, 16cqw, 78px); }
 /* 캐릭터 스티커(투명 SVG): 덩어리 크롭·흰 테두리 없이 그대로 */
 .cut--svg { overflow: visible; background: none; box-shadow: none; border-radius: 0; aspect-ratio: 1; }
 .cut--svg img { object-fit: contain; }
-.cluster--frame .sticker { right: -2%; top: -3%; width: clamp(80px, 25cqw, 116px); background: var(--violet); color: var(--white); --r: 8deg; }
+.cluster--frame .sticker { right: -2%; top: -3%; width: clamp(80px, 25cqw, 116px); }
 .cluster--frame .bubble--a { left: 18%; bottom: 0; }
 .cluster--frame .logo-sticker { left: -4%; bottom: 12%; --r: -8deg; width: clamp(72px, 26cqw, 124px); }
 .deco { position: absolute; z-index: 5; width: clamp(20px, 7cqw, 34px); transform: rotate(var(--r, 0deg)); filter: drop-shadow(0 3px 4px rgba(0, 0, 0, .15)); }
 .deco svg { width: 100%; height: auto; }
 .cluster--frame .deco--star { left: -1%; top: 1%; --r: 12deg; }
-.cluster--frame .deco--heart { left: 27%; top: 40%; --r: -14deg; }
+.cluster--frame .deco--heart { left: 30%; top: 44%; --r: -14deg; }

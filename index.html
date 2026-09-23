@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>피크픽 peakpic. — 쉽게 건지는 나만의 PEAK PIC</title>
-  <meta name="description" content="찍히는 사람이 카메라를 지휘하는 촬영 앱, 피크픽. 촬영자의 카메라 화면을 내 스마트폰에서 실시간으로 확인하고 원하는 구도를 직접 맞춰보세요. Google Play에서 다운로드.">
+  <meta name="description" content="찍히는 사람이 카메라를 지휘하는 촬영 앱, 피크픽. 촬영자의 카메라 화면을 내 스마트폰에서 실시간으로 확인하고 원하는 구도를 직접 맞춰보세요. Google Play와 App Store에서 다운로드.">
   <meta name="theme-color" content="#ffffff">
 
   <!-- OG: 도메인 확정 후 og:url / og:image 를 절대 URL로 교체 -->
@@ -38,7 +38,7 @@
           <image href="assets/logo.svg" width="1024" height="1024"></image>
         </svg>
       </a>
-      <a class="btn btn--sm" href="https://play.google.com/store/apps/details?id=soma.project.caestro&amp;hl=ko" target="_blank" rel="noopener">Google Play에서 설치</a>
+      <a class="btn btn--sm" href="#install">앱 다운로드</a>
     </div>
   </header>
 
@@ -56,8 +56,10 @@
             <a class="badge-play" href="https://play.google.com/store/apps/details?id=soma.project.caestro&amp;hl=ko" target="_blank" rel="noopener">
               <img src="assets/img/google-play-badge-ko.png" width="646" height="250" alt="Google Play에서 다운로드">
             </a>
-            <span class="badge-ios" aria-label="iOS App Store 출시 예정">App Store <span class="tag-soon">출시 예정</span></span>
-            <p class="stores__note">로그인 없이 바로 시작할 수 있어요.</p>
+            <a class="badge-app" href="https://apps.apple.com/kr/app/peakpic/id6807646621" target="_blank" rel="noopener">
+              <img src="assets/img/app-store-badge-ko.svg" width="130" height="40" alt="App Store에서 다운로드">
+            </a>
+            <p class="stores__note">무료 · 로그인 없이 바로 시작할 수 있어요.</p>
           </div>
         </div>
 
@@ -82,7 +84,7 @@
           <figure class="pola pola--side" style="--r:6deg">
             <span class="tape tape--clear" style="left:50%; margin-left:-9cqw; top:-9px; --tr:4deg"></span>
             <img src="assets/img/onboarding-1.webp" width="654" height="820" alt="혼자서 찍은 실내 셀피" loading="lazy" decoding="async">
-            <figcaption class="pola__cap"><span>solo shot</span><span>#01</span></figcaption>
+            <figcaption class="pola__cap"><span>peak pic</span><span>#01</span></figcaption>
           </figure>
 
           <span class="logo-sticker" aria-hidden="true"><img src="assets/img/sticker-diecut.svg" alt="" width="920" height="540"></span>
@@ -104,10 +106,10 @@
     <div class="ticker" aria-hidden="true">
       <div class="ticker__track">
         <ul>
-          <li>peak pic.</li><li>찍히는 사람이 카메라를 지휘해요</li><li>로그인 없이 시작</li><li>Google Play 출시</li><li>iOS 준비 중</li><li>미러링 · 포즈 추천 · 1인 촬영 · 나만의 프레임</li>
+          <li>peak pic.</li><li>찍히는 사람이 카메라를 지휘해요</li><li>로그인 없이 시작</li><li>Google Play · App Store 출시</li><li>미러링 · 포즈 추천 · 나만의 프레임</li>
         </ul>
         <ul>
-          <li>peak pic.</li><li>찍히는 사람이 카메라를 지휘해요</li><li>로그인 없이 시작</li><li>Google Play 출시</li><li>iOS 준비 중</li><li>미러링 · 포즈 추천 · 1인 촬영 · 나만의 프레임</li>
+          <li>peak pic.</li><li>찍히는 사람이 카메라를 지휘해요</li><li>로그인 없이 시작</li><li>Google Play · App Store 출시</li><li>미러링 · 포즈 추천 · 나만의 프레임</li>
         </ul>
       </div>
     </div>
@@ -181,68 +183,46 @@
     <section class="feature feature--alt paper" id="pose" aria-labelledby="f2-title">
       <div class="container feature__inner">
         <div class="cluster cluster--pose">
-          <figure class="pola pola--main" style="--r:2.5deg">
-            <span class="tape tape--tl" style="left:auto; right:8%; --tr:8deg"></span>
-            <img src="assets/img/onboarding-2.webp" width="654" height="820" loading="lazy" decoding="async"
-                 alt="추천 포즈 가이드 선이 겹쳐진 촬영 화면과 오른쪽의 포즈 후보 목록">
-            <figcaption class="pola__cap"><span><b>02</b> pose guide</span><span>street</span></figcaption>
+          <!-- 실제 앱 화면(발표 자료 목업): 뒤 = 포즈 추천 목록, 앞 = 가이드가 뜬 카메라 화면 -->
+          <figure class="shot shot--sub" style="--r:-4deg">
+            <img src="assets/img/pose-list.webp" width="640" height="1321" loading="lazy" decoding="async"
+                 alt="피크픽 포즈 추천 화면 — 길거리 포즈, 셀카 항공포즈, 광각 포즈 목록">
+          </figure>
+          <figure class="shot shot--main" style="--r:2deg">
+            <img src="assets/img/pose-camera.webp" width="640" height="1301" loading="lazy" decoding="async"
+                 alt="추천 포즈의 실루엣 가이드가 겹쳐진 촬영 화면 — 하단에 포즈 후보와 적용 버튼">
+            <span class="pin" style="--x:33%; --y:11.5%" aria-hidden="true">실루엣 가이드 ON</span>
           </figure>
           <span class="bubble bubble--a" style="--r:-4deg" aria-hidden="true">이 포즈 어때요?</span>
-          <span class="logo-sticker" aria-hidden="true"><img src="assets/img/sticker-label.svg" alt="" width="920" height="540"></span>
           <span class="sticker sticker--orange" style="--r:-12deg" aria-hidden="true">가이드<br>따라<br>찰칵</span>
+          <span class="logo-sticker" aria-hidden="true"><img src="assets/img/sticker-label.svg" alt="" width="920" height="540"></span>
         </div>
         <div class="feature__copy">
           <span class="tag">02 · pose guide</span>
           <h2 id="f2-title" class="headline">어색한 포즈 고민 끝,<br>가이드 따라 찰칵</h2>
           <p class="lede">사진에 어울리는 포즈를 추천받고,<br class="br-desktop"> 가이드에 맞춰 더 쉽게 인생샷을 완성해보세요.</p>
-          <ul class="ftags" aria-label="추천 포즈 종류">
-            <li>길거리 포즈</li>
-            <li class="is-orange">셀카 항공 포즈</li>
-            <li>광각 포즈</li>
+          <ul class="ftags" aria-label="포즈 추천에서 할 수 있는 것">
+            <li>길거리 · 셀카 · 광각 포즈</li>
+            <li class="is-orange">장소·구도에 맞는 추천</li>
+            <li>가이드 보며 바로 적용</li>
           </ul>
         </div>
       </div>
     </section>
 
-    <!-- 3-3. 1인 촬영 -->
-    <section class="feature" id="solo" aria-labelledby="f3-title">
-      <div class="container feature__inner">
-        <div class="cluster cluster--solo">
-          <figure class="pola pola--main" style="--r:-2deg">
-            <span class="tape tape--tl" style="left:38%; --tr:3deg"></span>
-            <img src="assets/img/onboarding-1.webp" width="654" height="820" loading="lazy" decoding="async"
-                 alt="혼자 촬영한 실내 셀피">
-            <figcaption class="pola__cap"><span><b>03</b> solo shot</span><span>ai guide</span></figcaption>
-          </figure>
-          <span class="bubble bubble--orange bubble--a" style="--r:5deg" aria-hidden="true">혼자서도 OK</span>
-          <span class="logo-sticker" aria-hidden="true"><img src="assets/img/sticker-diecut.svg" alt="" width="920" height="540"></span>
-          <span class="sticker sticker--outline" style="--r:8deg" aria-hidden="true">AI 가이드<br>ON</span>
-        </div>
-        <div class="feature__copy">
-          <span class="tag">03 · solo shot</span>
-          <h2 id="f3-title" class="headline">이제 혼자서도<br>원하는 사진을 찍어요</h2>
-          <p class="lede">혼자 찍을 때도 포즈 추천과 가이드 같은 AI 기능은 그대로 써요.<br class="br-desktop"> 셀카도 가이드 따라 더 쉽게 완성해보세요.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- 3-4. 나만의 프레임 — 출시 예정 (있는 것처럼 표현 금지)
+    <!-- 3-3. 나만의 네컷 (my frame) — 2026-09-23 출시 확인, "출시 예정" 표기 제거
          개념: 내 사진을 네컷 프레임에 넣고, 좋아하는 캐릭터·연예인 사진을 누끼 따서 스티커처럼 붙여 꾸민다.
          캐릭터/연예인 이미지는 저작권·초상권 때문에 넣지 않았다. 지금은 기존 사진을 .cut(덩어리 크롭 + 흰 테두리)으로 대신하며,
          최종 누끼 스티커(투명 PNG)가 오면 .cut 안의 img src만 교체하면 된다. -->
-    <section class="feature feature--alt paper" id="my-frame" aria-labelledby="f4-title">
+    <section class="feature" id="my-frame" aria-labelledby="f3-title">
       <div class="container feature__inner">
         <div class="cluster cluster--frame">
           <!-- 네컷 프레임: 최종 네컷 이미지가 오면 아래 4장의 src만 교체 (권장 3:4, 각 200KB 이하) -->
-          <div class="frame4" style="--r:-3deg" aria-hidden="true">
-            <div class="frame4__grid">
-              <img src="assets/img/frame-1.webp" width="640" height="640" alt="" loading="lazy" decoding="async">
-              <img src="assets/img/frame-2.webp" width="640" height="640" alt="" loading="lazy" decoding="async">
-              <img src="assets/img/frame-3.webp" width="640" height="629" alt="" loading="lazy" decoding="async">
-              <img src="assets/img/frame-4.webp" width="640" height="629" alt="" loading="lazy" decoding="async">
-            </div>
-            <div class="frame4__foot"><span>peak pic<span class="dot">.</span></span><span>· my frame</span></div>
-          </div>
+          <!-- 완성된 네컷(앱에서 만든 실제 결과물, 디저트 프레임). 핑크 Popteen 프레임은 헬로키티가 들어 있어 랜딩에서는 제외 -->
+          <figure class="fourcut" style="--r:-3deg">
+            <img src="assets/img/fourcut-dessert.webp" width="800" height="1000" loading="lazy" decoding="async"
+                 alt="디저트 프레임으로 완성한 네컷 사진">
+          </figure>
 
           <!-- 프레임 위에 붙인 누끼 스티커들 (스탠드인) -->
           <!-- 누끼 스티커(캐릭터): 저작권 없는 자체 SVG. 실제 캐릭터/연예인 누끼(투명 PNG)가 오면 src만 교체 -->
@@ -265,17 +245,16 @@
           <span class="deco deco--star" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.7-5.4 4.8 1.6 7L12 17.4 5.8 21l1.6-7L2 9.3l7.1-.7z" fill="#FF5A47"/></svg></span>
           <span class="deco deco--heart" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#000"/></svg></span>
           <span class="bubble bubble--orange bubble--a" style="--r:-4deg" aria-hidden="true">최애 스티커 붙이기</span>
-          <span class="sticker" aria-hidden="true">출시<br>예정</span>
+          <span class="sticker" style="--r:9deg" aria-hidden="true">내 맘대로<br>꾸미기</span>
         </div>
         <div class="feature__copy">
-          <span class="tag">04 · my frame</span>
-          <span class="tag tag--soon" style="--r:1deg">출시 예정</span>
-          <h2 id="f4-title" class="headline">최애 누끼 따서 붙이고,<br>나만의 프레임 완성</h2>
-          <p class="lede">내 사진을 네컷 프레임에 넣고, 좋아하는 캐릭터나 연예인 사진을 누끼 따서 스티커처럼 붙여보세요.<br class="br-desktop"> 출시되면 피크픽에서 바로 만나볼 수 있어요.</p>
-          <ul class="ftags" aria-label="나만의 프레임에서 할 수 있는 것">
-            <li>내 사진 넣기</li>
+          <span class="tag">03 · my frame</span>
+          <h2 id="f3-title" class="headline">최애 누끼 따서 붙이고,<br>나만의 네컷 완성</h2>
+          <p class="lede">찍은 사진을 원하는 프레임에 담고, 좋아하는 캐릭터나 연예인 사진을 누끼 따서 스티커처럼 붙여보세요.<br class="br-desktop"> 완성한 네컷은 바로 저장하고 공유할 수 있어요.</p>
+          <ul class="ftags" aria-label="나만의 네컷에서 할 수 있는 것">
+            <li>프레임 고르기</li>
             <li class="is-orange">최애 누끼 스티커</li>
-            <li>자유롭게 꾸미기</li>
+            <li>저장 · 공유</li>
           </ul>
         </div>
       </div>
@@ -287,12 +266,15 @@
         <div class="install__copy">
           <span class="tag tag--orange" style="--r:-2deg">download</span>
           <h2 id="install-title" class="headline">지금 설치하고<br>나만의 <span class="hl">PEAK PIC</span>을 건져보세요</h2>
-          <p class="lede">로그인 없이 바로 시작할 수 있어요. Android에서 만나보세요.</p>
+          <p class="lede">Android와 iPhone 모두 지금 바로 설치할 수 있어요.</p>
           <div class="stores">
             <a class="badge-play" href="https://play.google.com/store/apps/details?id=soma.project.caestro&amp;hl=ko" target="_blank" rel="noopener">
               <img src="assets/img/google-play-badge-ko.png" width="646" height="250" alt="Google Play에서 다운로드" loading="lazy">
             </a>
-            <span class="badge-ios" aria-label="iOS App Store 출시 예정">App Store <span class="tag-soon">출시 예정</span></span>
+            <a class="badge-app" href="https://apps.apple.com/kr/app/peakpic/id6807646621" target="_blank" rel="noopener">
+              <img src="assets/img/app-store-badge-ko.svg" width="130" height="40" alt="App Store에서 다운로드" loading="lazy">
+            </a>
+            <p class="stores__note">무료 · 로그인 없이 바로 시작할 수 있어요.</p>
           </div>
         </div>
         <div class="install__side" aria-label="Google Play 설치 QR 코드">
@@ -330,14 +312,14 @@
       </nav>
       <div class="footer__meta">
         <span>© <span data-year>2026</span> PeakPic. All rights reserved.</span>
-        <span>Google Play 및 Google Play 로고는 Google LLC의 상표입니다.</span>
+        <span>Google Play 및 Google Play 로고는 Google LLC의 상표입니다. Apple 및 Apple 로고는 Apple Inc.의 상표이며, App Store는 Apple Inc.의 서비스 마크입니다.</span>
       </div>
     </div>
   </footer>
 
   <!-- 모바일 고정 CTA: 히어로 CTA가 화면 밖으로 나가면 나타남 -->
   <div class="sticky-cta" aria-hidden="true">
-    <a class="btn btn--dot" href="https://play.google.com/store/apps/details?id=soma.project.caestro&amp;hl=ko" target="_blank" rel="noopener" tabindex="-1">Google Play에서 설치하기</a>
+    <a class="btn btn--dot" href="https://play.google.com/store/apps/details?id=soma.project.caestro&amp;hl=ko" data-play="https://play.google.com/store/apps/details?id=soma.project.caestro&amp;hl=ko" data-app="https://apps.apple.com/kr/app/peakpic/id6807646621" target="_blank" rel="noopener" tabindex="-1"><span data-store-label>Google Play에서 설치하기</span></a>
   </div>
 
   <script src="js/main.js" defer></script>
