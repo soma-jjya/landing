@@ -67,7 +67,7 @@
 
 ## 자산 (assets/)
 - logo.svg — 공식 로고 (흰 배경 포함판)
-- img/google-play-badge-ko.png, img/app-store-badge-ko.svg — 각 스토어 공식 배지 원본(변형 금지)
+- img/google-play-badge-ko-v2.png (투명 여백 제거판 646×192, 캐시 무효화를 위해 v2), img/app-store-badge-ko.svg — 각 스토어 공식 배지 원본(변형 금지)
 - img/sticker-*.svg — 디자이너 스티커 시트(다이컷·오렌지/블랙 라벨)를 logo.svg 레터폼으로 SVG화한 콜라주용 스티커
 - img/pose-camera.webp, img/pose-list.webp — 발표자료(Figma Peakpic 파일 node 1106:62804)의 앱 화면 목업, 기기 프레임 포함·투명 배경.
   pose-camera에는 실루엣 가이드를 합성했다: 인물은 덮지 않고, 인물 중심 1.10배·좌상단(-34,-18)으로 비낀 실루엣을

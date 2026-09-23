@@ -63,7 +63,7 @@
     }
   }
 
-  // 3) 방문자 OS에 맞춰 스토어 우선순위 + 고정 CTA 링크 (광고 유입 대부분 모바일)
+  // 3) 방문자 OS와 같은 스토어 배지를 앞으로 (고정 CTA는 두 배지가 있는 설치 섹션으로 이동)
   var ua = navigator.userAgent || '';
   var isIOS = /iPhone|iPad|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
   var primary = isIOS ? 'app' : 'play';
@@ -71,14 +71,6 @@
     var el = group.querySelector(primary === 'app' ? '.badge-app' : '.badge-play');
     if (el) el.classList.add('is-primary');
   });
-  var stickyLinkEl = document.querySelector('.sticky-cta a');
-  if (stickyLinkEl) {
-    var href = stickyLinkEl.getAttribute(isIOS ? 'data-app' : 'data-play');
-    if (href) stickyLinkEl.setAttribute('href', href);
-    var label = stickyLinkEl.querySelector('[data-store-label]');
-    if (label) label.textContent = isIOS ? 'App Store에서 설치하기' : 'Google Play에서 설치하기';
-  }
-
   // 4) 광고 UTM을 Google Play 설치 리퍼러로 전달 (Play Console 캠페인 귀속용)
   try {
     var params = new URLSearchParams(window.location.search);

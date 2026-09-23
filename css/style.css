@@ -112,9 +112,8 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--orange); outlin
 .stores { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 12px; }
 .stores > a { display: inline-block; border-radius: 8px; order: 1; }
 .stores > a.is-primary { order: 0; }            /* 방문자 OS와 같은 스토어를 앞으로 */
-.badge-play img { height: 52px; width: auto; }
-.badge-app img { height: 47px; width: auto; }   /* Google 가이드: Play 배지가 다른 배지보다 작지 않게 (PNG 내부 여백 보정) */
-@media (min-width: 900px) { .badge-play img { height: 56px; } .badge-app img { height: 50px; } }
+.badge-play img, .badge-app img { height: 48px; width: auto; }   /* Play PNG는 투명 여백을 잘라내(646×192) 두 배지 높이를 동일하게 */
+@media (min-width: 900px) { .badge-play img, .badge-app img { height: 52px; } }
 .tag-soon {
   display: inline-flex; align-items: center; height: 22px; padding: 0 8px; border-radius: 999px;
   font-size: 12px; font-weight: 800; color: var(--white); background: var(--violet);
@@ -298,7 +297,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--orange); outlin
 }
 
 /* ---------- 설치 CTA ---------- */
-.install { background: var(--black); color: var(--white); padding: 84px 0; overflow: clip; }
+.install { background: var(--black); color: var(--white); padding: 84px 0; overflow: clip; scroll-margin-top: var(--header-h); }
 .install__inner { display: grid; gap: 40px; align-items: center; }
 .install__inner > * { min-width: 0; }
 .install .headline { color: var(--white); }
@@ -337,6 +336,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--orange); outlin
 }
 .sticky-cta.is-visible { transform: translateY(0); }
 .sticky-cta .btn { width: 100%; height: 54px; font-size: 16px; }
+.btn__sub { font-size: 13px; font-weight: 600; opacity: .6; margin-left: 2px; }
 @media (min-width: 900px) { .sticky-cta { display: none; } }
 
 /* ---------- 법적 문서 페이지 ---------- */
