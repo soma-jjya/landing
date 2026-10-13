@@ -397,6 +397,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--orange); outlin
 .cut--svg img { object-fit: contain; }
 .cluster--frame .sticker { right: -2%; top: -3%; width: clamp(80px, 25cqw, 116px); }
 .cluster--frame .bubble--a { left: 18%; bottom: 0; }
+.cluster--frame .bubble--b { right: 0; top: 20%; }  /* 흰 말풍선(스티커 붙이기): 원형 스티커 아래, 누끼 카드 위 띠. 오렌지 bubble--a 는 네컷 아래 "너도 한 컷 올려!" */
 .cluster--frame .logo-sticker { left: -4%; bottom: 12%; --r: -8deg; width: clamp(72px, 26cqw, 124px); }
 .deco { position: absolute; z-index: 5; width: clamp(20px, 7cqw, 34px); transform: rotate(var(--r, 0deg)); filter: drop-shadow(0 3px 4px rgba(0, 0, 0, .15)); }
 .deco svg { width: 100%; height: auto; }

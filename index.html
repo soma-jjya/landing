@@ -109,10 +109,10 @@
     <div class="ticker" aria-hidden="true">
       <div class="ticker__track">
         <ul>
-          <li>peak pic.</li><li>찍히는 사람이 카메라를 지휘해요</li><li>로그인 없이 시작</li><li>Google Play · App Store 출시</li><li>미러링 · 포즈 추천 · 나만의 프레임</li>
+          <li>peak pic.</li><li>찍히는 사람이 카메라를 지휘해요</li><li>로그인 없이 시작</li><li>Google Play · App Store 출시</li><li>미러링 · 나만의 네컷 · 포즈 추천</li>
         </ul>
         <ul>
-          <li>peak pic.</li><li>찍히는 사람이 카메라를 지휘해요</li><li>로그인 없이 시작</li><li>Google Play · App Store 출시</li><li>미러링 · 포즈 추천 · 나만의 프레임</li>
+          <li>peak pic.</li><li>찍히는 사람이 카메라를 지휘해요</li><li>로그인 없이 시작</li><li>Google Play · App Store 출시</li><li>미러링 · 나만의 네컷 · 포즈 추천</li>
         </ul>
       </div>
     </div>
@@ -182,42 +182,11 @@
       </div>
     </section>
 
-    <!-- 3-2. 포즈 추천 -->
-    <section class="feature feature--alt paper" id="pose" aria-labelledby="f2-title">
-      <div class="container feature__inner">
-        <div class="cluster cluster--pose">
-          <!-- 실제 앱 화면(발표 자료 목업): 뒤 = 포즈 추천 목록, 앞 = 가이드가 뜬 카메라 화면 -->
-          <figure class="shot shot--sub" style="--r:-4deg">
-            <img src="assets/img/pose-list.webp" width="640" height="1321" loading="lazy" decoding="async"
-                 alt="피크픽 포즈 추천 화면 — 길거리 포즈, 셀카 항공포즈, 광각 포즈 목록">
-          </figure>
-          <figure class="shot shot--main" style="--r:2deg">
-            <img src="assets/img/pose-camera.webp" width="640" height="1301" loading="lazy" decoding="async"
-                 alt="추천 포즈의 실루엣 가이드가 겹쳐진 촬영 화면 — 하단에 포즈 후보와 적용 버튼">
-            <span class="pin" style="--x:33%; --y:11.5%" aria-hidden="true">실루엣 가이드 ON</span>
-          </figure>
-          <span class="bubble bubble--a" style="--r:-4deg" aria-hidden="true">이 포즈 어때요?</span>
-          <span class="sticker sticker--orange" style="--r:-12deg" aria-hidden="true">가이드<br>따라<br>찰칵</span>
-          <span class="logo-sticker" aria-hidden="true"><img src="assets/img/sticker-label.svg" alt="" width="920" height="540"></span>
-        </div>
-        <div class="feature__copy">
-          <span class="tag">02 · pose guide</span>
-          <h2 id="f2-title" class="headline">어색한 포즈 고민 끝,<br>가이드 따라 찰칵</h2>
-          <p class="lede">사진에 어울리는 포즈를 추천받고,<br class="br-desktop"> 가이드에 맞춰 더 쉽게 인생샷을 완성해보세요.</p>
-          <ul class="ftags" aria-label="포즈 추천에서 할 수 있는 것">
-            <li>길거리 · 셀카 · 광각 포즈</li>
-            <li class="is-orange">장소·구도에 맞는 추천</li>
-            <li>가이드 보며 바로 적용</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- 3-3. 나만의 네컷 (my frame) — 2026-09-23 출시 확인, "출시 예정" 표기 제거
+    <!-- 3-2. 나만의 네컷 (my frame) — 2026-09-23 출시 확인, "출시 예정" 표기 제거. 2026-10-13: 포즈와 순서 교체(2번), 친구와 한 컷씩 채우는 공유 기능 카피 추가
          개념: 내 사진을 네컷 프레임에 넣고, 좋아하는 캐릭터·연예인 사진을 누끼 따서 스티커처럼 붙여 꾸민다.
          캐릭터/연예인 이미지는 저작권·초상권 때문에 넣지 않았다. 지금은 기존 사진을 .cut(덩어리 크롭 + 흰 테두리)으로 대신하며,
          최종 누끼 스티커(투명 PNG)가 오면 .cut 안의 img src만 교체하면 된다. -->
-    <section class="feature" id="my-frame" aria-labelledby="f3-title">
+    <section class="feature feature--alt paper" id="my-frame" aria-labelledby="f2-title">
       <div class="container feature__inner">
         <div class="cluster cluster--frame">
           <!-- 네컷 프레임: 최종 네컷 이미지가 오면 아래 4장의 src만 교체 (권장 3:4, 각 200KB 이하) -->
@@ -247,17 +216,49 @@
           <span class="logo-sticker" aria-hidden="true"><img src="assets/img/sticker-diecut.svg" alt="" width="920" height="540"></span>
           <span class="deco deco--star" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.7-5.4 4.8 1.6 7L12 17.4 5.8 21l1.6-7L2 9.3l7.1-.7z" fill="#FF5A47"/></svg></span>
           <span class="deco deco--heart" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#000"/></svg></span>
-          <span class="bubble bubble--orange bubble--a" style="--r:-4deg" aria-hidden="true">최애 스티커 붙이기</span>
+          <span class="bubble bubble--b" style="--r:3deg" aria-hidden="true">최애 스티커 붙이기</span>
+          <span class="bubble bubble--orange bubble--a" style="--r:-4deg" aria-hidden="true">너도 한 컷 올려!</span>
           <span class="sticker" style="--r:9deg" aria-hidden="true">내 맘대로<br>꾸미기</span>
         </div>
         <div class="feature__copy">
-          <span class="tag">03 · my frame</span>
-          <h2 id="f3-title" class="headline">최애 누끼 따서 붙이고,<br>나만의 네컷 완성</h2>
-          <p class="lede">찍은 사진을 원하는 프레임에 담고, 좋아하는 캐릭터나 연예인 사진을 누끼 따서 스티커처럼 붙여보세요.<br class="br-desktop"> 완성한 네컷은 바로 저장하고 공유할 수 있어요.</p>
+          <span class="tag">02 · my frame</span>
+          <h2 id="f2-title" class="headline">친구와 한 컷씩 채우고,<br>최애 누끼로 꾸민 네컷</h2>
+          <p class="lede">네컷 프레임을 친구에게 공유하면 각자 한 컷씩 올려 함께 완성해요.<br class="br-desktop"> 좋아하는 캐릭터나 연예인 사진은 누끼 따서 스티커처럼 붙이고, 완성한 네컷은 바로 저장·공유하세요.</p>
           <ul class="ftags" aria-label="나만의 네컷에서 할 수 있는 것">
-            <li>프레임 고르기</li>
-            <li class="is-orange">최애 누끼 스티커</li>
+            <li class="is-orange">친구와 한 컷씩 채우기</li>
+            <li>최애 누끼 스티커</li>
             <li>저장 · 공유</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3-3. 포즈 추천 (2026-10-13: 네컷과 순서 교체, 3번으로) -->
+    <section class="feature" id="pose" aria-labelledby="f3-title">
+      <div class="container feature__inner">
+        <div class="cluster cluster--pose">
+          <!-- 실제 앱 화면(발표 자료 목업): 뒤 = 포즈 추천 목록, 앞 = 가이드가 뜬 카메라 화면 -->
+          <figure class="shot shot--sub" style="--r:-4deg">
+            <img src="assets/img/pose-list.webp" width="640" height="1321" loading="lazy" decoding="async"
+                 alt="피크픽 포즈 추천 화면 — 길거리 포즈, 셀카 항공포즈, 광각 포즈 목록">
+          </figure>
+          <figure class="shot shot--main" style="--r:2deg">
+            <img src="assets/img/pose-camera.webp" width="640" height="1301" loading="lazy" decoding="async"
+                 alt="추천 포즈의 실루엣 가이드가 겹쳐진 촬영 화면 — 하단에 포즈 후보와 적용 버튼">
+            <span class="pin" style="--x:33%; --y:11.5%" aria-hidden="true">실루엣 가이드 ON</span>
+          </figure>
+          <span class="bubble bubble--a" style="--r:-4deg" aria-hidden="true">이 포즈 어때요?</span>
+          <span class="sticker sticker--orange" style="--r:-12deg" aria-hidden="true">가이드<br>따라<br>찰칵</span>
+          <span class="logo-sticker" aria-hidden="true"><img src="assets/img/sticker-label.svg" alt="" width="920" height="540"></span>
+        </div>
+        <div class="feature__copy">
+          <span class="tag">03 · pose guide</span>
+          <h2 id="f3-title" class="headline">어색한 포즈 고민 끝,<br>가이드 따라 찰칵</h2>
+          <p class="lede">사진에 어울리는 포즈를 추천받고,<br class="br-desktop"> 가이드에 맞춰 더 쉽게 인생샷을 완성해보세요.</p>
+          <ul class="ftags" aria-label="포즈 추천에서 할 수 있는 것">
+            <li>길거리 · 셀카 · 광각 포즈</li>
+            <li class="is-orange">장소·구도에 맞는 추천</li>
+            <li>가이드 보며 바로 적용</li>
           </ul>
         </div>
       </div>
