@@ -86,7 +86,18 @@
   (광고 유입은 대부분 모바일)
 - 배포(예정): S3 + CloudFront. 도메인 미정 — peakpic.app 루트 후보
 
+## 지표 (PostHog, 2026-10-13 추가)
+- 설정: index.html <head> 의 `window.PEAKPIC_ANALYTICS = { key, host:'/ingest', uiHost }`. key 가 비면 꺼진다.
+  `/ingest` 는 vercel.json 리라이트(광고 차단 우회) → S3/CloudFront 로 옮기면 CloudFront 동작 또는 host 를 https://us.i.posthog.com 으로
+- 이벤트 스키마는 js/analytics.js 머리 주석이 원본. 핵심 전환 = `store_click`(store, placement, os). 모든 이벤트에
+  super property `ad_creative`(=utm_content)·`ad_campaign`·`ad_source`·`visitor_os` 가 붙는다
+- 광고 URL 규칙: `?utm_source=meta&utm_medium=paid_social&utm_campaign=<캠페인>&utm_content=<소재>`
+  소재 값은 Figma 포스터 이름과 맞춘다: `couple_d`, `fourcut_b`, `mirror_a`, `pose_c`
+- 측정 범위: 랜딩 도착 → 스토어 클릭까지. 설치·앱 내 행동은 Meta SDK/MMP 또는 앱 쪽 PostHog 와 연결해야 보인다
+- 개인정보처리방침에 분석 도구 사용 항목 필요(privacy.html 에 초안 문장 있음)
+
 ## 아직 없는 것 (플레이스홀더 진행)
 - [ ] 히어로 시연 영상 (팀 촬영 예정)
 - [ ] 미러링 실사용 카메라 화면 캡처 (광고에 가장 강한 장면 — 선택이지만 권장)
 - [ ] 개인정보처리방침·이용약관 본문
+- [x] PostHog 프로젝트 키 (앱과 같은 US 프로젝트, 2026-10-13 적용)
