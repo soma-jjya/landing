@@ -31,7 +31,9 @@
   https://play.google.com/store/apps/details?id=soma.project.caestro&hl=ko
 - **iOS: 출시됨 (2026-09-23)** — App Store 공식 배지 + 링크:
   https://apps.apple.com/kr/app/peakpic/id6807646621
-- 두 배지는 같은 높이로 나란히. 모바일에서는 방문자 OS와 같은 스토어를 앞에 두고 고정 CTA도 그 스토어로 연결(js/main.js)
+- **CTA 는 단일 "앱 다운로드" 버튼** (2026-10-15 결정, 모든 변형 공통): `<html class="os-android|os-ios|os-other">`(head 인라인 스크립트)를 보고
+  js/main.js 가 `.btn-store` 를 방문자 OS 의 스토어로 직행시킨다. 데스크톱·JS 없음(os-other)은 #install 로 스크롤 → 설치 섹션에만 공식 배지 2개 + QR.
+  공식 배지는 설치 섹션 외에 두지 않는다
 - 푸터에 Google·Apple 상표 고지 유지. "iOS 준비 중" 류 표기는 전부 폐기
 
 ## 카피 뱅크 (팀 확정 문장 — 우선 사용, 새 카피는 이 톤으로)
@@ -45,19 +47,26 @@
   AI 기능은 그대로 써요." (2026-09-08 변경, 이전 문구는 미러링을 암시해 폐기)
 - 공감(커플): "다시 찍어달라는 말, 이제 그만해도 돼요" — "연인에게 부탁한 인생샷,
   마음에 든 적 있나요?" ※ 커플은 대표 공감 장면으로만 사용 — 랜딩 정체성을 커플 앱으로
-  좁히지 말 것, 성별 지칭("남친/여친") 금지, "연인"으로 중립 표기
+  좁히지 말 것, 성별 지칭("남친/여친") 금지, "연인"으로 중립 표기.
+  **예외: /couple/ 변형의 히어로만** 광고 D 와 메시지를 맞추기 위해 "똥손 남친도 인생샷 찍어줌."을 쓴다(2026-10-15 사용자 결정). 그 외 문장은 "연인"
 - 나만의 네컷(2026-10-13): "친구와 한 컷씩 채우고, 최애 누끼로 꾸민 네컷" — "네컷 프레임을 친구에게 공유하면 각자 한 컷씩 올려
   함께 완성해요. 좋아하는 캐릭터나 연예인 사진은 누끼 따서 스티커처럼 붙이고, 완성한 네컷은 바로 저장·공유하세요."
   말풍선 "너도 한 컷 올려!"(Meta 포스터 B와 동일 문구). ※ "인생네컷"은 타사 상표 → "네컷"으로만 표기
 톤: 가볍고 친근한 존댓말. 기술 용어(WebRTC·P2P·세션) 노출 금지.
 
 ## 페이지 구조
+변형(2026-10-15~): 레포·Vercel 프로젝트 하나에 폴더로 나눈다. `/` 범용(스토어 심사 URL·QR·직접 유입), `/couple/` 커플 타깃(광고 D 도착지),
+`/fourcut/` 네컷 타깃(광고 B 도착지, 예정). 변형은 **히어로·문제 공감·기능 순서·카피만** 다르고 헤더·티커·설치·푸터·CSS·JS 는 공유한다.
+하위 폴더 페이지는 자산 경로를 `/assets/...` 처럼 루트 기준으로. 공통 부분을 고치면 모든 변형 파일에 반영할 것(빌드 도구 없음).
+변형별 PostHog 속성 `landing_variant` 는 각 페이지 head 의 `PEAKPIC_ANALYTICS.variant`.
+- /couple/: 미러링 → 포즈 → 네컷, 히어로 "똥손 남친도 인생샷 찍어줌.", 미러링·네컷 카피를 "연인/둘이"로
+
 1. 히어로: 시연 영상(자동재생·음소거·루프 — 영상 오기 전엔 home 화면 목업+포스터) +
-   슬로건 + **Google Play 버튼(주 CTA)**
+   슬로건 + **단일 "앱 다운로드" 버튼(주 CTA, OS 별 스토어 직행)**
 2. 문제 공감 한 섹션
 3. 기능 섹션 3개(미러링 → 나만의 네컷 → 포즈 추천. 2026-10-13 네컷을 2번으로 올림, 교차 레이아웃 `feature--alt paper`는 2번에): 콜라주 비주얼 + 온보딩 문법
    (오렌지 소문자 라벨 → 볼드 헤드라인 2줄 → 회색 설명 2줄)
-4. 설치 CTA 재노출 (Google Play + QR)
+4. 설치 CTA 재노출 (모바일: 단일 버튼 / 데스크톱: 공식 배지 2개 + QR)
 5. 푸터: 문의 asmjjya@gmail.com, 개인정보처리방침, 이용약관
 
 ## 디자인 규칙 (엄수)
@@ -95,8 +104,9 @@
   `/ingest` 는 vercel.json 리라이트(광고 차단 우회) → S3/CloudFront 로 옮기면 CloudFront 동작 또는 host 를 https://us.i.posthog.com 으로
 - 이벤트 스키마는 js/analytics.js 머리 주석이 원본. 핵심 전환 = `store_click`(store, placement, os). 모든 이벤트에
   super property `ad_creative`(=utm_content)·`ad_campaign`·`ad_source`·`visitor_os` 가 붙는다
-- 광고 URL 규칙: `?utm_source=meta&utm_medium=paid_social&utm_campaign=<캠페인>&utm_content=<소재>`
-  소재 값은 Figma 포스터 이름과 맞춘다: `couple_d`, `fourcut_b`, `mirror_a`, `pose_c`
+- 광고 URL 규칙: `<변형 경로>?utm_source=meta&utm_medium=paid_social&utm_campaign=<캠페인>&utm_content=<소재>`
+  소재 값은 Figma 포스터 이름과 맞춘다: `couple_d`, `fourcut_b`, `mirror_a`, `pose_c`. 커플 광고 → `/couple/`, 네컷 광고 → `/fourcut/`
+- super property `landing_variant`(main/couple/fourcut) 로 변형별 비교. 핵심 비교 지표 = 변형별 `store_click` 전환율
 - 측정 범위: 랜딩 도착 → 스토어 클릭까지. 설치·앱 내 행동은 Meta SDK/MMP 또는 앱 쪽 PostHog 와 연결해야 보인다
 - 개인정보처리방침에 분석 도구 사용 항목 필요(privacy.html 에 초안 문장 있음)
 

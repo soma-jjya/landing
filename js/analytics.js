@@ -5,10 +5,11 @@
    이벤트 설계 (광고 소재 비교가 목적):
    - $pageview / $pageleave  자동. utm_* 가 이벤트·사람 속성에 붙는다
    - ad_creative, ad_campaign  super property — 모든 이벤트에 utm_content/utm_campaign 을 복사해 breakdown 을 쉽게
+   - landing_variant           super property — 랜딩 변형 (main / couple / fourcut). 페이지 head 의 PEAKPIC_ANALYTICS.variant
    - section_viewed {section}  hero · pain · mirroring · pose · my-frame · install 이 35% 이상 보일 때 각 1회
    - scroll_depth {percent}    25 · 50 · 75 · 100 각 1회
    - cta_click {cta, placement} 헤더·고정 "앱 다운로드" (설치 섹션으로 스크롤)
-   - store_click {store, placement, os}  Google Play / App Store 배지 클릭 = 랜딩의 전환 지표
+   - store_click {store, placement, os}  스토어로 가는 링크 클릭(단일 버튼·공식 배지 모두) = 랜딩의 전환 지표
    - hero_video_play           시연 영상이 실제로 재생된 경우 1회
    퍼널: $pageview → section_viewed(install) → store_click, breakdown by ad_creative */
 (function () {
@@ -37,7 +38,8 @@
         ad_creative: params.utm_content || '(none)',
         ad_campaign: params.utm_campaign || '(none)',
         ad_source: params.utm_source || '(direct)',
-        visitor_os: os
+        visitor_os: os,
+        landing_variant: cfg.variant || 'main'   // 랜딩 변형 (main / couple / fourcut)
       });
     }
   });
@@ -76,9 +78,11 @@
   };
   document.addEventListener('click', function (e) {
     var a = e.target.closest && e.target.closest('a'); if (!a) return;
-    if (a.classList.contains('badge-play') || a.classList.contains('badge-app')) {
-      track('store_click', { store: a.classList.contains('badge-play') ? 'google_play' : 'app_store', placement: placementOf(a), os: os });
-    } else if ((a.getAttribute('href') || '') === '#install') {
+    var href = a.getAttribute('href') || '';   // 단일 버튼(.btn-store)은 main.js 가 OS 에 맞는 스토어 URL 로 바꿔 두므로 href 로 판별
+    var store = /play\.google\.com/.test(href) ? 'google_play' : (/apps\.apple\.com/.test(href) ? 'app_store' : null);
+    if (store) {
+      track('store_click', { store: store, placement: placementOf(a), os: os });
+    } else if (href === '#install') {
       track('cta_click', { cta: 'app_download', placement: placementOf(a) });
     }
   }, true);

@@ -22,7 +22,9 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
   <link rel="stylesheet" href="css/style.css">
   <!-- PostHog: key 를 넣으면 js/analytics.js 가 켜진다. host 는 vercel.json 의 /ingest 리라이트(광고 차단 우회). EU 프로젝트면 vercel.json 과 uiHost 를 eu 로 -->
-  <script>window.PEAKPIC_ANALYTICS = { key: 'phc_s3GaoSttixdo2SRtthMVFuatqAKc4tY6A2wF44iq7cJD', host: '/ingest', uiHost: 'https://us.posthog.com' };</script>
+  <script>window.PEAKPIC_ANALYTICS = { key: 'phc_s3GaoSttixdo2SRtthMVFuatqAKc4tY6A2wF44iq7cJD', host: '/ingest', uiHost: 'https://us.posthog.com', variant: 'main' };</script>
+  <!-- 방문자 OS 를 <html> 클래스로 (os-android / os-ios / os-other). 단일 "앱 다운로드" 버튼이 어느 스토어로 갈지 CSS·JS 가 이걸 본다 -->
+  <script>(function(){var u=navigator.userAgent||'',i=/iPhone|iPad|iPod/.test(u)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);document.documentElement.classList.add(i?'os-ios':(/Android/.test(u)?'os-android':'os-other'));})();</script>
   <script src="js/analytics.js" defer></script>
 </head>
 <body>
@@ -41,7 +43,7 @@
           <image href="assets/logo.svg" width="1024" height="1024"></image>
         </svg>
       </a>
-      <a class="btn btn--sm" href="#install">앱 다운로드</a>
+      <a class="btn btn--sm btn-store" href="#install">앱 다운로드</a>
     </div>
   </header>
 
@@ -55,13 +57,9 @@
           <h1 id="hero-title" class="hero__title">쉽게 건지는<br>나만의 <span class="hl">PEAK PIC</span><span class="dot">.</span></h1>
           <p class="hero__lede">복잡한 구도 고민 없이, 내가 원하는 모습 그대로<br class="br-desktop"> 가장 빛나는 순간을 사진으로 남겨보세요.</p>
 
-          <div class="stores hero__cta">
-            <a class="badge-play" href="https://play.google.com/store/apps/details?id=soma.project.caestro&amp;hl=ko" target="_blank" rel="noopener">
-              <img src="assets/img/google-play-badge-ko-v2.png" width="646" height="192" alt="Google Play에서 다운로드">
-            </a>
-            <a class="badge-app" href="https://apps.apple.com/kr/app/peakpic/id6807646621" target="_blank" rel="noopener">
-              <img src="assets/img/app-store-badge-ko.svg" width="130" height="40" alt="App Store에서 다운로드">
-            </a>
+          <!-- 단일 CTA: js/main.js 가 방문자 OS 의 스토어로 href 를 바꾼다 (Android→Google Play, iPhone→App Store). 데스크톱·JS 없음 → 설치 섹션의 공식 배지 2개 -->
+          <div class="store-cta hero__cta">
+            <a class="btn btn--dot btn-store" href="#install">앱 다운로드<span class="btn__sub" data-store-label>Google Play · App Store</span></a>
             <p class="stores__note">무료 · 로그인 없이 바로 시작할 수 있어요.</p>
           </div>
         </div>
@@ -271,6 +269,10 @@
           <span class="tag tag--orange" style="--r:-2deg">download</span>
           <h2 id="install-title" class="headline">지금 설치하고<br>나만의 <span class="hl">PEAK PIC</span>을 건져보세요</h2>
           <p class="lede">Android와 iPhone 모두 지금 바로 설치할 수 있어요.</p>
+          <div class="store-cta">
+            <a class="btn btn--dot btn-store" href="#install">앱 다운로드<span class="btn__sub" data-store-label>Google Play · App Store</span></a>
+            <p class="stores__note">무료 · 로그인 없이 바로 시작할 수 있어요.</p>
+          </div>
           <div class="stores">
             <a class="badge-play" href="https://play.google.com/store/apps/details?id=soma.project.caestro&amp;hl=ko" target="_blank" rel="noopener">
               <img src="assets/img/google-play-badge-ko-v2.png" width="646" height="192" alt="Google Play에서 다운로드" loading="lazy">
@@ -323,7 +325,7 @@
 
   <!-- 모바일 고정 CTA: 히어로 CTA가 화면 밖으로 나가면 나타남 -->
   <div class="sticky-cta" aria-hidden="true">
-    <a class="btn btn--dot" href="#install" tabindex="-1">앱 다운로드<span class="btn__sub">Google Play · App Store</span></a>
+    <a class="btn btn--dot btn-store" href="#install" tabindex="-1">앱 다운로드<span class="btn__sub" data-store-label>Google Play · App Store</span></a>
   </div>
 
   <script src="js/main.js" defer></script>

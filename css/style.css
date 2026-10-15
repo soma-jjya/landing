@@ -120,6 +120,18 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--orange); outlin
 }
 .stores__note { width: 100%; order: 2; font-size: 14px; font-weight: 600; color: var(--ink-55); }
 
+/* ---------- 단일 "앱 다운로드" 버튼 (2026-10-15) ----------
+   모바일: <html class="os-android|os-ios"> 이면 js/main.js 가 버튼을 해당 스토어로 직행시킨다. 설치 섹션의 공식 배지 2개는 숨김.
+   데스크톱·JS 없음(os-other): 버튼은 #install 로 스크롤, 설치 섹션에 공식 배지 2개 + QR 유지 */
+.store-cta { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
+.store-cta .btn { width: 100%; max-width: 340px; height: 56px; padding: 0 24px; font-size: 17px; gap: 10px; }
+.store-cta .btn__sub { font-size: 13px; opacity: .65; }
+.store-cta .stores__note { width: auto; order: 0; }
+.install .store-cta .btn { background: var(--white); color: var(--black); border-color: var(--white); }
+.install .store-cta { display: none; }
+.os-android .install .store-cta, .os-ios .install .store-cta { display: flex; }
+.os-android .install .stores, .os-ios .install .stores { display: none; }
+
 /* =========================================================
    콜라주 부품
    ========================================================= */

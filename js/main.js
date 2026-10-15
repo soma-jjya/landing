@@ -1,7 +1,9 @@
 /* PeakPic 랜딩 — 최소 JS
    1) 모바일 고정 CTA: 히어로의 CTA가 화면에서 벗어나면 표시 (설치 섹션이 보이면 숨김)
    2) 히어로 시연 영상: 파일이 없거나 재생 불가면 포스터 유지 + "시연 영상 준비 중" 표시
-   3) 푸터 연도 */
+   3) 단일 "앱 다운로드" 버튼을 방문자 OS 의 스토어로 연결 (+ 데스크톱 배지 순서)
+   4) 광고 UTM → Google Play 리퍼러
+   5) 푸터 연도 */
 (function () {
   'use strict';
 
@@ -63,9 +65,25 @@
     }
   }
 
-  // 3) 방문자 OS와 같은 스토어 배지를 앞으로 (고정 CTA는 두 배지가 있는 설치 섹션으로 이동)
+  // 3) 단일 "앱 다운로드" 버튼(.btn-store): 방문자 OS 의 스토어로 직행. 데스크톱 등 판별 불가면 #install(공식 배지 2개)로 둔다
   var ua = navigator.userAgent || '';
   var isIOS = /iPhone|iPad|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  var isAndroid = !isIOS && /Android/.test(ua);
+  var STORE = {
+    play: { url: 'https://play.google.com/store/apps/details?id=soma.project.caestro&hl=ko', label: 'Google Play' },
+    app: { url: 'https://apps.apple.com/kr/app/peakpic/id6807646621', label: 'App Store' }
+  };
+  var target = isIOS ? STORE.app : (isAndroid ? STORE.play : null);
+  if (target) {
+    Array.prototype.forEach.call(document.querySelectorAll('.btn-store'), function (a) {
+      a.href = target.url;
+      a.target = '_blank';
+      a.rel = 'noopener';
+      var label = a.querySelector('[data-store-label]');
+      if (label) label.textContent = target.label;
+    });
+  }
+  // 데스크톱용 공식 배지: 방문자 OS와 같은 스토어를 앞으로
   var primary = isIOS ? 'app' : 'play';
   Array.prototype.forEach.call(document.querySelectorAll('.stores'), function (group) {
     var el = group.querySelector(primary === 'app' ? '.badge-app' : '.badge-play');
