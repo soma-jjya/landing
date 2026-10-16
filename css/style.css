@@ -124,12 +124,12 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--orange); outlin
    모바일: <html class="os-android|os-ios"> 이면 js/main.js 가 버튼을 해당 스토어로 직행시킨다. 설치 섹션의 공식 배지 2개는 숨김.
    데스크톱·JS 없음(os-other): 버튼은 #install 로 스크롤, 설치 섹션에 공식 배지 2개 + QR 유지 */
 .store-cta { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
-.store-cta .btn { width: 100%; max-width: 340px; height: 56px; padding: 0 24px; font-size: 17px; gap: 10px; }
-.store-cta .stores__note { width: 100%; max-width: 340px; order: 0; text-align: center; font-size: 13px; }   /* 모바일: 버튼 폭에 맞춰 가운데 */
+.store-cta .btn { height: 50px; padding: 0 26px; font-size: 16px; gap: 10px; }                               /* 글자 크기에 맞는 알약 (꽉 찬 바 금지) */
+.store-cta .stores__note { width: auto; order: 0; font-size: 13px; padding-left: 4px; }                       /* 버튼 바로 아래, 왼쪽 맞춤 */
 @media (min-width: 900px) {
   .store-cta { flex-direction: row; align-items: center; gap: 16px; }                                       /* 데스크톱: 버튼 옆 한 줄 */
-  .store-cta .btn { width: auto; min-width: 200px; }
-  .store-cta .stores__note { width: auto; max-width: none; text-align: left; font-size: 14px; }
+  .store-cta .btn { height: 54px; padding: 0 30px; font-size: 17px; }
+  .store-cta .stores__note { font-size: 14px; padding-left: 0; }
 }
 .install .store-cta .btn { background: var(--white); color: var(--black); border-color: var(--white); }
 .install .store-cta { display: none; }
