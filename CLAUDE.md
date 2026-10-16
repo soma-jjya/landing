@@ -62,6 +62,7 @@
 - /couple/: 미러링 → 포즈 → 네컷, 히어로 "똥손 남친도 인생샷 찍어줌.", 미러링·네컷 카피를 "연인/둘이"로
 - /fourcut/ (2026-10-16): 네컷 → 미러링 → 포즈, 히어로 "뭐하러 부스까지 가? 폰으로 공짜 네컷." + 영상 프레임 대신 채워지는 네컷 콜라주
   (`.collage--fourcut`: 마지막 칸 `.cell-empty` 가 7초 루프 안에서 채워지고 3/4 → 4/4). 문제 공감은 줄·모임·비용 3장. 광고 URL 은 utm_content=fourcut_b
+  01 my frame 은 히어로와 이미지가 겹치지 않게 프레임 3종 부채꼴(`.cluster--frames`) + 누끼 카드, 헤드라인 "프레임은 취향대로 고르고, 최애 누끼로 꾸미기"
 
 1. 히어로: 시연 영상(자동재생·음소거·루프 — 영상 오기 전엔 home 화면 목업+포스터) +
    슬로건 + **단일 "앱 다운로드" 버튼(주 CTA, OS 별 스토어 직행)**
@@ -93,6 +94,9 @@
 - img/fourcut-dessert.webp — 앱에서 만든 네컷 결과물(디저트 프레임, Figma node 1106:62814). 핑크 Popteen 프레임은 헬로키티 포함이라 랜딩 사용 금지
 - img/fourcut-app.webp — "AI 네컷사진" 화면 목업(현재 미사용, 필요 시 사용)
 - img/char-*.svg — 나만의 네컷 섹션의 누끼 스티커용 자체 캐릭터(저작권 없음). 실제 캐릭터/연예인 누끼는 팀이 권리 확인 후 교체
+- img/frame-cute.webp, frame-dessert.webp, frame-gyaru.webp — 앱의 네컷 프레임 3종(Figma "Frame PNGs" node 1720:34589, 원본 assets/raw/frames/).
+  /fourcut/ 01 my frame 섹션 전용(2026-10-16): cute 는 칸에 onboarding 실사 2인(두 친구가 두 컷씩)을 합성, 나머지 둘은 빈 프레임.
+  재생성 `python3 scripts/compose-frames.py <출력폴더>` 후 cwebp
 - raw/ 의 SVG들(온보딩 1~4, home 등)은 **원본 보관용** — 사진이 base64 내장이라 3~11MB.
   **페이지에 원본 직접 삽입 금지**, 반드시 PNG/WebP(폭 750px 내외, 각 200KB 이하)로
   변환해 assets/img/ 에 두고 그것만 사용

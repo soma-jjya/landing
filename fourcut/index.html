@@ -147,45 +147,49 @@
          최종 누끼 스티커(투명 PNG)가 오면 .cut 안의 img src만 교체하면 된다. -->
     <section class="feature" id="my-frame" aria-labelledby="f1-title">
       <div class="container feature__inner">
-        <div class="cluster cluster--frame">
-          <!-- 네컷 프레임: 최종 네컷 이미지가 오면 아래 4장의 src만 교체 (권장 3:4, 각 200KB 이하) -->
-          <!-- 완성된 네컷(앱에서 만든 실제 결과물, 디저트 프레임). 핑크 Popteen 프레임은 헬로키티가 들어 있어 랜딩에서는 제외 -->
-          <figure class="fourcut" style="--r:-3deg">
-            <img src="/assets/img/fourcut-dessert.webp" width="800" height="1000" loading="lazy" decoding="async"
-                 alt="디저트 프레임으로 완성한 네컷 사진">
+        <!-- 네컷 변형 전용 (2026-10-16): 히어로와 같은 네컷 사진 대신 앱의 프레임 3종(Figma "Frame PNGs" 1720:34589)을 부채꼴로 펼쳐
+             "프레임을 골라 쓰고 누끼로 꾸민다"를 보여준다. 앞 프레임(cute)에는 두 사람의 실사 사진을 칸에 합성(친구와 한 컷씩), 뒤 두 장은 빈 프레임 -->
+        <div class="cluster cluster--frames">
+          <figure class="frame-card frame-card--l" style="--r:-10deg">
+            <img src="/assets/img/frame-dessert.webp" width="480" height="670" loading="lazy" decoding="async" alt="디저트 파티 네컷 프레임">
+            <span class="pin" aria-hidden="true">디저트 파티</span>
+          </figure>
+          <figure class="frame-card frame-card--r" style="--r:9deg">
+            <img src="/assets/img/frame-gyaru.webp" width="480" height="669" loading="lazy" decoding="async" alt="갸루 감성 네컷 프레임">
+            <span class="pin" aria-hidden="true">갸루 야호</span>
+          </figure>
+          <figure class="frame-card frame-card--main" style="--r:-2deg">
+            <span class="tape" style="left:50%; margin-left:-10cqw; top:-10px; --tr:3deg"></span>
+            <img src="/assets/img/frame-cute.webp" width="640" height="894" loading="lazy" decoding="async" alt="귀여운 고양이 프레임에 두 친구가 한 컷씩 채운 네컷 사진">
           </figure>
 
-          <!-- 프레임 위에 붙인 누끼 스티커들 (스탠드인) -->
-          <!-- 누끼 스티커(캐릭터): 저작권 없는 자체 SVG. 실제 캐릭터/연예인 누끼(투명 PNG)가 오면 src만 교체 -->
+          <!-- 앞 프레임 위에 붙인 누끼 스티커 (자체 캐릭터 SVG) -->
           <span class="cut cut--svg cut--1" aria-hidden="true"><img src="/assets/img/char-bear.svg" width="120" height="120" alt="" loading="lazy"></span>
           <span class="cut cut--svg cut--2" aria-hidden="true"><img src="/assets/img/char-blob.svg" width="120" height="120" alt="" loading="lazy"></span>
+          <span class="deco deco--star" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.7-5.4 4.8 1.6 7L12 17.4 5.8 21l1.6-7L2 9.3l7.1-.7z" fill="#FF5A47"/></svg></span>
+          <span class="deco deco--heart" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#000"/></svg></span>
 
-          <!-- 누끼 따기 과정 카드: 좋아하는 사진에서 인물만 오려내는 중 -->
-          <figure class="pola cutout" style="--r:5deg">
-            <span class="tape" style="left:50%; margin-left:-9cqw; top:-9px; --tr:4deg"></span>
+          <!-- 누끼 따기 카드 -->
+          <figure class="pola cutout" style="--r:6deg">
+            <span class="tape tape--clear" style="left:50%; margin-left:-9cqw; top:-9px; --tr:-4deg"></span>
             <div class="cutout__media" role="img" aria-label="좋아하는 캐릭터 그림에서 캐릭터만 오려낼 영역을 점선으로 표시한 예시">
-              <!-- 캐릭터 실루엣을 따라 도는 점선(누끼 경로)이 SVG 안에 함께 들어 있다 -->
               <img class="cutout__char" src="/assets/img/char-cat-cut.svg" width="124" height="124" alt="" loading="lazy">
               <span class="scissors" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.64 7.64c.23-.5.36-1.05.36-1.64 0-2.21-1.79-4-4-4S2 3.79 2 6s1.79 4 4 4c.59 0 1.14-.13 1.64-.36L10 12l-2.36 2.36C7.14 14.13 6.59 14 6 14c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4c0-.59-.13-1.14-.36-1.64L12 14l7 7h3v-1L9.64 7.64zM6 8c-1.1 0-2-.89-2-2s.9-2 2-2 2 .89 2 2-.9 2-2 2zm0 12c-1.1 0-2-.89-2-2s.9-2 2-2 2 .89 2 2-.9 2-2 2zm6-7.5c-.28 0-.5-.22-.5-.5s.22-.5.5-.5.5.22.5.5-.22.5-.5.5zM19 3l-6 6 2 2 7-7V3h-3z" fill="#000"/></svg></span>
             </div>
             <figcaption class="pola__cap"><span><b>최애</b> 누끼 따기</span><span>cut</span></figcaption>
           </figure>
-          <span class="cut cut--svg cut--3" aria-hidden="true"><img src="/assets/img/char-cat.svg" width="120" height="120" alt="" loading="lazy"></span>
 
-          <span class="logo-sticker" aria-hidden="true"><img src="/assets/img/sticker-diecut.svg" alt="" width="920" height="540"></span>
-          <span class="deco deco--star" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.7-5.4 4.8 1.6 7L12 17.4 5.8 21l1.6-7L2 9.3l7.1-.7z" fill="#FF5A47"/></svg></span>
-          <span class="deco deco--heart" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#000"/></svg></span>
-          <span class="bubble bubble--b" style="--r:3deg" aria-hidden="true">최애 스티커 붙이기</span>
-          <span class="bubble bubble--orange bubble--a" style="--r:-4deg" aria-hidden="true">너도 한 컷 올려!</span>
-          <span class="sticker" style="--r:9deg" aria-hidden="true">내 맘대로<br>꾸미기</span>
+          <span class="bubble bubble--orange bubble--a" style="--r:-4deg" aria-hidden="true">오늘은 이 프레임!</span>
+          <span class="sticker" style="--r:10deg" aria-hidden="true">프레임<br>골라 쓰기</span>
         </div>
         <div class="feature__copy">
           <span class="tag">01 · my frame</span>
-          <h2 id="f1-title" class="headline">친구와 한 컷씩 채우고,<br>최애 누끼로 꾸민 네컷</h2>
-          <p class="lede">네컷 프레임을 친구에게 공유하면 각자 한 컷씩 올려 함께 완성해요.<br class="br-desktop"> 좋아하는 캐릭터나 연예인 사진은 누끼 따서 스티커처럼 붙이고, 완성한 네컷은 바로 저장·공유하세요.</p>
+          <h2 id="f1-title" class="headline">프레임은 취향대로 고르고,<br>최애 누끼로 꾸미기</h2>
+          <p class="lede">디저트, 고양이, 갸루 감성까지 그날 기분에 맞는 프레임을 골라요.<br class="br-desktop"> 친구와 한 컷씩 채운 뒤 좋아하는 캐릭터나 연예인 사진을 누끼 따서 스티커처럼 붙이면 완성이에요.</p>
           <ul class="ftags" aria-label="나만의 네컷에서 할 수 있는 것">
-            <li class="is-orange">친구와 한 컷씩 채우기</li>
+            <li class="is-orange">프레임 골라 쓰기</li>
             <li>최애 누끼 스티커</li>
+            <li>친구와 한 컷씩</li>
             <li>저장 · 공유</li>
           </ul>
         </div>

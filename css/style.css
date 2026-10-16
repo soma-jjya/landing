@@ -397,6 +397,24 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--orange); outlin
 .collage .logo-sticker { animation: swing 3.6s ease-in-out infinite; }
 @keyframes swing { 0%, 100% { rotate: -3deg; } 50% { rotate: 3deg; } }
 
+/* ---------- 네컷 변형 my frame (/fourcut/): 프레임 3종 부채꼴 + 누끼 스티커 ----------
+   뒤 두 장(빈 프레임)은 좌우로 기울여 깔고, 앞 프레임(사진 합성본)을 가운데 세운다 */
+.cluster--frames { aspect-ratio: 1 / 1; }
+.frame-card { position: absolute; margin: 0; transform: rotate(var(--r, 0deg)); filter: drop-shadow(0 18px 22px rgba(0, 0, 0, .2)); }
+.frame-card img { display: block; width: 100%; height: auto; border-radius: 4px; }
+.frame-card .pin { --x: 50%; --y: 100%; }                      /* 프레임 이름표는 아래쪽 (위쪽은 스티커 자리) */
+.frame-card--l { left: -1%; top: 16%; width: 41%; z-index: 1; }
+.frame-card--r { right: -1%; top: 11%; width: 41%; z-index: 1; }
+.frame-card--main { left: 27%; top: 2%; width: 46%; z-index: 2; }
+.cluster--frames .cut { z-index: 6; }
+.cluster--frames .cut--1 { left: 21%; top: -2%; --r: -10deg; width: clamp(50px, 15cqw, 78px); }
+.cluster--frames .cut--2 { left: 22%; top: 50%; --r: 12deg; width: clamp(44px, 13cqw, 68px); }
+.cluster--frames .cutout { left: 40%; right: auto; top: auto; bottom: -3%; width: 26%; z-index: 5; }   /* 앞 프레임 아래 가운데: 좌우 프레임 이름표를 가리지 않게 */
+.cluster--frames .deco--star { left: 68%; top: 1%; --r: 14deg; }
+.cluster--frames .deco--heart { left: 47%; top: 47%; --r: -12deg; }
+.cluster--frames .bubble--a { left: 3%; bottom: 4%; z-index: 7; }
+.cluster--frames .sticker { right: 0; top: -4%; z-index: 7; width: clamp(66px, 20cqw, 96px); }
+
 /* ---------- 네컷 변형 히어로 (/fourcut/): 친구들이 채우는 네컷 콜라주 ----------
    7초 루프: "너도 한 컷 올려!" → "올렸어, 완성!" → 빈 칸이 사진으로 채워지고 3/4 → 4/4 */
 .collage--fourcut { aspect-ratio: 1 / 1.02; }                     /* 영상 프레임 콜라주보다 납작하게: 아래 빈 공간 제거 */
