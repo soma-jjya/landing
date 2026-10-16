@@ -1,4 +1,13 @@
 {
+  "redirects": [
+    {
+      "source": "/:path(.*)",
+      "has": [{ "type": "host", "value": "landing-pi-umber.vercel.app" }],
+      "missing": [{ "type": "header", "key": "x-peakpic-proxy" }],
+      "destination": "https://peakpic.app/:path",
+      "permanent": false
+    }
+  ],
   "rewrites": [
     { "source": "/ingest/static/:path(.*)", "destination": "https://us-assets.i.posthog.com/static/:path" },
     { "source": "/ingest/:path(.*)", "destination": "https://us.i.posthog.com/:path" }
