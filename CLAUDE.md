@@ -121,7 +121,8 @@
 - 광고 URL 규칙: `<변형 경로>?utm_source=meta&utm_medium=paid_social&utm_campaign=<캠페인>&utm_content=<소재>`
   소재 값은 Figma 포스터 이름과 맞춘다. v3(2026-10-16, Figma "META 광고 포스터" 페이지 상단): 커플① 똥손 남친 비포·애프터 `couple_d`,
   커플② 다시 찍어달라기 미안하죠? `couple_sorry` → `/couple/` / 네컷① 너만 올리면 완성(친구 알림) `fourcut_friends`, 네컷② 찍고 끝 말고, 직접 꾸미는 네컷 `fourcut_frame` → `/fourcut/`.
-  v2 값(`fourcut_b`, `mirror_a`, `pose_c`)은 보관용. 포스터 CTA 바는 "지금 무료로 다운로드 →" 하나만(스토어 배지 없음 — 클릭하면 랜딩으로 가므로)
+  v2 값(`fourcut_b`, `mirror_a`, `pose_c`)은 보관용. 포스터 CTA 바(2026-10-16)는 왼쪽 "모든 기능 무료로 사용하기 →" + 오른쪽 가격표 스티커 "~~Pro 월 3,900원~~ 3개월 무료!"(스토어 배지 없음 — 클릭하면 랜딩으로 가므로).
+  가격·프로모션은 사용자가 준 값 — 실제 Pro 가격·3개월 무료 조건이 바뀌면 포스터 8장 모두 고칠 것(표시광고 사실관계)
 - super property `landing_variant`(main/couple/fourcut) 로 변형별 비교. 핵심 비교 지표 = 변형별 `store_click` 전환율
 - 측정 범위: 랜딩 도착 → 스토어 클릭까지. 설치·앱 내 행동은 Meta SDK/MMP 또는 앱 쪽 PostHog 와 연결해야 보인다
 - 개인정보처리방침에 분석 도구 사용 항목 필요(privacy.html 에 초안 문장 있음)
