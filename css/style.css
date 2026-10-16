@@ -123,10 +123,14 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--orange); outlin
 /* ---------- 단일 "앱 다운로드" 버튼 (2026-10-15) ----------
    모바일: <html class="os-android|os-ios"> 이면 js/main.js 가 버튼을 해당 스토어로 직행시킨다. 설치 섹션의 공식 배지 2개는 숨김.
    데스크톱·JS 없음(os-other): 버튼은 #install 로 스크롤, 설치 섹션에 공식 배지 2개 + QR 유지 */
-.store-cta { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
+.store-cta { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
 .store-cta .btn { width: 100%; max-width: 340px; height: 56px; padding: 0 24px; font-size: 17px; gap: 10px; }
-.store-cta .btn__sub { font-size: 13px; opacity: .65; }
-.store-cta .stores__note { width: auto; order: 0; }
+.store-cta .stores__note { width: 100%; max-width: 340px; order: 0; text-align: center; font-size: 13px; }   /* 모바일: 버튼 폭에 맞춰 가운데 */
+@media (min-width: 900px) {
+  .store-cta { flex-direction: row; align-items: center; gap: 16px; }                                       /* 데스크톱: 버튼 옆 한 줄 */
+  .store-cta .btn { width: auto; min-width: 200px; }
+  .store-cta .stores__note { width: auto; max-width: none; text-align: left; font-size: 14px; }
+}
 .install .store-cta .btn { background: var(--white); color: var(--black); border-color: var(--white); }
 .install .store-cta { display: none; }
 .os-android .install .store-cta, .os-ios .install .store-cta { display: flex; }
@@ -362,9 +366,47 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--orange); outlin
 .legal .todo { margin-top: 24px; padding: 16px 18px; border-radius: 12px; background: var(--ink-03); border: 1px dashed var(--ink-20); color: var(--ink-55); font-size: 15px; }
 
 /* ---------- 모션 최소화 ---------- */
+/* ---------- 히어로 모션 (2026-10-16): 영상이 오기 전까지 정적 콜라주에 리듬을 준다 ----------
+   7초 루프: 말풍선 "조금만 왼쪽으로!" 팝업 → "지금이야, 찰칵" 팝업 → 영상 프레임 플래시 → 잠시 유지 → 사라짐.
+   transform 은 각 부품의 기울기(rotate)에 쓰고 있으므로 모션은 개별 속성(scale·translate·rotate)으로만 건드린다 */
+.hero__copy > * { animation: rise .6s cubic-bezier(.2, .8, .2, 1) both; }
+.hero__copy > :nth-child(2) { animation-delay: .08s; }
+.hero__copy > :nth-child(3) { animation-delay: .16s; }
+.hero__copy > :nth-child(4) { animation-delay: .24s; }
+@keyframes rise { from { opacity: 0; translate: 0 14px; } to { opacity: 1; translate: 0 0; } }
+
+.collage .bubble--a, .collage .bubble--b { transform-origin: 1.3em 100%; animation: pop-a 7s cubic-bezier(.34, 1.56, .64, 1) infinite; }
+.collage .bubble--b { animation-name: pop-b; }
+@keyframes pop-a {
+  0%, 9% { scale: 0; opacity: 0; }
+  14% { scale: 1.08; opacity: 1; }
+  17% { scale: 1; }
+  40% { translate: 0 0; } 44% { translate: 0 -4px; } 48% { translate: 0 0; }   /* 살짝 끄덕 */
+  90% { scale: 1; opacity: 1; }
+  95%, 100% { scale: .6; opacity: 0; }
+}
+@keyframes pop-b {
+  0%, 27% { scale: 0; opacity: 0; }
+  32% { scale: 1.1; opacity: 1; }
+  35% { scale: 1; }
+  36% { rotate: 0deg; } 38% { rotate: 3deg; } 40% { rotate: -2deg; } 42% { rotate: 0deg; }   /* 찰칵 순간 흔들 */
+  90% { scale: 1; opacity: 1; }
+  95%, 100% { scale: .6; opacity: 0; }
+}
+.reel__media::after {                                   /* 셔터 플래시: "지금이야, 찰칵" 직후 */
+  content: ""; position: absolute; inset: 0; z-index: 4; border-radius: 3px; background: var(--white); opacity: 0; pointer-events: none;
+  animation: flash 7s linear infinite;
+}
+@keyframes flash { 0%, 34% { opacity: 0; } 35.5% { opacity: .9; } 39% { opacity: 0; } 100% { opacity: 0; } }
+.collage .pola--side { animation: float 4.5s ease-in-out infinite; }
+@keyframes float { 0%, 100% { translate: 0 0; } 50% { translate: 0 -6px; } }
+.collage .logo-sticker { animation: swing 3.6s ease-in-out infinite; }
+@keyframes swing { 0%, 100% { rotate: -3deg; } 50% { rotate: 3deg; } }
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .spin svg, .rec::before, .ticker__track { animation: none; }
+  .hero__copy > *, .collage .bubble--a, .collage .bubble--b, .reel__media::after, .collage .pola--side, .collage .logo-sticker { animation: none; }
   .sticky-cta, .btn { transition: none; }
 }
 
