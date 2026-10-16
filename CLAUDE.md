@@ -112,11 +112,12 @@
 - 프레임워크·빌드 도구 없는 정적 사이트: index.html + CSS + 최소 JS. 모바일 우선 반응형
   (광고 유입은 대부분 모바일)
 - 배포: Vercel(main 자동 배포, https://landing-pi-umber.vercel.app). S3/CloudFront 계획은 폐기
-- 도메인 peakpic.app(2026-10-16 진행 중): DNS·도메인은 팀원의 Cloudflare Worker `peakpic-app-site`(peakpic-app-site.peakpic-app-site.workers.dev)가 갖고 있고
+- 도메인 peakpic.app(2026-10-16 연결 완료, 팀원이 Worker 에 분배 코드 배포): DNS·도메인은 팀원의 Cloudflare Worker `peakpic-app-site`(peakpic-app-site.peakpic-app-site.workers.dev)가 갖고 있고
   /fill/(네컷 친구 채우기)·/api/(그 임시 서버, KV FRAMES)·/.well-known/assetlinks.json(안드로이드 앱 링크)·/privacy/·/terms/ 를 서빙한다 → **DNS 를 Vercel 로 돌리지 말 것**(공유 기능이 깨짐).
   대신 그 Worker 가 랜딩 경로(/, /couple/, /fourcut/, /css, /js, /assets, /ingest)만 Vercel 로 넘긴다: 붙여 넣을 코드 cloudflare/landing-proxy.js (요청에 x-peakpic-proxy: 1 헤더를 붙임).
   새 경로를 랜딩에 추가하면 그 파일의 isLandingPath 와 Worker 의 run_worker_first 에도 추가할 것.
-  연결 후 할 일: og:url/og:image 절대 URL(https://peakpic.app/...), vercel.app 직접 접속 → peakpic.app 리다이렉트(x-peakpic-proxy 헤더가 없을 때만 — 없으면 무한 루프), 광고 URL 을 peakpic.app 으로
+  canonical·og:url·og:image 는 https://peakpic.app/... 절대 URL. vercel.json 이 landing-pi-umber.vercel.app 직접 접속을 peakpic.app 으로 307 리다이렉트한다
+  (x-peakpic-proxy 헤더가 있으면 제외 — 이 조건을 빼면 무한 루프로 peakpic.app 전체가 죽는다)
   개인정보처리방침·이용약관은 팀원 사이트의 https://peakpic.app/privacy/ · /terms/ 가 정본(랜딩 푸터가 링크). 레포의 privacy.html·terms.html 초안은 미사용
 
 ## 지표 (PostHog, 2026-10-13 추가)
@@ -124,7 +125,7 @@
   `/ingest` 는 vercel.json 리라이트(광고 차단 우회) → S3/CloudFront 로 옮기면 CloudFront 동작 또는 host 를 https://us.i.posthog.com 으로
 - 이벤트 스키마는 js/analytics.js 머리 주석이 원본. 핵심 전환 = `store_click`(store, placement, os). 모든 이벤트에
   super property `ad_creative`(=utm_content)·`ad_campaign`·`ad_source`·`visitor_os` 가 붙는다
-- 광고 URL 규칙: `<변형 경로>?utm_source=meta&utm_medium=paid_social&utm_campaign=<캠페인>&utm_content=<소재>`
+- 광고 URL 규칙: `https://peakpic.app<변형 경로>?utm_source=meta&utm_medium=paid_social&utm_campaign=<캠페인>&utm_content=<소재>`
   소재 값은 Figma 포스터 이름과 맞춘다. v3(2026-10-16, Figma "META 광고 포스터" 페이지 상단): 커플① 똥손 남친 비포·애프터 `couple_d`,
   커플② 다시 찍어달라기 미안하죠? `couple_sorry` → `/couple/` / 네컷① 너만 올리면 완성(친구 알림) `fourcut_friends`, 네컷② 찍고 끝 말고, 직접 꾸미는 네컷 `fourcut_frame` → `/fourcut/`.
   v2 값(`fourcut_b`, `mirror_a`, `pose_c`)은 보관용. 포스터 CTA 바(2026-10-16)는 왼쪽 "지금 무료로 다운로드 →" + 오른쪽 가격표 스티커 "~~Pro 월 3,900원~~ 현재 무료!"(스토어 배지 없음 — 클릭하면 랜딩으로 가므로).
