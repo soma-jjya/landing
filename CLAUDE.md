@@ -93,6 +93,9 @@
   가장자리 블러 10px의 반투명 흰 형태(28%) + 은은한 외곽선(55%)으로 올림. 재생성: scripts/make-silhouette.swift (macOS Vision)
   `swiftc -O scripts/make-silhouette.swift -o seg && ./seg <목업.png> <outdir> -34 -18 1.10 0.28 0.55 10`
 - img/fourcut-dessert.webp — 앱에서 만든 네컷 결과물(디저트 프레임, Figma node 1106:62814). 핑크 Popteen 프레임은 헬로키티 포함이라 랜딩 사용 금지
+- img/fourcut-friends.webp — /fourcut/ 히어로 전용(2026-10-16). fourcut-dessert 는 네 칸이 모두 같은 인물이라 "친구가 한 컷 올렸다" 장면이 어색해서,
+  마지막 칸(우하단) 사진만 Meta 포스터 v3 네컷①의 왼쪽 아래 인물(원본 assets/raw/fourcut/friend-cut.png)로 바꿨다. 레이스·스티커는 원본 유지.
+  재생성 `python3 scripts/swap-fourcut-cell.py assets/img/fourcut-dessert.webp assets/raw/fourcut/friend-cut.png <out.png>` 후 cwebp -q 82
 - img/fourcut-app.webp — "AI 네컷사진" 화면 목업(현재 미사용, 필요 시 사용)
 - img/char-*.svg — 나만의 네컷 섹션의 누끼 스티커용 자체 캐릭터(저작권 없음). 실제 캐릭터/연예인 누끼는 팀이 권리 확인 후 교체
 - img/couple-hero-beach.webp — /couple/ 히어로 큰 사진(2026-10-16, "여친샷" 느낌). 앱 포즈 상세 화면의 추천 포즈 사진(Figma node 1720:34208,
