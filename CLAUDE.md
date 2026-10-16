@@ -111,7 +111,13 @@
 ## 기술 스택
 - 프레임워크·빌드 도구 없는 정적 사이트: index.html + CSS + 최소 JS. 모바일 우선 반응형
   (광고 유입은 대부분 모바일)
-- 배포(예정): S3 + CloudFront. 도메인 미정 — peakpic.app 루트 후보
+- 배포: Vercel(main 자동 배포, https://landing-pi-umber.vercel.app). S3/CloudFront 계획은 폐기
+- 도메인 peakpic.app(2026-10-16 진행 중): DNS·도메인은 팀원의 Cloudflare Worker `peakpic-app-site`(peakpic-app-site.peakpic-app-site.workers.dev)가 갖고 있고
+  /fill/(네컷 친구 채우기)·/api/(그 임시 서버, KV FRAMES)·/.well-known/assetlinks.json(안드로이드 앱 링크)·/privacy/·/terms/ 를 서빙한다 → **DNS 를 Vercel 로 돌리지 말 것**(공유 기능이 깨짐).
+  대신 그 Worker 가 랜딩 경로(/, /couple/, /fourcut/, /css, /js, /assets, /ingest)만 Vercel 로 넘긴다: 붙여 넣을 코드 cloudflare/landing-proxy.js (요청에 x-peakpic-proxy: 1 헤더를 붙임).
+  새 경로를 랜딩에 추가하면 그 파일의 isLandingPath 와 Worker 의 run_worker_first 에도 추가할 것.
+  연결 후 할 일: og:url/og:image 절대 URL(https://peakpic.app/...), vercel.app 직접 접속 → peakpic.app 리다이렉트(x-peakpic-proxy 헤더가 없을 때만 — 없으면 무한 루프), 광고 URL 을 peakpic.app 으로
+  개인정보처리방침·이용약관은 팀원 사이트의 https://peakpic.app/privacy/ · /terms/ 가 정본(랜딩 푸터가 링크). 레포의 privacy.html·terms.html 초안은 미사용
 
 ## 지표 (PostHog, 2026-10-13 추가)
 - 설정: index.html <head> 의 `window.PEAKPIC_ANALYTICS = { key, host:'/ingest', uiHost }`. key 가 비면 꺼진다.
