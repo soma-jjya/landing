@@ -31,8 +31,7 @@ def build(name, photos, width):
     w = width; h = round(fr.size[1]*w/fr.size[0])
     base.resize((w, h), Image.LANCZOS).save(f'{out}/frame-{name}.png')
     print(name, (w, h))
-# 앞 프레임(cute): 두 친구가 두 컷씩 — 소녀(onboarding-1) / 단발(onboarding-4, onboarding-2)
-build('cute', [('onboarding-1.webp', .5, .42, 1.15), ('onboarding-4.webp', .55, .40, 1.25),
-               ('onboarding-2.webp', .45, .33, 2.1), ('onboarding-1.webp', .38, .62, 1.35)], 640)
+# 앞 프레임(cute)도 빈 칸(흰색) — 2026-10-16 인물 합성은 어색하다는 피드백으로 제거
+build('cute', [None]*4, 640)
 build('dessert', [None]*4, 480)
 build('gyaru', [None]*4, 480)

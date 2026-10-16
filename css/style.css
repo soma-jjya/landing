@@ -399,21 +399,38 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--orange); outlin
 
 /* ---------- 네컷 변형 my frame (/fourcut/): 프레임 3종 부채꼴 + 누끼 스티커 ----------
    뒤 두 장(빈 프레임)은 좌우로 기울여 깔고, 앞 프레임(사진 합성본)을 가운데 세운다 */
-.cluster--frames { aspect-ratio: 1 / 1; }
+.cluster--frames { aspect-ratio: 1 / 1; }                      /* 1:1 이라 화살표 SVG(viewBox 100×100)가 왜곡 없이 겹친다 */
 .frame-card { position: absolute; margin: 0; transform: rotate(var(--r, 0deg)); filter: drop-shadow(0 18px 22px rgba(0, 0, 0, .2)); }
 .frame-card img { display: block; width: 100%; height: auto; border-radius: 4px; }
-.frame-card .pin { --x: 50%; --y: 100%; }                      /* 프레임 이름표는 아래쪽 (위쪽은 스티커 자리) */
+.frame-card .pin { --x: 50%; --y: 100%; }                      /* 디저트 이름표는 아래 */
+.frame-card--r .pin { --y: 0; }                                /* 갸루 이름표는 위 (아래는 누끼 카드 자리) */
 .frame-card--l { left: -1%; top: 16%; width: 41%; z-index: 1; }
 .frame-card--r { right: -1%; top: 11%; width: 41%; z-index: 1; }
 .frame-card--main { left: 27%; top: 2%; width: 46%; z-index: 2; }
+/* 앞 프레임 칸 좌표(1:1 클러스터 기준): 왼쪽 열 x 30~49%, 오른쪽 열 51~70%, 윗줄 y 5~30%, 아랫줄 31~58% */
 .cluster--frames .cut { z-index: 6; }
-.cluster--frames .cut--1 { left: 21%; top: -2%; --r: -10deg; width: clamp(50px, 15cqw, 78px); }
-.cluster--frames .cut--2 { left: 22%; top: 50%; --r: 12deg; width: clamp(44px, 13cqw, 68px); }
-.cluster--frames .cutout { left: 40%; right: auto; top: auto; bottom: -3%; width: 26%; z-index: 5; }   /* 앞 프레임 아래 가운데: 좌우 프레임 이름표를 가리지 않게 */
-.cluster--frames .deco--star { left: 68%; top: 1%; --r: 14deg; }
-.cluster--frames .deco--heart { left: 47%; top: 47%; --r: -12deg; }
-.cluster--frames .bubble--a { left: 3%; bottom: 4%; z-index: 7; }
-.cluster--frames .sticker { right: 0; top: -4%; z-index: 7; width: clamp(66px, 20cqw, 96px); }
+.cluster--frames .cut--1 { left: 31%; top: 8%; --r: -10deg; width: clamp(50px, 16cqw, 80px); }       /* 왼쪽 위 칸 */
+.cluster--frames .cut--2 { left: 54%; top: 11%; --r: 12deg; width: clamp(46px, 14cqw, 72px); }      /* 오른쪽 위 칸 */
+.cluster--frames .cut--paste { left: 32%; top: 33%; --r: -6deg; width: clamp(52px, 17cqw, 84px); z-index: 7; }   /* 왼쪽 아래 칸: 화살표 도착점 */
+.cluster--frames .deco--star { left: 61%; top: 40%; --r: 14deg; }
+.cluster--frames .deco--heart { left: 53%; top: 47%; --r: -12deg; }
+.cluster--frames .cutout { left: 62%; right: auto; top: auto; bottom: -2%; width: 35%; z-index: 5; }
+.cluster--frames .bubble--a { left: 14%; bottom: 3%; z-index: 7; }
+.cluster--frames .sticker { left: -1%; right: auto; top: -2%; z-index: 7; width: clamp(64px, 19cqw, 92px); }
+.cut-arrow { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 6; overflow: visible; pointer-events: none; }
+.cut-arrow path { fill: none; stroke: var(--orange); stroke-width: .9; stroke-linecap: round; stroke-linejoin: round; }
+.cut-arrow__line { stroke-dasharray: 2.4 2; animation: march 1.2s linear infinite; }
+@keyframes march { to { stroke-dashoffset: -8.8; } }
+/* 6초 루프: 고양이 스티커가 칸에 "쏙" 붙고 유지 → 살짝 사라졌다 다시. 가위는 싹둑 */
+.cluster--frames .cut--paste { animation: paste 6s cubic-bezier(.34, 1.56, .64, 1) infinite; }
+@keyframes paste {
+  0%, 12% { scale: 0; opacity: 0; translate: 40% 50%; }
+  22% { scale: 1.15; opacity: 1; translate: 0 0; }
+  27%, 88% { scale: 1; opacity: 1; translate: 0 0; }
+  95%, 100% { scale: .4; opacity: 0; translate: 0 0; }
+}
+.cluster--frames .scissors { animation: snip 1.6s ease-in-out infinite; }
+@keyframes snip { 0%, 60%, 100% { rotate: 0deg; } 70% { rotate: -18deg; } 80% { rotate: 6deg; } }
 
 /* ---------- 네컷 변형 히어로 (/fourcut/): 친구들이 채우는 네컷 콜라주 ----------
    7초 루프: "너도 한 컷 올려!" → "올렸어, 완성!" → 빈 칸이 사진으로 채워지고 3/4 → 4/4 */
@@ -447,7 +464,8 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--orange); outlin
   html { scroll-behavior: auto; }
   .spin svg, .rec::before, .ticker__track { animation: none; }
   .hero__copy > *, .collage .bubble--a, .collage .bubble--b, .reel__media::after, .collage .pola--side, .collage .logo-sticker,
-  .collage--fourcut .cell-empty, .collage--fourcut .pin--3, .collage--fourcut .pin--4 { animation: none; }
+  .collage--fourcut .cell-empty, .collage--fourcut .pin--3, .collage--fourcut .pin--4,
+  .cut-arrow__line, .cluster--frames .cut--paste, .cluster--frames .scissors { animation: none; }
   .collage--fourcut .cell-empty { opacity: 0; } .collage--fourcut .pin--4 { opacity: 1; } .collage--fourcut .pin--3 { opacity: 0; }   /* 모션 없으면 완성 상태로 */
   .sticky-cta, .btn { transition: none; }
 }
