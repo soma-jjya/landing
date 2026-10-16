@@ -95,6 +95,8 @@
 - img/fourcut-dessert.webp — 앱에서 만든 네컷 결과물(디저트 프레임, Figma node 1106:62814). 핑크 Popteen 프레임은 헬로키티 포함이라 랜딩 사용 금지
 - img/fourcut-app.webp — "AI 네컷사진" 화면 목업(현재 미사용, 필요 시 사용)
 - img/char-*.svg — 나만의 네컷 섹션의 누끼 스티커용 자체 캐릭터(저작권 없음). 실제 캐릭터/연예인 누끼는 팀이 권리 확인 후 교체
+- img/couple-hero-beach.webp — /couple/ 히어로 큰 사진(2026-10-16, "여친샷" 느낌). 앱 포즈 상세 화면의 추천 포즈 사진(Figma node 1720:34208,
+  원본 assets/raw/couple/). 원본이 480×640 이라 업스케일 없이 4:5(477×596)로만 잘랐다. 루트 히어로는 onboarding-4 그대로
 - img/frame-cute.webp, frame-dessert.webp, frame-gyaru.webp — 앱의 네컷 프레임 3종(Figma "Frame PNGs" node 1720:34589, 원본 assets/raw/frames/).
   /fourcut/ 01 my frame 섹션 전용(2026-10-16): 세 장 모두 빈 칸(흰색). 칸에 인물 사진 합성은 어색하다는 피드백으로 폐기 — 칸은 누끼 스티커로만 꾸민다.
   재생성 `python3 scripts/compose-frames.py <출력폴더>` 후 cwebp
