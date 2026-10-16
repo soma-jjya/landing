@@ -402,21 +402,20 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--orange); outlin
 .cluster--frames { aspect-ratio: 1 / 1; }                      /* 1:1 이라 화살표 SVG(viewBox 100×100)가 왜곡 없이 겹친다 */
 .frame-card { position: absolute; margin: 0; transform: rotate(var(--r, 0deg)); filter: drop-shadow(0 18px 22px rgba(0, 0, 0, .2)); }
 .frame-card img { display: block; width: 100%; height: auto; border-radius: 4px; }
-.frame-card .pin { --x: 50%; --y: 100%; }                      /* 디저트 이름표는 아래 */
-.frame-card--r .pin { --y: 0; }                                /* 갸루 이름표는 위 (아래는 누끼 카드 자리) */
+.frame-card .pin { --x: 50%; --y: 0; }                         /* 프레임 이름표는 위쪽 */
 .frame-card--l { left: -1%; top: 16%; width: 41%; z-index: 1; }
 .frame-card--r { right: -1%; top: 11%; width: 41%; z-index: 1; }
 .frame-card--main { left: 27%; top: 2%; width: 46%; z-index: 2; }
-/* 앞 프레임 칸 좌표(1:1 클러스터 기준): 왼쪽 열 x 30~49%, 오른쪽 열 51~70%, 윗줄 y 5~30%, 아랫줄 31~58% */
+/* 앞 프레임(1:1 클러스터 기준): 바깥 x 27~73%, y 2~66%. 칸은 비워 두고 스티커는 모서리·테두리에 걸쳐 붙인다 */
 .cluster--frames .cut { z-index: 6; }
-.cluster--frames .cut--1 { left: 31%; top: 8%; --r: -10deg; width: clamp(50px, 16cqw, 80px); }       /* 왼쪽 위 칸 */
-.cluster--frames .cut--2 { left: 54%; top: 11%; --r: 12deg; width: clamp(46px, 14cqw, 72px); }      /* 오른쪽 위 칸 */
-.cluster--frames .cut--paste { left: 32%; top: 33%; --r: -6deg; width: clamp(52px, 17cqw, 84px); z-index: 7; }   /* 왼쪽 아래 칸: 화살표 도착점 */
-.cluster--frames .deco--star { left: 61%; top: 40%; --r: 14deg; }
-.cluster--frames .deco--heart { left: 53%; top: 47%; --r: -12deg; }
+.cluster--frames .cut--1 { left: 20%; top: -3%; --r: -12deg; width: clamp(50px, 16cqw, 80px); }     /* 왼쪽 위 모서리 */
+.cluster--frames .cut--2 { left: 64%; top: 35%; --r: 10deg; width: clamp(44px, 14cqw, 70px); }      /* 오른쪽 테두리 가운데 */
+.cluster--frames .cut--paste { left: 21%; top: 49%; --r: -6deg; width: clamp(52px, 17cqw, 84px); z-index: 7; }   /* 왼쪽 아래 모서리: 화살표 도착점 */
+.cluster--frames .deco--star { left: 68%; top: -1%; --r: 14deg; }                                     /* 오른쪽 위 모서리 */
+.cluster--frames .deco--heart { left: 47%; top: 27.5%; --r: -12deg; }                                 /* 가운데 십자 테두리 */
 .cluster--frames .cutout { left: 62%; right: auto; top: auto; bottom: -2%; width: 35%; z-index: 5; }
-.cluster--frames .bubble--a { left: 14%; bottom: 3%; z-index: 7; }
-.cluster--frames .sticker { left: -1%; right: auto; top: -2%; z-index: 7; width: clamp(64px, 19cqw, 92px); }
+.cluster--frames .bubble--a { left: 16%; bottom: 3%; z-index: 7; }
+.cluster--frames .sticker { left: -1%; right: auto; top: auto; bottom: 13%; z-index: 7; width: clamp(64px, 19cqw, 92px); }
 .cut-arrow { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 6; overflow: visible; pointer-events: none; }
 .cut-arrow path { fill: none; stroke: var(--orange); stroke-width: .9; stroke-linecap: round; stroke-linejoin: round; }
 .cut-arrow__line { stroke-dasharray: 2.4 2; animation: march 1.2s linear infinite; }

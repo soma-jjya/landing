@@ -148,7 +148,7 @@
     <section class="feature" id="my-frame" aria-labelledby="f1-title">
       <div class="container feature__inner">
         <!-- 네컷 변형 전용 (2026-10-16): 히어로와 같은 네컷 사진 대신 앱의 프레임 3종(Figma "Frame PNGs" 1720:34589)을 부채꼴로 펼쳐
-             "프레임을 골라 쓰고 누끼로 꾸민다"를 보여준다. 프레임은 모두 빈 칸(흰색). 누끼 강조: 누끼 따기 카드 → 점선 화살표 → 앞 프레임 칸에 붙은 같은 스티커(루프 애니메이션) -->
+             "프레임을 골라 쓰고 누끼로 꾸민다"를 보여준다. 프레임은 모두 빈 칸(흰색). 누끼 강조: 누끼 따기 카드 → 점선 화살표 → 앞 프레임 테두리에 붙은 같은 스티커(루프 애니메이션). 스티커는 칸 안이 아니라 테두리에 걸친다 -->
         <div class="cluster cluster--frames">
           <figure class="frame-card frame-card--l" style="--r:-10deg">
             <img src="/assets/img/frame-dessert.webp" width="480" height="670" loading="lazy" decoding="async" alt="디저트 파티 네컷 프레임">
@@ -163,14 +163,14 @@
             <img src="/assets/img/frame-cute.webp" width="640" height="894" loading="lazy" decoding="async" alt="누끼 스티커로 꾸민 귀여운 고양이 네컷 프레임">
           </figure>
 
-          <!-- 누끼 흐름: 카드에서 오려낸 고양이가 점선을 따라 앞 프레임 왼쪽 아래 칸에 붙는다 -->
+          <!-- 누끼 흐름: 카드에서 오려낸 고양이가 점선을 따라 앞 프레임 왼쪽 아래 모서리(테두리)에 붙는다 -->
           <svg class="cut-arrow" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
-            <path class="cut-arrow__line" d="M63 79 C 54 90, 41 85, 41.5 54"/>
-            <path class="cut-arrow__head" d="M38.4 57.4 L41.5 53 L44.6 57.2"/>
+            <path class="cut-arrow__line" d="M63 80 C 52 91, 34 88, 31 68"/>
+            <path class="cut-arrow__head" d="M28.2 71 L30.9 67 L34.2 70.4"/>
           </svg>
           <span class="cut cut--svg cut--paste" aria-hidden="true"><img src="/assets/img/char-cat.svg" width="120" height="120" alt="" loading="lazy"></span>
 
-          <!-- 앞 프레임 칸에 붙인 다른 누끼 스티커 (자체 캐릭터 SVG) -->
+          <!-- 앞 프레임 테두리·모서리에 걸쳐 붙인 누끼 스티커 (칸 안은 비워 둔다, 2026-10-16 피드백) -->
           <span class="cut cut--svg cut--1" aria-hidden="true"><img src="/assets/img/char-bear.svg" width="120" height="120" alt="" loading="lazy"></span>
           <span class="cut cut--svg cut--2" aria-hidden="true"><img src="/assets/img/char-blob.svg" width="120" height="120" alt="" loading="lazy"></span>
           <span class="deco deco--star" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.7-5.4 4.8 1.6 7L12 17.4 5.8 21l1.6-7L2 9.3l7.1-.7z" fill="#FF5A47"/></svg></span>
