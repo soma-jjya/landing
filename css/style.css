@@ -397,10 +397,40 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--orange); outlin
 .collage .logo-sticker { animation: swing 3.6s ease-in-out infinite; }
 @keyframes swing { 0%, 100% { rotate: -3deg; } 50% { rotate: 3deg; } }
 
+/* ---------- 네컷 변형 히어로 (/fourcut/): 친구들이 채우는 네컷 콜라주 ----------
+   7초 루프: "너도 한 컷 올려!" → "올렸어, 완성!" → 빈 칸이 사진으로 채워지고 3/4 → 4/4 */
+.collage--fourcut { aspect-ratio: 1 / 1.02; }                     /* 영상 프레임 콜라주보다 납작하게: 아래 빈 공간 제거 */
+.collage--fourcut .fourcut--hero { left: 3%; top: 3%; width: 62%; overflow: visible; z-index: 2; }
+.collage--fourcut .fourcut--hero img { border-radius: 10px; }
+.collage--fourcut .fourcut--hero .pin { --x: 50%; --y: 0; }
+.cell-empty {                                             /* 마지막 칸(우하단)을 덮는 빈 칸 */
+  position: absolute; z-index: 3; left: 51.5%; top: 48%; width: 45.5%; height: 43%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .45em;
+  background: rgba(255, 255, 255, .94); border: 2px dashed var(--orange); border-radius: 6px;
+  color: var(--black); font-size: clamp(11px, 3.2cqw, 15px); font-weight: 800; letter-spacing: -.01em;
+}
+.cell-empty b { display: inline-flex; align-items: center; justify-content: center; width: 1.9em; height: 1.9em; border-radius: 50%; background: var(--orange); color: var(--white); font-size: 1.3em; line-height: 1; }
+.collage--fourcut .cut { position: absolute; }
+.collage--fourcut .cut--1 { left: 56%; top: -2%; --r: 10deg; width: clamp(60px, 20cqw, 96px); }
+.collage--fourcut .cut--2 { left: 0; bottom: 1%; --r: -12deg; width: clamp(56px, 18cqw, 86px); }
+.collage.collage--fourcut .logo-sticker { left: 34%; right: auto; top: auto; bottom: 0; --r: -8deg; width: clamp(72px, 25cqw, 120px); }   /* .collage .logo-sticker(아래쪽 선언)보다 우선 */
+.collage.collage--fourcut .bubble--a { right: 0; top: 22%; }
+.collage.collage--fourcut .bubble--b { right: -1%; top: 48%; }
+.collage--fourcut .sticker { right: 2%; bottom: 9%; }
+.collage.collage--fourcut .spin { left: -4%; top: 34%; }
+.collage--fourcut .cell-empty { animation: cell-fill 7s linear infinite; }
+@keyframes cell-fill { 0%, 33% { opacity: 1; } 38% { opacity: 0; } 92% { opacity: 0; } 97%, 100% { opacity: 1; } }
+.collage--fourcut .pin--3 { animation: pin-out 7s linear infinite; }
+.collage--fourcut .pin--4 { opacity: 0; animation: pin-in 7s linear infinite; }
+@keyframes pin-out { 0%, 33% { opacity: 1; } 36% { opacity: 0; } 93% { opacity: 0; } 96%, 100% { opacity: 1; } }
+@keyframes pin-in { 0%, 33% { opacity: 0; } 36% { opacity: 1; } 93% { opacity: 1; } 96%, 100% { opacity: 0; } }
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .spin svg, .rec::before, .ticker__track { animation: none; }
-  .hero__copy > *, .collage .bubble--a, .collage .bubble--b, .reel__media::after, .collage .pola--side, .collage .logo-sticker { animation: none; }
+  .hero__copy > *, .collage .bubble--a, .collage .bubble--b, .reel__media::after, .collage .pola--side, .collage .logo-sticker,
+  .collage--fourcut .cell-empty, .collage--fourcut .pin--3, .collage--fourcut .pin--4 { animation: none; }
+  .collage--fourcut .cell-empty { opacity: 0; } .collage--fourcut .pin--4 { opacity: 1; } .collage--fourcut .pin--3 { opacity: 0; }   /* 모션 없으면 완성 상태로 */
   .sticky-cta, .btn { transition: none; }
 }
 
