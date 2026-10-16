@@ -223,12 +223,6 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--orange); outlin
 }
 .rec::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--orange); animation: blink 1.2s steps(1) infinite; }
 @keyframes blink { 50% { opacity: .15; } }
-.reel__note {                          /* 영상 파일이 없을 때만 (js가 .is-poster 부여) */
-  display: none; position: absolute; right: 3cqw; bottom: 3cqw; z-index: 3; padding: 6px 10px; border-radius: 999px;
-  background: var(--white); color: var(--black); border: 1.5px dashed var(--black);
-  font-size: clamp(10px, 2.6cqw, 12px); font-weight: 800; white-space: nowrap;
-}
-.reel.is-poster .reel__note { display: inline-flex; }
 .collage .pola--side { right: 0; bottom: 3%; width: 40%; z-index: 3; --ar: 1; }
 .collage .bubble--a { right: 1%; top: 1%; }
 .collage .bubble--b { right: -1%; top: 40%; }
