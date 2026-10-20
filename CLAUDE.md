@@ -133,6 +133,9 @@
 - super property `landing_variant`(main/couple/fourcut) 로 변형별 비교. 핵심 비교 지표 = 변형별 `store_click` 전환율
 - 측정 범위: 랜딩 도착 → 스토어 클릭까지. 설치·앱 내 행동은 Meta SDK/MMP 또는 앱 쪽 PostHog 와 연결해야 보인다
 - 개인정보처리방침에 분석 도구 사용 항목 필요(privacy.html 에 초안 문장 있음)
+- Meta 픽셀(2026-10-20): 데이터 세트 `peakpic` ID 1758731071879086, 광고 계정 peakpic 에 연결됨. 각 페이지 head 의 `PEAKPIC_ANALYTICS.metaPixelId` 로 켠다(js/analytics.js).
+  이벤트 PageView + 커스텀 `StoreClick`(store_click 과 같은 순간). 광고 최적화·성과는 광고 관리자에서 StoreClick 으로 "맞춤 전환"을 만들어 쓴다.
+  Conversions API 는 끔. 정식 개인정보처리방침(peakpic.app/privacy/)에 Meta 픽셀 항목 추가 필요(팀원 담당)
 
 ## 아직 없는 것 (플레이스홀더 진행)
 - [ ] 히어로 시연 영상 (팀 촬영 예정)

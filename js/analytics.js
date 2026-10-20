@@ -11,10 +11,25 @@
    - cta_click {cta, placement} 헤더·고정 "앱 다운로드" (설치 섹션으로 스크롤)
    - store_click {store, placement, os}  스토어로 가는 링크 클릭(단일 버튼·공식 배지 모두) = 랜딩의 전환 지표
    - hero_video_play           시연 영상이 실제로 재생된 경우 1회
-   퍼널: $pageview → section_viewed(install) → store_click, breakdown by ad_creative */
+   퍼널: $pageview → section_viewed(install) → store_click, breakdown by ad_creative
+
+   Meta 픽셀 (2026-10-20, 광고 최적화용 — PEAKPIC_ANALYTICS.metaPixelId 가 있을 때만)
+   - PageView     페이지 로드 시
+   - StoreClick   (custom) store_click 과 같은 순간 {store, placement, os, landing_variant, ad_creative}
+                  광고 관리자에서 "맞춤 전환"으로 만들어 최적화·성과 지표로 쓴다 */
 (function () {
   'use strict';
   var cfg = window.PEAKPIC_ANALYTICS || {};
+
+  /* ---- Meta 픽셀 (공식 기본 코드) ---- */
+  var metaTrack = function () {};
+  if (cfg.metaPixelId) {
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', cfg.metaPixelId);
+    fbq('track', 'PageView');
+    metaTrack = function (name, props) { try { fbq('trackCustom', name, props || {}); } catch (e) { /* 수집 실패는 무시 */ } };
+  }
+
   if (!cfg.key) return;
 
   /* ---- PostHog 공식 로더 스니펫 (array.js 로드 전 호출을 큐에 쌓는다) ---- */
@@ -82,6 +97,7 @@
     var store = /play\.google\.com/.test(href) ? 'google_play' : (/apps\.apple\.com/.test(href) ? 'app_store' : null);
     if (store) {
       track('store_click', { store: store, placement: placementOf(a), os: os });
+      metaTrack('StoreClick', { store: store, placement: placementOf(a), os: os, landing_variant: cfg.variant || 'main', ad_creative: params.utm_content || '(none)' });
     } else if (href === '#install') {
       track('cta_click', { cta: 'app_download', placement: placementOf(a) });
     }
