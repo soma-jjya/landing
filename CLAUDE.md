@@ -128,7 +128,7 @@
 - 광고 URL 규칙: `https://peakpic.app<변형 경로>?utm_source=meta&utm_medium=paid_social&utm_campaign=<캠페인>&utm_content=<소재>`
   소재 값은 Figma 포스터 이름과 맞춘다. v3(2026-10-16, Figma "META 광고 포스터" 페이지 상단): 커플① 똥손 남친 비포·애프터 `couple_d`,
   커플② 다시 찍어달라기 미안하죠? `couple_sorry` → `/couple/` / 네컷① 너만 올리면 완성(친구 알림) `fourcut_friends`, 네컷② 찍고 끝 말고, 직접 꾸미는 네컷 `fourcut_frame` → `/fourcut/`.
-  네컷① 변형(2026-10-21, 팀원 수정안 기반, 섹션 오른쪽 끝): ①-B 칸마다 다른 실사 인물 `fourcut_friends_b`, ①-C 서로 하트(1칸 원래 여성 사진 + 2·3칸 Figma AI 생성 사진, 3칸 반쪽 하트 → 빈 칸의 점선 반쪽) `fourcut_hearts`.
+  네컷① 변형(2026-10-21, 팀원 수정안 기반, 섹션 오른쪽 끝): ①-B 칸마다 다른 실사 인물 `fourcut_friends_b`, ①-C 서로 하트(윗줄 여자·남자 반쪽 하트가 칸 사이에서 이어짐 — 둘 다 Figma AI 생성, 왼쪽 아래 원래 여성 사진) `fourcut_hearts`.
   ①-C 는 AI 생성 인물이 있어 랜딩에는 쓰지 말 것(디자인 규칙), 광고 집행 시 Meta 의 AI 표시 확인
   v2 값(`fourcut_b`, `mirror_a`, `pose_c`)은 보관용. 포스터 CTA 바(2026-10-16)는 왼쪽 "지금 무료로 다운로드 →" + 오른쪽 가격표 스티커 "~~Pro 월 3,900원~~ 현재 무료!"(스토어 배지 없음 — 클릭하면 랜딩으로 가므로).
   무료 종료 시점이 미정이라 기간("3개월" 등)은 쓰지 않는다. Pro 가격은 사용자가 준 값 — 가격이 바뀌거나 무료가 끝나면 포스터 8장 모두 고칠 것(표시광고 사실관계)
