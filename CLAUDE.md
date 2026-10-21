@@ -138,6 +138,10 @@
 - Meta 픽셀(2026-10-20): 데이터 세트 `peakpic` ID 1758731071879086, 광고 계정 peakpic 에 연결됨. 각 페이지 head 의 `PEAKPIC_ANALYTICS.metaPixelId` 로 켠다(js/analytics.js).
   이벤트 PageView + 커스텀 `StoreClick`(store_click 과 같은 순간). 광고 최적화·성과는 광고 관리자에서 StoreClick 으로 "맞춤 전환"을 만들어 쓴다.
   Conversions API 는 끔. 정식 개인정보처리방침(peakpic.app/privacy/)에 Meta 픽셀 항목 추가 필요(팀원 담당)
+- 설치 귀속·CPI(2026-10-21): 앱에 Meta SDK/MMP 가 없어 Meta 화면에는 설치가 안 잡힌다. 대신 js/main.js 가 스토어 링크에 포스터별 이름을 붙인다:
+  Google Play 는 referrer 의 utm_campaign 을 `<캠페인>__<소재>`(예 test_1021__couple_d)로 바꿔 Play Console 사용자 확보 보고서에 포스터별 설치가 잡히게,
+  App Store 는 head 의 `PEAKPIC_ANALYTICS.appStorePt`(App Store Connect 제공자 토큰)가 채워지면 캠페인 링크(pt·ct=같은 이름)로 바꾼다(현재 빈 값 = 꺼짐).
+  CPI = 포스터별 광고비 ÷ (Play 설치 + App Store 설치). App Store 수치는 분석 공유에 동의한 사용자만 잡혀 과소 집계
 
 ## 아직 없는 것 (플레이스홀더 진행)
 - [ ] 히어로 시연 영상 (팀 촬영 예정)
