@@ -22,7 +22,7 @@ def cover(src, box, fx, fy, zoom):
 def build(name, photos, width):
     fr = Image.open(f'{dl}/frame-{name}.png').convert('RGBA')
     base = Image.new('RGBA', fr.size, (255,255,255,255))
-    for box, p in zip(CELLS[name], photos):
+    for box, p in zip(CELLS.get(name, []), photos):
         if p is None: continue
         f, fx, fy, z = p
         base.paste(cover(Image.open(f'{img}/{f}').convert('RGB'), box, fx, fy, z), box[:2])
@@ -35,3 +35,7 @@ def build(name, photos, width):
 build('cute', [None]*4, 640)
 build('dessert', [None]*4, 480)
 build('gyaru', [None]*4, 480)
+# 2026-10-27: 앱 번들 프레임(peakpic.app/frames/img_frame_*.png → assets/raw/frames/frame-*.png)도 같은 방식. 칸은 흰색
+build('chrome', [None]*4, 640)      # Y2K 크롬 하트 — /fourcut/ 01 my frame 앞 프레임
+build('vintage', [None]*4, 480)     # 빈티지 필름 — 왼쪽
+build('patchwork', [None]*4, 480)   # 코지 패치워크 — '친구랑 같이 찍는 법' 1단계

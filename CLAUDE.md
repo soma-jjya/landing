@@ -67,7 +67,7 @@
   찰칵 1/4~4/4 사진 4장 → 가운데로 모여 한 장 → 프레임 탭 → 디저트 프레임 결과 → 스티커 → 저장 → "앨범에 저장됐어요", 오렌지 스티커 "현재 무료!"(광고 가격표와 같은 문구)). 비주얼 폭 모바일 330px·데스크톱 520px.
   사진은 fourcut-dessert 의 네 칸을 자른 fourcut-cut-1~4.webp(원본 assets/raw/fourcut/booth). utm_content 에 hearts·friends 가 있으면 .hero--mode-hearts 로
   "너만 올리면 네컷 완성." + 기존 친구 채우기 콜라주. 문제 공감 다음에 "친구랑 같이 찍는 법" 3단계 섹션(#how, 버튼 placement=how) 추가.
-  2단계 "각자 폰으로 한 컷씩" 그림은 광고 네컷①-C 하트 프레임(3/4 채워진 상태, fourcut-hearts-fill.webp, 원본 assets/raw/fourcut/hearts-fill.png).
+  1단계 그림은 코지 패치워크 프레임(frame-patchwork), 2단계 "각자 폰으로 한 컷씩" 그림은 광고 네컷①-C 하트 프레임(3/4 채워진 상태, fourcut-hearts-fill.webp, 원본 assets/raw/fourcut/hearts-fill.png).
   **인물 3명이 Figma AI 생성 — "AI 이미지 금지" 규칙의 유일한 예외(2026-10-27 사용자 결정, 이 자리에만)**. 실사 하트 사진이 생기면 교체 + 영상 프레임 대신 채워지는 네컷 콜라주
   (`.collage--fourcut`: 마지막 칸 `.cell-empty` 가 7초 루프 안에서 채워지고 3/4 → 4/4). 문제 공감은 줄·모임·비용 3장. 광고 URL 은 utm_content=fourcut_b
   01 my frame 은 히어로와 이미지가 겹치지 않게 프레임 3종 부채꼴(`.cluster--frames`) + 누끼 카드, 헤드라인 "프레임은 취향대로 고르고, 최애 누끼로 꾸미기"
@@ -109,6 +109,8 @@
 - img/couple-hero-beach.webp — /couple/ 히어로 큰 사진(2026-10-16, "여친샷" 느낌). 앱 포즈 상세 화면의 추천 포즈 사진(Figma node 1720:34208,
   원본 assets/raw/couple/). 원본이 480×640 이라 업스케일 없이 4:5(477×596)로만 잘랐다. 루트 히어로는 onboarding-4 그대로
 - img/frame-cute.webp, frame-dessert.webp, frame-gyaru.webp — 앱의 네컷 프레임 3종(Figma "Frame PNGs" node 1720:34589, 원본 assets/raw/frames/).
+  + frame-chrome.webp(Y2K 크롬 하트)·frame-vintage.webp(빈티지 필름)·frame-patchwork.webp(코지 패치워크) — 2026-10-27 앱 번들 프레임 peakpic.app/frames/img_frame_*.png 에서(목록 /frames/frames.json, 디자이너 스튜디오 peakpic.app/studio/).
+  /fourcut/ 01 my frame 은 왼쪽 빈티지·오른쪽 갸루·앞 크롬(초록 고양이 cute 는 안 어울린다는 피드백으로 교체), '친구랑 같이 찍는 법' 1단계는 패치워크. cute·dessert 프레임 파일은 보관
   /fourcut/ 01 my frame 섹션 전용(2026-10-16): 세 장 모두 빈 칸(흰색). 칸에 인물 사진 합성은 어색하다는 피드백으로 폐기 — 칸은 누끼 스티커로만 꾸민다.
   재생성 `python3 scripts/compose-frames.py <출력폴더>` 후 cwebp
 - raw/ 의 SVG들(온보딩 1~4, home 등)은 **원본 보관용** — 사진이 base64 내장이라 3~11MB.
