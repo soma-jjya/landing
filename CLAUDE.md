@@ -124,6 +124,7 @@
 
 ## 지표 (PostHog, 2026-10-13 추가)
 - 설정: index.html <head> 의 `window.PEAKPIC_ANALYTICS = { key, host:'/ingest', uiHost }`. key 가 비면 꺼진다.
+  2026-10-27: hostname 이 peakpic.app 이 아니면(로컬·같은 와이파이 IP·Vercel 미리보기) PostHog·메타 픽셀 모두 꺼진다. 로컬 확인: `python3 -m http.server 8000` → http://localhost:8000/fourcut/
   `/ingest` 는 vercel.json 리라이트(광고 차단 우회) → S3/CloudFront 로 옮기면 CloudFront 동작 또는 host 를 https://us.i.posthog.com 으로
 - 이벤트 스키마는 js/analytics.js 머리 주석이 원본. 핵심 전환 = `store_click`(store, placement, os). 모든 이벤트에
   super property `ad_creative`(=utm_content)·`ad_campaign`·`ad_source`·`visitor_os`·`ad_placement`(=utm_term, 2026-10-26) 가 붙는다

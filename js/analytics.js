@@ -23,6 +23,8 @@
 (function () {
   'use strict';
   var cfg = window.PEAKPIC_ANALYTICS || {};
+  // 2026-10-27: 실제 도메인에서만 수집한다. 로컬(localhost·같은 와이파이 IP)·미리보기에서 열면 PostHog·메타 픽셀 모두 꺼져 데이터가 오염되지 않는다
+  if (!/(^|\.)peakpic\.app$/.test(location.hostname)) return;
 
   /* ---- Meta 픽셀 (공식 기본 코드) ---- */
   var metaTrack = function () {};
