@@ -106,7 +106,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--orange); outlin
 .btn--sm { height: 38px; padding: 0 14px; font-size: 14px; }
 .btn--dot::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--orange); flex: none; }
 .header .btn { display: none; }
-@media (min-width: 900px) { .header .btn { display: inline-flex; } }
+/* 2026-10-27: 헤더 다운로드 버튼 삭제(사용자 요청) */
 
 /* ---------- 스토어 배지 (둘 다 공식 배지, 같은 높이) ---------- */
 .stores { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 12px; }
