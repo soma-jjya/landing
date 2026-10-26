@@ -137,6 +137,8 @@
 - 개인정보처리방침에 분석 도구 사용 항목 필요(privacy.html 에 초안 문장 있음)
 - Meta 픽셀(2026-10-20): 데이터 세트 `peakpic` ID 1758731071879086, 광고 계정 peakpic 에 연결됨. 각 페이지 head 의 `PEAKPIC_ANALYTICS.metaPixelId` 로 켠다(js/analytics.js).
   이벤트 PageView + 커스텀 `StoreClick`(store_click 과 같은 순간). 광고 최적화·성과는 광고 관리자에서 StoreClick 으로 "맞춤 전환"을 만들어 쓴다.
+  2026-10-26 멘토 피드백 반영: 표준 이벤트 `ViewContent`(페이지 로드)·`Lead`(스토어 클릭) 추가. 새 캠페인은 목표 "리드" + 전환 이벤트 Lead 로 최적화(맞춤 전환·트래픽 목표 쓰지 않음).
+  StoreClick 은 기존 테스트 캠페인 호환용으로 남김. PostHog store_click 은 즉시 전송(sendBeacon)으로 iOS 인앱 유실을 줄였다
   Conversions API 는 끔. 정식 개인정보처리방침(peakpic.app/privacy/)에 Meta 픽셀 항목 추가 필요(팀원 담당)
 - 설치 귀속·CPI(2026-10-21): 앱에 Meta SDK/MMP 가 없어 Meta 화면에는 설치가 안 잡힌다. 대신 js/main.js 가 스토어 링크에 포스터별 이름을 붙인다:
   Google Play 는 referrer 의 utm_campaign 을 `<캠페인>__<소재>`(예 test_1021__couple_d)로 바꿔 Play Console 사용자 확보 보고서에 포스터별 설치가 잡히게,

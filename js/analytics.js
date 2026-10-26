@@ -15,7 +15,9 @@
 
    Meta 픽셀 (2026-10-20, 광고 최적화용 — PEAKPIC_ANALYTICS.metaPixelId 가 있을 때만)
    - PageView     페이지 로드 시
-   - StoreClick   (custom) store_click 과 같은 순간 {store, placement, os, landing_variant, ad_creative}
+   - ViewContent  (표준, 2026-10-26) 페이지 로드 시 {content_name: 변형}
+   - Lead         (표준, 2026-10-26) store_click 과 같은 순간 — 새 캠페인(리드 목표)의 최적화 이벤트
+   - StoreClick   (custom) store_click 과 같은 순간. 기존 테스트 캠페인 호환용으로 유지 {store, placement, os, landing_variant, ad_creative}
                   광고 관리자에서 "맞춤 전환"으로 만들어 최적화·성과 지표로 쓴다 */
 (function () {
   'use strict';
@@ -23,11 +25,15 @@
 
   /* ---- Meta 픽셀 (공식 기본 코드) ---- */
   var metaTrack = function () {};
+  var metaStd = function () {};
   if (cfg.metaPixelId) {
     !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
     fbq('init', cfg.metaPixelId);
     fbq('track', 'PageView');
+    // 2026-10-26 멘토 피드백: 표준 이벤트로 최적화. 랜딩 도착 = ViewContent, 스토어 클릭 = Lead
+    try { fbq('track', 'ViewContent', { content_name: cfg.variant || 'main', content_category: 'landing' }); } catch (e) { /* 무시 */ }
     metaTrack = function (name, props) { try { fbq('trackCustom', name, props || {}); } catch (e) { /* 수집 실패는 무시 */ } };
+    metaStd = function (name, props) { try { fbq('track', name, props || {}); } catch (e) { /* 수집 실패는 무시 */ } };
   }
 
   if (!cfg.key) return;
@@ -60,6 +66,8 @@
   });
 
   var track = function (name, props) { try { posthog.capture(name, props || {}); } catch (e) { /* 수집 실패는 무시 */ } };
+  // 페이지를 떠나는 순간의 이벤트(스토어 클릭)는 배치 대기 없이 바로 보낸다 — iOS 인앱 브라우저에서 유실이 컸다(2026-10-24 분석)
+  var trackNow = function (name, props) { try { posthog.capture(name, props || {}, { send_instantly: true, transport: 'sendBeacon' }); } catch (e) { /* 수집 실패는 무시 */ } };
 
   // 1) 섹션 노출
   var sections = [['hero', '.hero'], ['pain', '.pain'], ['mirroring', '#mirroring'], ['pose', '#pose'], ['my-frame', '#my-frame'], ['install', '#install']];
@@ -96,7 +104,8 @@
     var href = a.getAttribute('href') || '';   // 단일 버튼(.btn-store)은 main.js 가 OS 에 맞는 스토어 URL 로 바꿔 두므로 href 로 판별
     var store = /play\.google\.com/.test(href) ? 'google_play' : (/apps\.apple\.com/.test(href) ? 'app_store' : null);
     if (store) {
-      track('store_click', { store: store, placement: placementOf(a), os: os });
+      trackNow('store_click', { store: store, placement: placementOf(a), os: os });
+      metaStd('Lead', { content_name: cfg.variant || 'main', content_category: store });
       metaTrack('StoreClick', { store: store, placement: placementOf(a), os: os, landing_variant: cfg.variant || 'main', ad_creative: params.utm_content || '(none)' });
     } else if (href === '#install') {
       track('cta_click', { cta: 'app_download', placement: placementOf(a) });
