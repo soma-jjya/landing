@@ -7,7 +7,7 @@
    - ad_creative, ad_campaign  super property — 모든 이벤트에 utm_content/utm_campaign 을 복사해 breakdown 을 쉽게
    - ad_placement              super property — utm_term (메타 동적 값 {{placement}}: 노출 위치별 이탈·전환 비교)
    - landing_variant           super property — 랜딩 변형 (main / couple / fourcut). 페이지 head 의 PEAKPIC_ANALYTICS.variant
-   - section_viewed {section}  hero · pain · mirroring · pose · my-frame · install 이 35% 이상 보일 때 각 1회
+   - section_viewed {section}  hero · pain · how(/fourcut/ 전용) · mirroring · pose · my-frame · install 이 35% 이상 보일 때 각 1회
    - scroll_depth {percent}    25 · 50 · 75 · 100 각 1회
    - cta_click {cta, placement} 헤더·고정 "앱 다운로드" (설치 섹션으로 스크롤)
    - store_click {store, placement, os}  스토어로 가는 링크 클릭(단일 버튼·공식 배지 모두) = 랜딩의 전환 지표
@@ -74,7 +74,7 @@
   var trackNow = function (name, props) { try { posthog.capture(name, props || {}, { send_instantly: true, transport: 'sendBeacon' }); } catch (e) { /* 수집 실패는 무시 */ } };
 
   // 1) 섹션 노출
-  var sections = [['hero', '.hero'], ['pain', '.pain'], ['mirroring', '#mirroring'], ['pose', '#pose'], ['my-frame', '#my-frame'], ['install', '#install']];
+  var sections = [['hero', '.hero'], ['pain', '.pain'], ['how', '#how'], ['mirroring', '#mirroring'], ['pose', '#pose'], ['my-frame', '#my-frame'], ['install', '#install']];   // how = /fourcut/ '친구랑 같이 찍는 법'(2026-10-27), 없는 페이지에선 건너뜀
   if ('IntersectionObserver' in window) {
     sections.forEach(function (s) {
       var el = document.querySelector(s[1]); if (!el) return;

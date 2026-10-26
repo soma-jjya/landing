@@ -67,7 +67,7 @@
   찰칵 1/4~4/4 사진 4장 → 가운데로 모여 한 장 → 프레임 탭 → 디저트 프레임 결과 → 스티커 → 저장 → "앨범에 저장됐어요", 오렌지 스티커 "현재 무료!"(광고 가격표와 같은 문구)). 비주얼 폭 모바일 330px·데스크톱 520px.
   사진은 fourcut-dessert 의 네 칸을 자른 fourcut-cut-1~4.webp(원본 assets/raw/fourcut/booth). utm_content 에 hearts·friends 가 있으면 .hero--mode-hearts 로
   "너만 올리면 네컷 완성." + 기존 친구 채우기 콜라주. 문제 공감 다음에 "친구랑 같이 찍는 법" 3단계 섹션(#how, 버튼 placement=how) 추가.
-  1단계 그림은 코지 패치워크 프레임(frame-patchwork), 2단계 "각자 폰으로 한 컷씩" 그림은 광고 네컷①-C 하트 프레임(3/4 채워진 상태, fourcut-hearts-fill.webp, 원본 assets/raw/fourcut/hearts-fill.png).
+  1단계 그림은 갸루 야호 프레임(frame-gyaru, 2026-10-27 사용자 선택 — 패치워크 webp 는 보관), 2단계 "각자 폰으로 한 컷씩" 그림은 광고 네컷①-C 하트 프레임(3/4 채워진 상태, fourcut-hearts-fill.webp, 원본 assets/raw/fourcut/hearts-fill.png).
   **인물 3명이 Figma AI 생성 — "AI 이미지 금지" 규칙의 유일한 예외(2026-10-27 사용자 결정, 이 자리에만)**. 실사 하트 사진이 생기면 교체 + 영상 프레임 대신 채워지는 네컷 콜라주
   (`.collage--fourcut`: 마지막 칸 `.cell-empty` 가 7초 루프 안에서 채워지고 3/4 → 4/4). 문제 공감은 줄·모임·비용 3장. 광고 URL 은 utm_content=fourcut_b
   01 my frame 은 히어로와 이미지가 겹치지 않게 프레임 3종 부채꼴(`.cluster--frames`) + 누끼 카드, 헤드라인 "프레임은 취향대로 고르고, 최애 누끼로 꾸미기"
@@ -134,7 +134,7 @@
 - 설정: index.html <head> 의 `window.PEAKPIC_ANALYTICS = { key, host:'/ingest', uiHost }`. key 가 비면 꺼진다.
   2026-10-27: hostname 이 peakpic.app 이 아니면(로컬·같은 와이파이 IP·Vercel 미리보기) PostHog·메타 픽셀 모두 꺼진다. 로컬 확인: `python3 -m http.server 8000` → http://localhost:8000/fourcut/
   `/ingest` 는 vercel.json 리라이트(광고 차단 우회) → S3/CloudFront 로 옮기면 CloudFront 동작 또는 host 를 https://us.i.posthog.com 으로
-- 이벤트 스키마는 js/analytics.js 머리 주석이 원본. 핵심 전환 = `store_click`(store, placement, os). 모든 이벤트에
+- 이벤트 스키마는 js/analytics.js 머리 주석이 원본. section_viewed 의 section 에 `how`(/fourcut/ 친구랑 같이 찍는 법) 추가(2026-10-27). 대시보드 2261880 의 '마지막 본 섹션' 표도 네컷 순서에 반영 핵심 전환 = `store_click`(store, placement, os). 모든 이벤트에
   super property `ad_creative`(=utm_content)·`ad_campaign`·`ad_source`·`visitor_os`·`ad_placement`(=utm_term, 2026-10-26) 가 붙는다
 - 광고 URL 규칙: `https://peakpic.app<변형 경로>?utm_source=meta&utm_medium=paid_social&utm_campaign=<캠페인>&utm_content=<소재>`
   b2c_1028 캠페인(2026-10-27 16:00 시작, 리드 목표·Lead 최적화, couple 3.5만·fourcut 2.5만/일)부터 `&utm_term={{placement}}` 를 붙인다 — 메타가 노출 위치 이름으로 바꿔 넣는다
