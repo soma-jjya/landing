@@ -467,9 +467,120 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--orange); outlin
 .collage--fourcut .pin--4 { opacity: 0; animation: pin-in 7s linear infinite; }
 @keyframes pin-out { 0%, 33% { opacity: 1; } 36% { opacity: 0; } 93% { opacity: 0; } 96%, 100% { opacity: 1; } }
 @keyframes pin-in { 0%, 33% { opacity: 0; } 36% { opacity: 1; } 93% { opacity: 1; } 96%, 100% { opacity: 0; } }
+/* ---------- 네컷 포토부스 히어로 (2026-10-27, 광고 "이제 내 폰이 공짜 포토부스"와 같은 장면) ----------
+   8초 루프: 찰칵 1/4~4/4(0.2·0.9·1.6·2.2초) → 3~3.8초 가운데로 모여 한 장 → 4.3초 "프레임" 탭 → 디저트 프레임 결과
+   → 5초 "스티커" 탭 → 캐릭터 스티커 → 5.7초 "저장" 탭 → "앨범에 저장됐어요" → 7.5초부터 사라지고 반복.
+   기본(포토부스 광고·직접 유입)은 이 장면, 하트·친구 광고는 .hero--mode-hearts 로 기존 친구 채우기 콜라주 */
+.hero--mode-booth .collage--fourcut { display: none; }
+.hero--mode-hearts .booth { display: none; }
+.booth { position: relative; width: 100%; max-width: 300px; margin: 0 auto; aspect-ratio: 1 / 1.08; container-type: inline-size; order: -1; }
+@media (min-width: 900px) { .booth { order: 0; max-width: 480px; margin: 0 0 0 auto; } }
+.booth > * { animation-duration: 8s; animation-iteration-count: infinite; animation-timing-function: ease-in-out; animation-fill-mode: both; }
+.booth__board, .booth__result { position: absolute; left: 23cqw; top: 16cqw; width: 54cqw; height: 67.5cqw; border-radius: 2cqw; }
+.booth__board { background: #111; box-shadow: var(--shadow-card); animation-name: booth-board; }
+.booth__result { z-index: 4; object-fit: cover; box-shadow: var(--shadow-card); animation-name: booth-result; }
+.booth__card {
+  position: absolute; z-index: 3; width: 26cqw; padding: 1.8cqw 1.8cqw 0; background: var(--white); border-radius: 1.2cqw;
+  box-shadow: var(--shadow-card); border: 1px solid var(--ink-06); overflow: hidden;
+}
+.booth__card img { width: 100%; aspect-ratio: 360 / 420; object-fit: cover; border-radius: .6cqw; }
+.booth__card span { display: block; padding: 1.1cqw 0 1.3cqw; font-size: clamp(9px, 2.6cqw, 12px); font-weight: 800; letter-spacing: .08em; color: var(--ink-40); }
+.booth__card i { position: absolute; inset: 0; background: var(--white); opacity: 0; animation: inherit; animation-duration: 8s; animation-iteration-count: infinite; animation-fill-mode: both; }
+.booth__count {
+  position: absolute; z-index: 6; left: 0; right: 0; top: 44cqw; width: max-content; margin: 0 auto; padding: .5em 1.05em; border-radius: 999px;
+  background: var(--orange); color: var(--white); font-size: clamp(15px, 5.2cqw, 24px); font-weight: 900; letter-spacing: -.01em;
+  box-shadow: 0 10px 22px -10px rgba(255, 90, 71, .7); opacity: 0;
+}
+.booth .booth__st { z-index: 7; aspect-ratio: 1; width: 17cqw; animation-name: booth-sticker; }
+.booth .booth__st--1 { left: 66cqw; top: 9cqw; --r: 12deg; }
+.booth .booth__st--2 { left: 15cqw; top: 70cqw; --r: -10deg; width: 15cqw; animation-name: booth-sticker-2; }
+.booth__tools { position: absolute; z-index: 6; left: 0; right: 0; top: 89cqw; display: flex; justify-content: center; gap: 2.4cqw; animation-name: booth-tools; }
+.booth__tool {
+  padding: .45em 1em; border-radius: 999px; border: 1.5px solid var(--black); background: var(--white); color: var(--black);
+  font-size: clamp(12px, 3.6cqw, 16px); font-weight: 800; animation-duration: 8s; animation-iteration-count: infinite; animation-fill-mode: both;
+}
+.booth__tool--frame { animation-name: booth-tap-frame; }
+.booth__tool--sticker { animation-name: booth-tap-sticker; }
+.booth__tool--save { background: var(--orange); border-color: var(--orange); color: var(--white); animation-name: booth-tap-save; }
+.booth__toast {
+  position: absolute; z-index: 8; left: 0; right: 0; top: 74cqw; width: max-content; margin: 0 auto; padding: .55em 1.1em; border-radius: 999px;
+  background: rgba(0, 0, 0, .86); color: var(--white); font-size: clamp(12px, 3.8cqw, 16px); font-weight: 800; animation-name: booth-toast;
+}
+.booth .booth__free { right: -1cqw; top: 41cqw; width: 19cqw; z-index: 5; }
+.booth__card--1 { left: 2cqw; top: 6cqw; --r: -7deg; --tx: 21.5cqw; --ty: 9.7cqw; animation-name: booth-card-1; }
+.booth__card--1 i { animation-name: booth-flash-1; }
+.booth__count--1 { animation-name: booth-count-1; }
+@keyframes booth-card-1 { 0%, 2.5% { opacity: 0; scale: .5; translate: 0 0; rotate: calc(var(--r) * 2.5); } 5.5% { opacity: 1; scale: 1.08; rotate: var(--r); } 7.5%, 38% { opacity: 1; scale: 1; translate: 0 0; rotate: var(--r); } 47%, 57% { opacity: 1; scale: .92; translate: var(--tx) var(--ty); rotate: 0deg; } 60%, 100% { opacity: 0; scale: .92; translate: var(--tx) var(--ty); rotate: 0deg; } }
+@keyframes booth-flash-1 { 0%, 2.5% { opacity: 0; } 3.5% { opacity: .95; } 7.5%, 100% { opacity: 0; } }
+@keyframes booth-count-1 { 0%, 2.5% { opacity: 0; scale: .6; } 4.5% { opacity: 1; scale: 1.12; } 6.0% { scale: 1; } 10.0% { opacity: 1; scale: 1; } 11.5%, 100% { opacity: 0; scale: 1; } }
+.booth__card--2 { left: 72cqw; top: 2cqw; --r: 6deg; --tx: -22.6cqw; --ty: 13.7cqw; animation-name: booth-card-2; }
+.booth__card--2 i { animation-name: booth-flash-2; }
+.booth__count--2 { animation-name: booth-count-2; }
+@keyframes booth-card-2 { 0%, 11% { opacity: 0; scale: .5; translate: 0 0; rotate: calc(var(--r) * 2.5); } 14% { opacity: 1; scale: 1.08; rotate: var(--r); } 16%, 38% { opacity: 1; scale: 1; translate: 0 0; rotate: var(--r); } 47%, 57% { opacity: 1; scale: .92; translate: var(--tx) var(--ty); rotate: 0deg; } 60%, 100% { opacity: 0; scale: .92; translate: var(--tx) var(--ty); rotate: 0deg; } }
+@keyframes booth-flash-2 { 0%, 11% { opacity: 0; } 12% { opacity: .95; } 16%, 100% { opacity: 0; } }
+@keyframes booth-count-2 { 0%, 11% { opacity: 0; scale: .6; } 13% { opacity: 1; scale: 1.12; } 14.5% { scale: 1; } 18.5% { opacity: 1; scale: 1; } 20%, 100% { opacity: 0; scale: 1; } }
+.booth__card--3 { left: 3cqw; top: 66cqw; --r: 5deg; --tx: 20.5cqw; --ty: -19.25cqw; animation-name: booth-card-3; }
+.booth__card--3 i { animation-name: booth-flash-3; }
+.booth__count--3 { animation-name: booth-count-3; }
+@keyframes booth-card-3 { 0%, 19.5% { opacity: 0; scale: .5; translate: 0 0; rotate: calc(var(--r) * 2.5); } 22.5% { opacity: 1; scale: 1.08; rotate: var(--r); } 24.5%, 38% { opacity: 1; scale: 1; translate: 0 0; rotate: var(--r); } 47%, 57% { opacity: 1; scale: .92; translate: var(--tx) var(--ty); rotate: 0deg; } 60%, 100% { opacity: 0; scale: .92; translate: var(--tx) var(--ty); rotate: 0deg; } }
+@keyframes booth-flash-3 { 0%, 19.5% { opacity: 0; } 20.5% { opacity: .95; } 24.5%, 100% { opacity: 0; } }
+@keyframes booth-count-3 { 0%, 19.5% { opacity: 0; scale: .6; } 21.5% { opacity: 1; scale: 1.12; } 23.0% { scale: 1; } 27.0% { opacity: 1; scale: 1; } 28.5%, 100% { opacity: 0; scale: 1; } }
+.booth__card--4 { left: 71cqw; top: 64cqw; --r: -6deg; --tx: -21.6cqw; --ty: -17.25cqw; animation-name: booth-card-4; }
+.booth__card--4 i { animation-name: booth-flash-4; }
+.booth__count--4 { animation-name: booth-count-4; }
+@keyframes booth-card-4 { 0%, 28% { opacity: 0; scale: .5; translate: 0 0; rotate: calc(var(--r) * 2.5); } 31% { opacity: 1; scale: 1.08; rotate: var(--r); } 33%, 38% { opacity: 1; scale: 1; translate: 0 0; rotate: var(--r); } 47%, 57% { opacity: 1; scale: .92; translate: var(--tx) var(--ty); rotate: 0deg; } 60%, 100% { opacity: 0; scale: .92; translate: var(--tx) var(--ty); rotate: 0deg; } }
+@keyframes booth-flash-4 { 0%, 28% { opacity: 0; } 29% { opacity: .95; } 33%, 100% { opacity: 0; } }
+@keyframes booth-count-4 { 0%, 28% { opacity: 0; scale: .6; } 30% { opacity: 1; scale: 1.12; } 31.5% { scale: 1; } 35.5% { opacity: 1; scale: 1; } 37%, 100% { opacity: 0; scale: 1; } }
+@keyframes booth-board { 0%, 40% { opacity: 0; scale: .96; } 46%, 60% { opacity: 1; scale: 1; } 62%, 100% { opacity: 0; scale: 1; } }
+@keyframes booth-result { 0%, 56% { opacity: 0; scale: .96; } 59% { opacity: 1; scale: 1.04; } 61%, 93% { opacity: 1; scale: 1; } 97%, 100% { opacity: 0; scale: 1; } }
+@keyframes booth-tools { 0%, 47% { opacity: 0; translate: 0 3cqw; } 50%, 79% { opacity: 1; translate: 0 0; } 82%, 100% { opacity: 0; translate: 0 0; } }
+@keyframes booth-tap-frame { 0%, 53% { scale: 1; } 54.5% { scale: .86; } 56.5% { scale: 1.1; } 58%, 100% { scale: 1; } }
+@keyframes booth-tap-sticker { 0%, 62% { scale: 1; } 63.5% { scale: .86; } 65.5% { scale: 1.1; } 67%, 100% { scale: 1; } }
+@keyframes booth-tap-save { 0%, 70% { scale: 1; } 71.5% { scale: .86; } 73.5% { scale: 1.1; } 75%, 100% { scale: 1; } }
+@keyframes booth-sticker { 0%, 64% { opacity: 0; scale: 0; } 66.5% { opacity: 1; scale: 1.2; } 68.5%, 93% { opacity: 1; scale: 1; } 97%, 100% { opacity: 0; scale: 1; } }
+@keyframes booth-sticker-2 { 0%, 66% { opacity: 0; scale: 0; } 68.5% { opacity: 1; scale: 1.2; } 70.5%, 93% { opacity: 1; scale: 1; } 97%, 100% { opacity: 0; scale: 1; } }
+@keyframes booth-toast { 0%, 73% { opacity: 0; translate: 0 2cqw; } 75.5%, 93% { opacity: 1; translate: 0 0; } 97%, 100% { opacity: 0; translate: 0 0; } }
+/* 저장 순간에 히어로 버튼을 살짝 튕김(포토부스 모드). 하트 모드는 아래 cta-nudge(7초, 4/4 완성 순간) */
+.hero--mode-booth .hero__cta .btn-store { animation: cta-nudge-booth 8s ease-in-out infinite; }
+@keyframes cta-nudge-booth { 0%, 74% { scale: 1; } 77% { scale: 1.07; } 80% { scale: .98; } 83%, 100% { scale: 1; } }
+
+/* ---------- 친구랑 같이 찍는 법 (네컷 변형, 2026-10-27) ---------- */
+.how { padding: 72px 0; overflow: clip; }
+.how__head { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; }
+.how__steps { display: grid; gap: 18px; margin: 32px 0 0; padding: 0; list-style: none; }
+.how__step {
+  display: grid; grid-template-columns: 104px 1fr; grid-template-areas: "vis no" "vis title" "vis text"; column-gap: 18px; row-gap: 4px; align-content: start;
+  padding: 18px; background: var(--white); border: 1.5px solid var(--black); border-radius: 18px; box-shadow: 5px 5px 0 rgba(0, 0, 0, .08);
+}
+.how__step:nth-child(2) { box-shadow: 5px 5px 0 rgba(255, 90, 71, .35); }
+.how__vis { grid-area: vis; position: relative; align-self: start; aspect-ratio: 4 / 5; border-radius: 10px; }
+.how__vis > img { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; box-shadow: 0 8px 18px -10px rgba(0, 0, 0, .4); }
+.how__chip {
+  position: absolute; left: 50%; bottom: -10px; transform: translateX(-50%) rotate(-3deg); padding: 4px 9px; border-radius: 999px; white-space: nowrap;
+  background: var(--orange); color: var(--white); font-size: 11px; font-weight: 800;
+}
+.how__vis--fill { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 3px; padding: 4px; background: #f3e7df; border-radius: 8px; }
+.how__vis--fill > img { border-radius: 3px; box-shadow: none; }
+.how__empty {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; border: 1.5px dashed var(--orange); border-radius: 3px;
+  background: var(--white); font-size: 9.5px; font-weight: 800; text-align: center; line-height: 1.15;
+}
+.how__empty b { display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; border-radius: 50%; background: var(--orange); color: var(--white); font-size: 13px; }
+.how__vis .how__st { position: absolute; right: -12px; top: -14px; width: 46px; aspect-ratio: 1; --r: 12deg; container-type: normal; }
+.how__no { grid-area: no; font-size: 13px; font-weight: 900; letter-spacing: .1em; color: var(--orange); }
+.how__step h3 { grid-area: title; font-size: 19px; font-weight: 800; letter-spacing: -.02em; line-height: 1.3; }
+.how__step p { grid-area: text; font-size: 14.5px; color: var(--ink-70); line-height: 1.55; }
+.how__cta { margin-top: 30px; }
+@media (min-width: 900px) {
+  .how { padding: 110px 0; }
+  .how__steps { grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 44px; }
+  .how__step { grid-template-columns: 1fr; grid-template-areas: "vis" "no" "title" "text"; row-gap: 8px; padding: 22px; }
+  .how__vis { width: 62%; margin: 0 auto 14px; }
+}
+
 /* 2026-10-27: 네컷 아이폰 방문자는 첫 화면에 ~21초(루프 3번) 머물다 스크롤 없이 나감 →
    "4/4 완성" 순간에 버튼을 살짝 튕기고, 다음 섹션으로 가는 링크를 둔다 */
-.hero--fourcut .hero__cta .btn-store { animation: cta-nudge 7s ease-in-out infinite; }
+.hero--mode-hearts .hero__cta .btn-store { animation: cta-nudge 7s ease-in-out infinite; }
 @keyframes cta-nudge { 0%, 36% { scale: 1; } 39% { scale: 1.07; } 42% { scale: .98; } 45%, 100% { scale: 1; } }
 .hero__more { display: inline-flex; align-items: center; gap: 6px; margin-top: -4px; font-size: 15px; font-weight: 700; color: var(--ink-70); text-decoration: underline; text-underline-offset: 4px; }
 .hero__more span { display: inline-block; animation: more-bob 1.6s ease-in-out infinite; }
@@ -482,6 +593,8 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--orange); outlin
   .collage--fourcut .cell-empty, .collage--fourcut .pin--3, .collage--fourcut .pin--4, .hero--fourcut .hero__cta .btn-store, .hero__more span,
   .cut-arrow__line, .cluster--frames .cut--paste, .cluster--frames .scissors { animation: none; }
   .collage--fourcut .cell-empty { opacity: 0; } .collage--fourcut .pin--4 { opacity: 1; } .collage--fourcut .pin--3 { opacity: 0; }   /* 모션 없으면 완성 상태로 */
+  .booth > *, .booth__tool, .booth__card i, .hero--mode-booth .hero__cta .btn-store { animation: none; }
+  .booth__card, .booth__count, .booth__tools, .booth__board { display: none; } .booth__result, .booth .booth__st, .booth__toast { opacity: 1; }   /* 모션 없으면 꾸민 결과만 */
   .sticky-cta, .btn { transition: none; }
 }
 

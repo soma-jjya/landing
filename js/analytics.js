@@ -101,6 +101,7 @@
     if (el.closest('.header')) return 'header';
     if (el.closest('.hero')) return 'hero';
     if (el.closest('.install')) return 'install';
+    if (el.closest('.how')) return 'how';   // 2026-10-27 네컷 '친구랑 같이 찍는 법' 섹션 버튼
     return 'other';
   };
   document.addEventListener('click', function (e) {

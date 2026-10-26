@@ -22,7 +22,7 @@
 
   <link rel="icon" type="image/svg+xml" href="/assets/logo.svg">
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-  <link rel="preload" as="image" href="/assets/img/fourcut-friends.webp" fetchpriority="high">
+  <link rel="preload" as="image" href="/assets/img/fourcut-dessert.webp" fetchpriority="high">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
   <link rel="stylesheet" href="/css/style.css">
   <!-- PostHog: key 를 넣으면 js/analytics.js 가 켜진다. host 는 vercel.json 의 /ingest 리라이트(광고 차단 우회). EU 프로젝트면 vercel.json 과 uiHost 를 eu 로 -->
@@ -53,12 +53,12 @@
   <main id="top">
 
     <!-- ===== 1. 히어로 ===== 2026-10-26: 광고 네컷①(친구 알림)과 첫 문장을 맞춤 + 모바일에서 콜라주를 글 위로(아이폰 인앱 첫 화면 이탈 74%→개선 목적). 부스 카피는 문제 공감 섹션에 남김 -->
-    <section class="hero hero--fourcut paper" aria-labelledby="hero-title">
+    <section class="hero hero--fourcut hero--mode-booth paper" aria-labelledby="hero-title">
       <div class="container hero__inner">
         <div class="hero__copy">
-          <span class="tag tag--outline" style="--r:-2deg">친구와 폰으로 완성하는 네컷</span>
-          <h1 id="hero-title" class="hero__title">너만 올리면<br><span class="hl">네컷 완성</span><span class="dot">.</span></h1>
-          <p class="hero__lede">친구가 보낸 프레임에 내 폰으로 한 컷만 올리면 끝.<br class="br-desktop"> 줄도, 돈도, 다 모일 필요도 없어요.</p>
+          <span class="tag tag--outline" style="--r:-2deg">부스 없이 폰으로 끝내는 네컷</span>
+          <h1 id="hero-title" class="hero__title">이제 내 폰이<br><span class="hl">공짜 포토부스</span><span class="dot">.</span></h1>
+          <p class="hero__lede">내 폰으로 한 컷씩 찍고, 프레임·스티커로 꾸미면 끝.<br class="br-desktop"> 줄도, 돈도 필요 없어요.</p>
 
           <!-- 단일 CTA: js/main.js 가 방문자 OS 의 스토어로 href 를 바꾼다 (Android→Google Play, iPhone→App Store). 데스크톱·JS 없음 → 설치 섹션의 공식 배지 2개 -->
           <div class="store-cta hero__cta">
@@ -66,18 +66,41 @@
             <p class="stores__note"><b>무료</b> · 로그인 없이 바로 시작할 수 있어요.</p>
           </div>
           <a class="hero__more" href="#my-frame">어떻게 찍는지 보기 <span aria-hidden="true">↓</span></a>
-          <!-- 2026-10-27: 광고 소재에 따라 첫 문장을 광고와 똑같이 (포토부스 광고 → "이제 내 폰이 공짜 포토부스.") -->
-          <script>(function(){try{var c=new URLSearchParams(location.search).get('utm_content')||'';if(c.indexOf('booth')<0)return;
-            document.getElementById('hero-title').innerHTML='이제 내 폰이<br><span class="hl">공짜 포토부스</span><span class="dot">.</span>';
-            var t=document.querySelector('.hero--fourcut .tag');if(t)t.textContent='부스 없이 폰으로 끝내는 네컷';
-            var l=document.querySelector('.hero--fourcut .hero__lede');if(l)l.innerHTML='내 폰으로 한 컷씩 찍고, 프레임·스티커로 꾸미면 끝.<br class="br-desktop"> 줄도, 돈도 필요 없어요.';}catch(e){}})();</script>
+          <!-- 2026-10-27: 광고 소재에 따라 히어로를 광고와 똑같이. 기본(포토부스 광고·직접 유입) = 찰칵 4번 → 한 장 → 꾸미기,
+               하트·친구 광고(utm_content 에 hearts·friends) = "너만 올리면 네컷 완성." + 친구가 채우는 네컷 콜라주 -->
+          <script>(function(){try{var c=new URLSearchParams(location.search).get('utm_content')||'';if(!/hearts|friends/.test(c))return;
+            var h=document.querySelector('.hero--fourcut');h.classList.remove('hero--mode-booth');h.classList.add('hero--mode-hearts');
+            document.getElementById('hero-title').innerHTML='너만 올리면<br><span class="hl">네컷 완성</span><span class="dot">.</span>';
+            var t=h.querySelector('.tag');if(t)t.textContent='친구와 폰으로 완성하는 네컷';
+            var l=h.querySelector('.hero__lede');if(l)l.innerHTML='친구가 보낸 프레임에 내 폰으로 한 컷만 올리면 끝.<br class="br-desktop"> 줄도, 돈도, 다 모일 필요도 없어요.';}catch(e){}})();</script>
+        </div>
+
+        <!-- 포토부스 히어로(2026-10-27, 광고 "이제 내 폰이 공짜 포토부스"와 같은 장면): 8초 루프
+             찰칵 1/4~4/4 로 사진 4장이 흩어져 찍힘 → 가운데로 모여 한 장 → "프레임" 탭에 디저트 프레임 결과로 → 스티커 → 저장.
+             사진은 앱으로 실제 만든 디저트 네컷(fourcut-dessert)의 네 칸을 잘라 씀(assets/raw/fourcut/booth) -->
+        <div class="booth" role="img" aria-label="폰으로 사진 네 장을 찍으면 한 장의 네컷으로 모이고, 디저트 프레임과 스티커로 꾸며 앨범에 저장되는 모습">
+          <span class="booth__board" aria-hidden="true"></span>
+          <img class="booth__result" src="/assets/img/fourcut-dessert.webp" width="800" height="1000" alt="" fetchpriority="high">
+          <figure class="booth__card booth__card--1" aria-hidden="true"><img src="/assets/img/fourcut-cut-1.webp" width="360" height="420" alt=""><span>1 / 4</span><i></i></figure>
+          <figure class="booth__card booth__card--2" aria-hidden="true"><img src="/assets/img/fourcut-cut-2.webp" width="360" height="420" alt=""><span>2 / 4</span><i></i></figure>
+          <figure class="booth__card booth__card--3" aria-hidden="true"><img src="/assets/img/fourcut-cut-3.webp" width="360" height="420" alt=""><span>3 / 4</span><i></i></figure>
+          <figure class="booth__card booth__card--4" aria-hidden="true"><img src="/assets/img/fourcut-cut-4.webp" width="360" height="420" alt=""><span>4 / 4</span><i></i></figure>
+          <span class="booth__count booth__count--1" aria-hidden="true">찰칵! 1/4</span>
+          <span class="booth__count booth__count--2" aria-hidden="true">찰칵! 2/4</span>
+          <span class="booth__count booth__count--3" aria-hidden="true">찰칵! 3/4</span>
+          <span class="booth__count booth__count--4" aria-hidden="true">찰칵! 4/4</span>
+          <span class="cut cut--svg booth__st booth__st--1" aria-hidden="true"><img src="/assets/img/char-bear.svg" width="120" height="120" alt=""></span>
+          <span class="cut cut--svg booth__st booth__st--2" aria-hidden="true"><img src="/assets/img/char-cat.svg" width="120" height="120" alt=""></span>
+          <span class="booth__tools" aria-hidden="true"><b class="booth__tool booth__tool--frame">프레임</b><b class="booth__tool booth__tool--sticker">스티커</b><b class="booth__tool booth__tool--save">저장</b></span>
+          <span class="booth__toast" aria-hidden="true">앨범에 저장됐어요</span>
+          <span class="sticker sticker--orange booth__free" style="--r:12deg" aria-hidden="true">찍는 건<br>무료</span>
         </div>
 
         <!-- 콜라주(네컷 변형): 친구들이 채우는 네컷이 주인공. 마지막 칸은 비어 있다가 7초 루프 안에서 채워진다(css .cell-empty / .pin--3 → .pin--4) -->
         <div class="collage collage--fourcut">
           <figure class="fourcut fourcut--hero" style="--r:-2.5deg">
             <span class="tape" style="left:10%; top:-10px; --tr:-7deg"></span>
-            <img src="/assets/img/fourcut-friends.webp" width="800" height="1000" alt="친구들이 한 컷씩 올려 완성한 네컷 사진" fetchpriority="high">
+            <img src="/assets/img/fourcut-friends.webp" width="800" height="1000" alt="친구들이 한 컷씩 올려 완성한 네컷 사진" loading="lazy">
             <span class="cell-empty" aria-hidden="true"><b>+</b>한 컷 남음!</span>
             <span class="pin pin--3" style="--x:50%; --y:0" aria-hidden="true">3 / 4 완성</span>
             <span class="pin pin--4" style="--x:50%; --y:0" aria-hidden="true">4 / 4 완성</span>
@@ -103,10 +126,10 @@
     <div class="ticker" aria-hidden="true">
       <div class="ticker__track">
         <ul>
-          <li>peak pic.</li><li>부스 없이 폰으로 공짜 네컷</li><li>로그인 없이 시작</li><li>Google Play · App Store 출시</li><li>네컷 꾸미기 · 미러링 · 포즈 추천</li>
+          <li>peak pic.</li><li>이제 내 폰이 공짜 포토부스</li><li>친구랑 한 컷씩</li><li>로그인 없이 시작</li><li>Google Play · App Store 출시</li><li>네컷 꾸미기 · 미러링 · 포즈 추천</li>
         </ul>
         <ul>
-          <li>peak pic.</li><li>부스 없이 폰으로 공짜 네컷</li><li>로그인 없이 시작</li><li>Google Play · App Store 출시</li><li>네컷 꾸미기 · 미러링 · 포즈 추천</li>
+          <li>peak pic.</li><li>이제 내 폰이 공짜 포토부스</li><li>친구랑 한 컷씩</li><li>로그인 없이 시작</li><li>Google Play · App Store 출시</li><li>네컷 꾸미기 · 미러링 · 포즈 추천</li>
         </ul>
       </div>
     </div>
@@ -143,6 +166,53 @@
             <span class="sticker sticker--orange" style="--r:12deg">지금!</span>
           </li>
         </ul>
+      </div>
+    </section>
+
+
+    <!-- ===== 2-1. 친구랑 같이 찍는 법 (2026-10-27 추가): 네컷 기능을 3단계로. 사진은 앱 결과물·프레임 원본만 ===== -->
+    <section class="how paper" id="how" aria-labelledby="how-title">
+      <div class="container">
+        <div class="how__head">
+          <span class="tag" style="--r:-2deg">how to</span>
+          <h2 id="how-title" class="headline">친구랑 같이 찍는 네컷,<br><span class="hl">3단계</span>면 끝<span class="dot">.</span></h2>
+          <p class="lede">멀리 있어도, 다 같이 모이지 않아도 괜찮아요. 링크 하나로 시작해요.</p>
+        </div>
+        <ol class="how__steps">
+          <li class="how__step">
+            <div class="how__vis how__vis--share" aria-hidden="true">
+              <img src="/assets/img/frame-cute.webp" width="640" height="894" loading="lazy" decoding="async" alt="">
+              <span class="how__chip">링크 복사됨</span>
+            </div>
+            <b class="how__no">01</b>
+            <h3>프레임 고르고 링크 공유</h3>
+            <p>마음에 드는 프레임을 고르고 단톡방에 링크를 보내요.</p>
+          </li>
+          <li class="how__step">
+            <div class="how__vis how__vis--fill" aria-hidden="true">
+              <img src="/assets/img/fourcut-cut-1.webp" width="360" height="420" loading="lazy" decoding="async" alt="">
+              <img src="/assets/img/fourcut-cut-2.webp" width="360" height="420" loading="lazy" decoding="async" alt="">
+              <img src="/assets/img/fourcut-cut-3.webp" width="360" height="420" loading="lazy" decoding="async" alt="">
+              <span class="how__empty"><b>+</b>너도 한 컷!</span>
+            </div>
+            <b class="how__no">02</b>
+            <h3>각자 폰으로 한 컷씩</h3>
+            <p>친구들이 각자 폰에서 한 컷씩 올려요. 다 모이면 네컷이 채워져요.</p>
+          </li>
+          <li class="how__step">
+            <div class="how__vis how__vis--done" aria-hidden="true">
+              <img src="/assets/img/fourcut-dessert.webp" width="800" height="1000" loading="lazy" decoding="async" alt="">
+              <span class="cut cut--svg how__st"><img src="/assets/img/char-bear.svg" width="120" height="120" alt=""></span>
+            </div>
+            <b class="how__no">03</b>
+            <h3>꾸미고 저장하면 끝</h3>
+            <p>프레임·누끼 스티커로 꾸미고 앨범에 저장하거나 바로 공유해요.</p>
+          </li>
+        </ol>
+        <div class="store-cta how__cta">
+          <a class="btn btn--dot btn-store" href="#install">앱 다운로드</a>
+          <p class="stores__note"><b>무료</b> · 로그인 없이 바로 시작할 수 있어요.</p>
+        </div>
       </div>
     </section>
 
