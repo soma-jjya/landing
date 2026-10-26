@@ -124,8 +124,9 @@
 - 설정: index.html <head> 의 `window.PEAKPIC_ANALYTICS = { key, host:'/ingest', uiHost }`. key 가 비면 꺼진다.
   `/ingest` 는 vercel.json 리라이트(광고 차단 우회) → S3/CloudFront 로 옮기면 CloudFront 동작 또는 host 를 https://us.i.posthog.com 으로
 - 이벤트 스키마는 js/analytics.js 머리 주석이 원본. 핵심 전환 = `store_click`(store, placement, os). 모든 이벤트에
-  super property `ad_creative`(=utm_content)·`ad_campaign`·`ad_source`·`visitor_os` 가 붙는다
+  super property `ad_creative`(=utm_content)·`ad_campaign`·`ad_source`·`visitor_os`·`ad_placement`(=utm_term, 2026-10-26) 가 붙는다
 - 광고 URL 규칙: `https://peakpic.app<변형 경로>?utm_source=meta&utm_medium=paid_social&utm_campaign=<캠페인>&utm_content=<소재>`
+  b2c_1028 캠페인(2026-10-27 16:00 시작, 리드 목표·Lead 최적화, couple 3.5만·fourcut 2.5만/일)부터 `&utm_term={{placement}}` 를 붙인다 — 메타가 노출 위치 이름으로 바꿔 넣는다
   소재 값은 Figma 포스터 이름과 맞춘다. v3(2026-10-16, Figma "META 광고 포스터" 페이지 상단): 커플① 똥손 남친 비포·애프터 `couple_d`,
   커플② 다시 찍어달라기 미안하죠? `couple_sorry` → `/couple/` / 네컷① 너만 올리면 완성(친구 알림) `fourcut_friends`, 네컷② 찍고 끝 말고, 직접 꾸미는 네컷 `fourcut_frame` → `/fourcut/`.
   네컷① 변형(2026-10-21, 팀원 수정안 기반, 섹션 오른쪽 끝): ①-B 칸마다 다른 실사 인물 `fourcut_friends_b`, ①-C 네 칸이 모여 큰 하트(왼쪽 위·오른쪽 위 머리 위 팔 아치가 가운데서 만남 — 오른쪽 위는 같은 포즈 좌우 반전, 왼쪽 아래 대각선 팔, 빈 칸 점선이 마지막 조각. 인물 3명 모두 Figma AI 생성) `fourcut_hearts`.

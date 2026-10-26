@@ -5,6 +5,7 @@
    이벤트 설계 (광고 소재 비교가 목적):
    - $pageview / $pageleave  자동. utm_* 가 이벤트·사람 속성에 붙는다
    - ad_creative, ad_campaign  super property — 모든 이벤트에 utm_content/utm_campaign 을 복사해 breakdown 을 쉽게
+   - ad_placement              super property — utm_term (메타 동적 값 {{placement}}: 노출 위치별 이탈·전환 비교)
    - landing_variant           super property — 랜딩 변형 (main / couple / fourcut). 페이지 head 의 PEAKPIC_ANALYTICS.variant
    - section_viewed {section}  hero · pain · mirroring · pose · my-frame · install 이 35% 이상 보일 때 각 1회
    - scroll_depth {percent}    25 · 50 · 75 · 100 각 1회
@@ -59,6 +60,7 @@
         ad_creative: params.utm_content || '(none)',
         ad_campaign: params.utm_campaign || '(none)',
         ad_source: params.utm_source || '(direct)',
+        ad_placement: params.utm_term || '(none)',   // 2026-10-26: 메타 URL 의 utm_term={{placement}} (피드·스토리·릴스 등)
         visitor_os: os,
         landing_variant: cfg.variant || 'main'   // 랜딩 변형 (main / couple / fourcut)
       });
