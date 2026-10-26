@@ -65,7 +65,6 @@
             <a class="btn btn--dot btn-store" href="#install">앱 다운로드</a>
             <p class="stores__note"><b>무료</b> · 로그인 없이 바로 시작할 수 있어요.</p>
           </div>
-          <a class="hero__more" href="#my-frame">어떻게 찍는지 보기 <span aria-hidden="true">↓</span></a>
           <!-- 2026-10-27: 광고 소재에 따라 히어로를 광고와 똑같이. 기본(포토부스 광고·직접 유입) = 찰칵 4번 → 한 장 → 꾸미기,
                하트·친구 광고(utm_content 에 hearts·friends) = "너만 올리면 네컷 완성." + 친구가 채우는 네컷 콜라주 -->
           <script>(function(){try{var c=new URLSearchParams(location.search).get('utm_content')||'';if(!/hearts|friends/.test(c))return;
@@ -93,7 +92,7 @@
           <span class="cut cut--svg booth__st booth__st--2" aria-hidden="true"><img src="/assets/img/char-cat.svg" width="120" height="120" alt=""></span>
           <span class="booth__tools" aria-hidden="true"><b class="booth__tool booth__tool--frame">프레임</b><b class="booth__tool booth__tool--sticker">스티커</b><b class="booth__tool booth__tool--save">저장</b></span>
           <span class="booth__toast" aria-hidden="true">앨범에 저장됐어요</span>
-          <span class="sticker sticker--orange booth__free" style="--r:12deg" aria-hidden="true">찍는 건<br>무료</span>
+          <span class="sticker sticker--orange booth__free" style="--r:12deg" aria-hidden="true">현재<br>무료!</span>
         </div>
 
         <!-- 콜라주(네컷 변형): 친구들이 채우는 네컷이 주인공. 마지막 칸은 비어 있다가 7초 루프 안에서 채워진다(css .cell-empty / .pin--3 → .pin--4) -->
@@ -190,10 +189,8 @@
           </li>
           <li class="how__step">
             <div class="how__vis how__vis--fill" aria-hidden="true">
-              <img src="/assets/img/fourcut-cut-1.webp" width="360" height="420" loading="lazy" decoding="async" alt="">
-              <img src="/assets/img/fourcut-cut-2.webp" width="360" height="420" loading="lazy" decoding="async" alt="">
-              <img src="/assets/img/fourcut-cut-3.webp" width="360" height="420" loading="lazy" decoding="async" alt="">
-              <span class="how__empty"><b>+</b>너도 한 컷!</span>
+              <!-- 광고 네컷①-C 하트 프레임(3/4 채워진 상태). 인물 3명은 Figma AI 생성 — 2026-10-27 사용자 결정으로 이 자리에만 사용 -->
+              <img src="/assets/img/fourcut-hearts-fill.webp" width="952" height="1124" loading="lazy" decoding="async" alt="">
             </div>
             <b class="how__no">02</b>
             <h3>각자 폰으로 한 컷씩</h3>
