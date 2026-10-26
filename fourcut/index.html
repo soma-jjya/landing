@@ -64,8 +64,14 @@
           <!-- 단일 CTA: js/main.js 가 방문자 OS 의 스토어로 href 를 바꾼다 (Android→Google Play, iPhone→App Store). 데스크톱·JS 없음 → 설치 섹션의 공식 배지 2개 -->
           <div class="store-cta hero__cta">
             <a class="btn btn--dot btn-store" href="#install">앱 다운로드</a>
-            <p class="stores__note">무료 · 로그인 없이 바로 시작할 수 있어요.</p>
+            <p class="stores__note"><b>무료</b> · 로그인 없이 바로 시작할 수 있어요.</p>
           </div>
+          <a class="hero__more" href="#my-frame">어떻게 찍는지 보기 <span aria-hidden="true">↓</span></a>
+          <!-- 2026-10-27: 광고 소재에 따라 첫 문장을 광고와 똑같이 (포토부스 광고 → "이제 내 폰이 공짜 포토부스.") -->
+          <script>(function(){try{var c=new URLSearchParams(location.search).get('utm_content')||'';if(c.indexOf('booth')<0)return;
+            document.getElementById('hero-title').innerHTML='이제 내 폰이<br><span class="hl">공짜 포토부스</span><span class="dot">.</span>';
+            var t=document.querySelector('.hero--fourcut .tag');if(t)t.textContent='부스 없이 폰으로 끝내는 네컷';
+            var l=document.querySelector('.hero--fourcut .hero__lede');if(l)l.innerHTML='내 폰으로 한 컷씩 찍고, 프레임·스티커로 꾸미면 끝.<br class="br-desktop"> 줄도, 돈도 필요 없어요.';}catch(e){}})();</script>
         </div>
 
         <!-- 콜라주(네컷 변형): 친구들이 채우는 네컷이 주인공. 마지막 칸은 비어 있다가 7초 루프 안에서 채워진다(css .cell-empty / .pin--3 → .pin--4) -->

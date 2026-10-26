@@ -467,12 +467,19 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--orange); outlin
 .collage--fourcut .pin--4 { opacity: 0; animation: pin-in 7s linear infinite; }
 @keyframes pin-out { 0%, 33% { opacity: 1; } 36% { opacity: 0; } 93% { opacity: 0; } 96%, 100% { opacity: 1; } }
 @keyframes pin-in { 0%, 33% { opacity: 0; } 36% { opacity: 1; } 93% { opacity: 1; } 96%, 100% { opacity: 0; } }
+/* 2026-10-27: 네컷 아이폰 방문자는 첫 화면에 ~21초(루프 3번) 머물다 스크롤 없이 나감 →
+   "4/4 완성" 순간에 버튼을 살짝 튕기고, 다음 섹션으로 가는 링크를 둔다 */
+.hero--fourcut .hero__cta .btn-store { animation: cta-nudge 7s ease-in-out infinite; }
+@keyframes cta-nudge { 0%, 36% { scale: 1; } 39% { scale: 1.07; } 42% { scale: .98; } 45%, 100% { scale: 1; } }
+.hero__more { display: inline-flex; align-items: center; gap: 6px; margin-top: -4px; font-size: 15px; font-weight: 700; color: var(--ink-70); text-decoration: underline; text-underline-offset: 4px; }
+.hero__more span { display: inline-block; animation: more-bob 1.6s ease-in-out infinite; }
+@keyframes more-bob { 0%, 100% { translate: 0 0; } 50% { translate: 0 3px; } }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .spin svg, .rec::before, .ticker__track { animation: none; }
   .hero__copy > *, .collage .bubble--a, .collage .bubble--b, .reel__media::after, .collage .pola--side, .collage .logo-sticker,
-  .collage--fourcut .cell-empty, .collage--fourcut .pin--3, .collage--fourcut .pin--4,
+  .collage--fourcut .cell-empty, .collage--fourcut .pin--3, .collage--fourcut .pin--4, .hero--fourcut .hero__cta .btn-store, .hero__more span,
   .cut-arrow__line, .cluster--frames .cut--paste, .cluster--frames .scissors { animation: none; }
   .collage--fourcut .cell-empty { opacity: 0; } .collage--fourcut .pin--4 { opacity: 1; } .collage--fourcut .pin--3 { opacity: 0; }   /* 모션 없으면 완성 상태로 */
   .sticky-cta, .btn { transition: none; }

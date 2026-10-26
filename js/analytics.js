@@ -111,6 +111,8 @@
       metaTrack('StoreClick', { store: store, placement: placementOf(a), os: os, landing_variant: cfg.variant || 'main', ad_creative: params.utm_content || '(none)' });
     } else if (href === '#install') {
       track('cta_click', { cta: 'app_download', placement: placementOf(a) });
+    } else if (a.closest('.hero__more')) {
+      track('cta_click', { cta: 'see_how', placement: 'hero' });   // 2026-10-27 네컷 히어로 '어떻게 찍는지 보기'
     }
   }, true);
 
