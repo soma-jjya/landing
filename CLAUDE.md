@@ -166,6 +166,10 @@
   무료 종료 시점이 미정이라 기간("3개월" 등)은 쓰지 않는다. Pro 가격은 사용자가 준 값 — 가격이 바뀌거나 무료가 끝나면 포스터 8장 모두 고칠 것(표시광고 사실관계)
 - super property `landing_variant`(main/couple/fourcut) 로 변형별 비교. 핵심 비교 지표 = 변형별 `store_click` 전환율
 - 측정 범위: 랜딩 도착 → 스토어 클릭까지. 설치·앱 내 행동은 Meta SDK/MMP 또는 앱 쪽 PostHog 와 연결해야 보인다
+- 해외 대시보드(2026-10-28, 10/29 0시~): 2270280 "해외① 영어권 en_tier1_1029", 2270281 "해외② 동남아 sea_en_1029" — 한국 대시보드와 같은 표 + 나라별 표.
+  **나라는 $geoip 가 아니라 visitor_tz(기기 시간대)로 본다**: Worker→Vercel→PostHog 프록시를 거쳐서 IP 가 Cloudflare/Vercel 것이 되어 $geoip_country_name 이 틀린다(한국만 타기팅한 광고에서 40%가 미국·홍콩·일본·싱가포르로 찍힘).
+  고치려면 Worker 가 /ingest 를 PostHog 로 직접 보내면서 X-Forwarded-For 에 CF-Connecting-IP 를 넣어야 함(팀원 작업)
+- JS·CSS 를 고치면 모든 페이지의 `?v=날짜` 를 올릴 것(Cache-Control max-age 4시간이라 안 올리면 반영이 늦다)
 - 개인정보처리방침에 분석 도구 사용 항목 필요(privacy.html 에 초안 문장 있음)
 - Meta 픽셀(2026-10-20): 데이터 세트 `peakpic` ID 1758731071879086, 광고 계정 peakpic 에 연결됨. 각 페이지 head 의 `PEAKPIC_ANALYTICS.metaPixelId` 로 켠다(js/analytics.js).
   이벤트 PageView + 커스텀 `StoreClick`(store_click 과 같은 순간). 광고 최적화·성과는 광고 관리자에서 StoreClick 으로 "맞춤 전환"을 만들어 쓴다.
