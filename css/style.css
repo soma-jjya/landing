@@ -452,6 +452,8 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--orange); outlin
   background: rgba(255, 255, 255, .94); border: 2px dashed var(--orange); border-radius: 6px;
   color: var(--black); font-size: clamp(11px, 3.2cqw, 15px); font-weight: 800; letter-spacing: -.01em;
 }
+/* 2026-10-28: 하트 광고로 들어오면 광고 속 하트 네컷(네 칸 팔이 모여 큰 하트) 그대로. 마지막 칸 위치가 디저트 프레임과 달라 따로 맞춤 */
+.fourcut--hearts .cell-empty { left: 52%; top: 46.2%; width: 42.5%; height: 38.2%; border-radius: 4px; }
 .cell-empty b { display: inline-flex; align-items: center; justify-content: center; width: 1.9em; height: 1.9em; border-radius: 50%; background: var(--orange); color: var(--white); font-size: 1.3em; line-height: 1; }
 .collage--fourcut .cut { position: absolute; }
 .collage--fourcut .cut--1 { left: 56%; top: -2%; --r: 10deg; width: clamp(60px, 20cqw, 96px); }
