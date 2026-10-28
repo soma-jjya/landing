@@ -6,7 +6,8 @@
    - $pageview / $pageleave  자동. utm_* 가 이벤트·사람 속성에 붙는다
    - ad_creative, ad_campaign  super property — 모든 이벤트에 utm_content/utm_campaign 을 복사해 breakdown 을 쉽게
    - ad_placement              super property — utm_term (메타 동적 값 {{placement}}: 노출 위치별 이탈·전환 비교)
-   - landing_variant           super property — 랜딩 변형 (main / couple / fourcut). 페이지 head 의 PEAKPIC_ANALYTICS.variant
+   - landing_variant           super property — 랜딩 변형 (main / couple / fourcut / couple_en / fourcut_en). 페이지 head 의 PEAKPIC_ANALYTICS.variant
+   - visitor_tz, visitor_lang  super property — 기기 시간대·언어(2026-10-28). 프록시 때문에 $geoip_country_name 이 부정확해 나라 구분은 시간대로
    - section_viewed {section}  hero · pain · how(/fourcut/ 전용) · mirroring · pose · my-frame · install 이 35% 이상 보일 때 각 1회
    - scroll_depth {percent}    25 · 50 · 75 · 100 각 1회
    - cta_click {cta, placement} 헤더·고정 "앱 다운로드" (설치 섹션으로 스크롤)
@@ -49,6 +50,9 @@
   var ua = navigator.userAgent || '';
   var os = /iPhone|iPad|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1) ? 'ios' : (/Android/.test(ua) ? 'android' : 'other');
 
+  var tz = '(unknown)', lang = navigator.language || '(unknown)';
+  try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || tz; } catch (e) { /* 구형 브라우저 */ }
+
   posthog.init(cfg.key, {
     api_host: cfg.host || 'https://us.i.posthog.com',
     ui_host: cfg.uiHost || 'https://us.posthog.com',
@@ -64,7 +68,9 @@
         ad_source: params.utm_source || '(direct)',
         ad_placement: params.utm_term || '(none)',   // 2026-10-26: 메타 URL 의 utm_term={{placement}} (피드·스토리·릴스 등)
         visitor_os: os,
-        landing_variant: cfg.variant || 'main'   // 랜딩 변형 (main / couple / fourcut)
+        visitor_tz: tz,       // 2026-10-28: 기기 시간대(예 America/New_York, Asia/Manila). peakpic.app 프록시 때문에 $geoip 나라가 틀려서 나라 구분은 이걸로 한다
+        visitor_lang: lang,   // 기기 언어(예 en-US, ko-KR)
+        landing_variant: cfg.variant || 'main'   // 랜딩 변형 (main / couple / fourcut / couple_en / fourcut_en)
       });
     }
   });
