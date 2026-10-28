@@ -160,6 +160,8 @@
   v4 네컷 포토부스 모션(2026-10-26, 맨 오른쪽, my4cut-official.com 히어로의 움직임만 참고 — 그 회사 문구 "내 손안의 포토부스"·"나만의 네컷"은 쓰지 않음): 헤드라인 "이제 내 폰이 / 공짜 포토부스."(2026-10-26 사용자 선택, 형광펜은 2줄 '공짜 포토부스'. "공짜"는 기본 촬영·기본 프레임 기준 — 유료 프레임 있음, "전부 무료" 표현 금지), 모델은 랜딩 히어로 디저트 네컷(앱 실제 결과물)의 네 컷을 잘라 씀(원본 섹션 옆 보관).
   "찰칵! n/4"로 스냅샷 4장이 흩어져 찍힘 → 한 장의 검은 네컷으로 합쳐짐 → 프레임·스티커·저장 칩 탭 → 디저트 프레임 결과로 바뀌고 캐릭터 스티커 → "앨범에 저장됐어요". 9초 `fourcut_booth_motion` → `/fourcut/`.
   2026-10-26 결정: 정적 포스터는 집행 안 함 — 커플 couple_d_motion·couple_mirror_motion, 네컷 fourcut_hearts_motion·fourcut_booth_motion 2026-10-26 결정: 네컷 실사(①-B) 모션은 집행 안 함, 프레임 꾸미기(fourcut_frame)는 단독 광고 폐기
+  EN 모션 4종(2026-10-28, Figma 같은 페이지 y=-8570 줄 "EN · v4 …" 섹션, 한국 모션을 복제해 문구만 현지화): `couple_d_motion_en`·`couple_mirror_motion_en` → `/couple/en/`(모델은 Figma AI 지중해 해안 여성·BEFORE 컷 새로 생성),
+  `fourcut_hearts_motion_en`·`fourcut_booth_motion_en` → `/fourcut/en/`(한국 사진 그대로). 가격표 "Pro $3.99/mo · Free for now!". 캠페인은 한국과 분리 `global_en_1029`(utm_campaign), 국가 묶음별 광고 세트
   v2 값(`fourcut_b`, `mirror_a`, `pose_c`)은 보관용. 포스터 CTA 바(2026-10-16)는 왼쪽 "지금 무료로 다운로드 →" + 오른쪽 가격표 스티커 "~~Pro 월 3,900원~~ 현재 무료!"(스토어 배지 없음 — 클릭하면 랜딩으로 가므로).
   무료 종료 시점이 미정이라 기간("3개월" 등)은 쓰지 않는다. Pro 가격은 사용자가 준 값 — 가격이 바뀌거나 무료가 끝나면 포스터 8장 모두 고칠 것(표시광고 사실관계)
 - super property `landing_variant`(main/couple/fourcut) 로 변형별 비교. 핵심 비교 지표 = 변형별 `store_click` 전환율
