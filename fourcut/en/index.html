@@ -48,7 +48,7 @@
 
   <main id="top">
 
-        <section class="hero hero--fourcut hero--mode-booth paper" aria-labelledby="hero-title">
+    <section class="hero hero--fourcut hero--mode-booth paper" aria-labelledby="hero-title">
       <div class="container hero__inner">
         <div class="hero__copy">
           <span class="tag tag--outline" style="--r:-2deg">The Korean photo booth, minus the booth</span>
@@ -60,7 +60,7 @@
             <p class="stores__note"><b>Free</b> · No sign-up needed.</p>
           </div>
                     <script>(function(){try{var c=new URLSearchParams(location.search).get('utm_content')||'';if(!/hearts|friends/.test(c))return;
-            var h=document.querySelector('.hero--fourcut');h.classList.remove('hero--mode-booth');h.classList.add('hero--mode-hearts');
+            var h=document.querySelector('.hero--fourcut');
             document.getElementById('hero-title').innerHTML='Add your shot,<br><span class="hl">strip complete</span><span class="dot">.</span>';
             var t=h.querySelector('.tag');if(t)t.textContent='Photo strips with friends, phone to phone';
             var l=h.querySelector('.hero__lede');if(l)l.innerHTML='Your friends sent the frame — add one shot from your phone and it\'s done.<br class="br-desktop"> No line, no cash, no meetup needed.';}catch(e){}})();</script>
@@ -84,24 +84,6 @@
           <span class="sticker sticker--orange booth__free" style="--r:12deg" aria-hidden="true">Free<br>now!</span>
         </div>
 
-        <div class="collage collage--fourcut collage--hearts">
-          <!-- 2026-10-28: 하트 광고(fourcut_hearts_motion)와 같은 9초 흐름 — 친구 알림이 오며 칸이 하나씩 채워짐 → "너만 남았어" + 빈 칸 두근 → 마지막 칸 찰칵 → 4/4 하트 완성 스탬프.
-               칸 위치는 Figma 네컷 프레임(476×562)의 칸 좌표를 % 로 옮긴 것 -->
-          <figure class="fourcut fourcut--hero fourcut--hearts" style="--r:-2.5deg">
-            <img src="/assets/img/en-fourcut-hearts-full.webp" width="800" height="944" alt="Four friends each added a shot to make one big heart" loading="lazy">
-            <span class="hc-cell hc-cell--2" aria-hidden="true"><b>+</b></span>
-            <span class="hc-cell hc-cell--3" aria-hidden="true"><b>+</b></span>
-            <span class="hc-cell hc-cell--4" aria-hidden="true"><b>+</b>1 shot left!</span>
-            <span class="hc-flash" aria-hidden="true"></span>
-          </figure>
-          <ul class="hc-toasts" aria-hidden="true">
-            <li class="hc-toast hc-toast--1"><i>peakpic.</i><small>5m ago</small><span>Emma added a shot · 2/4</span></li>
-            <li class="hc-toast hc-toast--2"><i>peakpic.</i><small>Just now</small><span>Olivia added a shot · 3/4</span></li>
-            <li class="hc-toast hc-toast--3"><i>peakpic.</i><small>Now</small><span>Your turn! Add the last shot!</span></li>
-          </ul>
-          <span class="hc-stamp" aria-hidden="true">4/4<br>Heart done!</span>
-          <span class="cut cut--svg cut--1" aria-hidden="true"><img src="/assets/img/char-bear.svg" width="120" height="120" alt=""></span>
-        </div>
       </div>
     </section>
 

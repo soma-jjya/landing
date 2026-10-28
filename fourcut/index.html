@@ -66,9 +66,9 @@
             <p class="stores__note"><b>무료</b> · 로그인 없이 바로 시작할 수 있어요.</p>
           </div>
           <!-- 2026-10-27: 광고 소재에 따라 히어로를 광고와 똑같이. 기본(포토부스 광고·직접 유입) = 찰칵 4번 → 한 장 → 꾸미기,
-               하트·친구 광고(utm_content 에 hearts·friends) = "너만 올리면 네컷 완성." + 친구가 채우는 네컷 콜라주 -->
+               하트·친구 광고(utm_content 에 hearts·friends) = 문구만 "너만 올리면 네컷 완성."으로. 그림은 2026-10-28부터 모두 포토부스 장면 -->
           <script>(function(){try{var c=new URLSearchParams(location.search).get('utm_content')||'';if(!/hearts|friends/.test(c))return;
-            var h=document.querySelector('.hero--fourcut');h.classList.remove('hero--mode-booth');h.classList.add('hero--mode-hearts');
+            var h=document.querySelector('.hero--fourcut');
             document.getElementById('hero-title').innerHTML='너만 올리면<br><span class="hl">네컷 완성</span><span class="dot">.</span>';
             var t=h.querySelector('.tag');if(t)t.textContent='친구와 폰으로 완성하는 네컷';
             var l=h.querySelector('.hero__lede');if(l)l.innerHTML='친구가 보낸 프레임에 내 폰으로 한 컷만 올리면 끝.<br class="br-desktop"> 줄도, 돈도, 다 모일 필요도 없어요.';}catch(e){}})();</script>
@@ -95,24 +95,6 @@
           <span class="sticker sticker--orange booth__free" style="--r:12deg" aria-hidden="true">현재<br>무료!</span>
         </div>
 
-        <div class="collage collage--fourcut collage--hearts">
-          <!-- 2026-10-28: 하트 광고(fourcut_hearts_motion)와 같은 9초 흐름 — 친구 알림이 오며 칸이 하나씩 채워짐 → "너만 남았어" + 빈 칸 두근 → 마지막 칸 찰칵 → 4/4 하트 완성 스탬프.
-               칸 위치는 Figma 네컷 프레임(476×562)의 칸 좌표를 % 로 옮긴 것 -->
-          <figure class="fourcut fourcut--hero fourcut--hearts" style="--r:-2.5deg">
-            <img src="/assets/img/fourcut-hearts-full.webp" width="800" height="944" alt="친구 네 명이 한 컷씩 올려 큰 하트를 완성한 네컷 사진" loading="lazy">
-            <span class="hc-cell hc-cell--2" aria-hidden="true"><b>+</b></span>
-            <span class="hc-cell hc-cell--3" aria-hidden="true"><b>+</b></span>
-            <span class="hc-cell hc-cell--4" aria-hidden="true"><b>+</b>한 컷 남음!</span>
-            <span class="hc-flash" aria-hidden="true"></span>
-          </figure>
-          <ul class="hc-toasts" aria-hidden="true">
-            <li class="hc-toast hc-toast--1"><i>peakpic.</i><small>5분 전</small><span>지민님이 한 컷 올렸어요 · 2/4</span></li>
-            <li class="hc-toast hc-toast--2"><i>peakpic.</i><small>방금</small><span>서연님이 한 컷 올렸어요 · 3/4</span></li>
-            <li class="hc-toast hc-toast--3"><i>peakpic.</i><small>지금</small><span>너만 남았어! 마지막 한 컷 올려줘!</span></li>
-          </ul>
-          <span class="hc-stamp" aria-hidden="true">4/4<br>하트 완성!</span>
-          <span class="cut cut--svg cut--1" aria-hidden="true"><img src="/assets/img/char-bear.svg" width="120" height="120" alt=""></span>
-        </div>
       </div>
     </section>
 
