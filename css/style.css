@@ -452,8 +452,6 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--orange); outlin
   background: rgba(255, 255, 255, .94); border: 2px dashed var(--orange); border-radius: 6px;
   color: var(--black); font-size: clamp(11px, 3.2cqw, 15px); font-weight: 800; letter-spacing: -.01em;
 }
-/* 2026-10-28: 하트 광고로 들어오면 광고 속 하트 네컷(네 칸 팔이 모여 큰 하트) 그대로. 마지막 칸 위치가 디저트 프레임과 달라 따로 맞춤 */
-.fourcut--hearts .cell-empty { left: 52%; top: 46.2%; width: 42.5%; height: 38.2%; border-radius: 4px; }
 .cell-empty b { display: inline-flex; align-items: center; justify-content: center; width: 1.9em; height: 1.9em; border-radius: 50%; background: var(--orange); color: var(--white); font-size: 1.3em; line-height: 1; }
 .collage--fourcut .cut { position: absolute; }
 .collage--fourcut .cut--1 { left: 56%; top: -2%; --r: 10deg; width: clamp(60px, 20cqw, 96px); }
@@ -577,7 +575,6 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--orange); outlin
 
 /* 2026-10-27: 네컷 아이폰 방문자는 첫 화면에 ~21초(루프 3번) 머물다 스크롤 없이 나감 →
    "4/4 완성" 순간에 버튼을 살짝 튕긴다 */
-.hero--mode-hearts .hero__cta .btn-store { animation: cta-nudge 7s ease-in-out infinite; }
 @keyframes cta-nudge { 0%, 36% { scale: 1; } 39% { scale: 1.07; } 42% { scale: .98; } 45%, 100% { scale: 1; } }
 
 
@@ -640,3 +637,56 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--orange); outlin
 .deco svg { width: 100%; height: auto; }
 .cluster--frame .deco--star { left: -1%; top: 1%; --r: 12deg; }
 .cluster--frame .deco--heart { left: 30%; top: 44%; --r: -14deg; }
+
+/* ---------- /fourcut/ 하트 광고 유입 히어로 (2026-10-28): 광고 fourcut_hearts_motion 과 같은 9초 흐름 ----------
+   0% 1칸만 채워짐 → 15% 지민 알림·2칸 → 31% 서연 알림·3칸 → 47% "너만 남았어!" + 빈 칸 두근 → 61% 찰칵(플래시)·4칸 → 66% 4/4 스탬프 → 94% 리셋 */
+.collage--hearts .fourcut--hearts { left: 1%; top: 14%; width: 56%; background: transparent; box-shadow: 0 18px 40px rgba(0,0,0,.22); }
+.collage--hearts .cut--1 { left: -3%; top: 6%; --r: 10deg; width: clamp(54px, 17cqw, 86px); z-index: 4; }
+.hc-cell, .hc-flash { position: absolute; width: 42.5%; height: 38.18%; border-radius: 1.5%/1.3%; }
+.hc-cell {
+  z-index: 2; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .4em;
+  background: #f4f4f4; border: 2px dashed var(--orange);
+  color: var(--black); font-size: clamp(10px, 3cqw, 14px); font-weight: 800; letter-spacing: -.01em;
+}
+.hc-cell b { display: inline-flex; align-items: center; justify-content: center; width: 1.9em; height: 1.9em; border-radius: 50%; background: var(--orange); color: var(--white); font-size: 1.3em; line-height: 1; }
+.hc-cell--2 { left: 52%; top: 4.66%; animation: hc-c2 9s linear infinite; }
+.hc-cell--3 { left: 5.5%; top: 46.23%; animation: hc-c3 9s linear infinite; }
+.hc-cell--4 { left: 52%; top: 46.23%; animation: hc-c4 9s linear infinite; }
+.hc-cell--4 b { animation: hc-beat 9s ease-in-out infinite; }
+.hc-flash { left: 52%; top: 46.23%; z-index: 3; background: var(--white); opacity: 0; animation: hc-flash 9s linear infinite; }
+@keyframes hc-c2 { 0%, 13% { opacity: 1; } 15%, 94% { opacity: 0; } 97%, 100% { opacity: 1; } }
+@keyframes hc-c3 { 0%, 29% { opacity: 1; } 31%, 94% { opacity: 0; } 97%, 100% { opacity: 1; } }
+@keyframes hc-c4 { 0%, 60% { opacity: 1; } 61%, 94% { opacity: 0; } 97%, 100% { opacity: 1; } }
+@keyframes hc-beat { 0%, 47% { scale: 1; } 50% { scale: 1.2; } 53% { scale: 1; } 56% { scale: 1.2; } 59%, 100% { scale: 1; } }
+@keyframes hc-flash { 0%, 60% { opacity: 0; } 61% { opacity: .95; } 66%, 100% { opacity: 0; } }
+.hc-toasts { position: absolute; z-index: 5; right: 0; top: 1%; width: 51%; margin: 0; padding: 0; list-style: none; display: grid; gap: 2.4cqw; }
+.hc-toast {
+  display: grid; grid-template-columns: auto 1fr; column-gap: 1.6cqw; align-items: center;
+  padding: 1.8cqw 2.4cqw; border-radius: 12px; background: var(--white); box-shadow: 0 8px 22px rgba(0,0,0,.16);
+  font-size: clamp(10px, 2.9cqw, 13.5px); line-height: 1.3; opacity: 0;
+}
+.hc-toast i { grid-row: span 2; font-style: normal; font-weight: 900; font-size: .78em; letter-spacing: -.02em; padding: .45em .4em; border-radius: 8px; border: 1.5px solid var(--black); }
+.hc-toast small { color: rgba(0,0,0,.45); font-size: .8em; font-weight: 600; }
+.hc-toast span { font-weight: 800; }
+.hc-toast--3 { border: 2px solid var(--orange); }
+.hc-toast--3 span { color: var(--orange); }
+.hc-toast--1 { animation: hc-t1 9s ease-out infinite; }
+.hc-toast--2 { animation: hc-t2 9s ease-out infinite; }
+.hc-toast--3 { animation: hc-t3 9s ease-out infinite; }
+@keyframes hc-t1 { 0%, 12% { opacity: 0; translate: 0 8px; } 15%, 94% { opacity: 1; translate: 0 0; } 97%, 100% { opacity: 0; } }
+@keyframes hc-t2 { 0%, 28% { opacity: 0; translate: 0 8px; } 31%, 94% { opacity: 1; translate: 0 0; } 97%, 100% { opacity: 0; } }
+@keyframes hc-t3 { 0%, 44% { opacity: 0; translate: 0 8px; } 47%, 94% { opacity: 1; translate: 0 0; } 97%, 100% { opacity: 0; } }
+.hc-stamp {
+  position: absolute; z-index: 6; right: 3%; bottom: 3%; width: 31cqw; aspect-ratio: 1; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; text-align: center;
+  background: var(--orange); color: var(--white); border: 4px solid var(--white); box-shadow: 0 10px 24px rgba(0,0,0,.2);
+  font-size: clamp(13px, 4.4cqw, 20px); font-weight: 900; line-height: 1.15; letter-spacing: -.02em;
+  transform: rotate(-8deg); opacity: 0; animation: hc-stamp 9s ease-out infinite;
+}
+@keyframes hc-stamp { 0%, 62% { opacity: 0; scale: .4; } 66% { opacity: 1; scale: 1.12; } 69%, 94% { opacity: 1; scale: 1; } 97%, 100% { opacity: 0; scale: .4; } }
+.hero--mode-hearts .hero__cta .btn-store { animation: cta-nudge-hearts 9s ease-in-out infinite; }
+@keyframes cta-nudge-hearts { 0%, 66% { scale: 1; } 69% { scale: 1.07; } 72% { scale: .98; } 75%, 100% { scale: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  .hc-cell, .hc-cell b, .hc-flash, .hc-toast, .hc-stamp, .hero--mode-hearts .hero__cta .btn-store { animation: none; }
+  .hc-cell { opacity: 0; } .hc-toast, .hc-stamp { opacity: 1; }   /* 모션 없으면 완성 상태로 */
+}

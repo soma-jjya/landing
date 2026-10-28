@@ -66,7 +66,8 @@
   2026-10-27 개편: 히어로 기본(포토부스 광고·직접 유입) = 칩 "부스 없이 폰으로 끝내는 네컷" + "이제 내 폰이 / 공짜 포토부스." + 포토부스 장면(.booth, 8초 루프:
   찰칵 1/4~4/4 사진 4장 → 가운데로 모여 한 장 → 프레임 탭 → 디저트 프레임 결과 → 스티커 → 저장 → "앨범에 저장됐어요", 오렌지 스티커 "현재 무료!"(광고 가격표와 같은 문구)). 비주얼 폭 모바일 330px·데스크톱 520px.
   사진은 fourcut-dessert 의 네 칸을 자른 fourcut-cut-1~4.webp(원본 assets/raw/fourcut/booth). utm_content 에 hearts·friends 가 있으면 .hero--mode-hearts 로
-  "너만 올리면 네컷 완성." + 광고 속 하트 네컷 그대로(2026-10-28, fourcut-hearts-full.webp / 영어는 en-fourcut-hearts-full.webp, 마지막 칸이 비었다가 채워짐, .fourcut--hearts). 문제 공감 다음에 "친구랑 같이 찍는 법" 3단계 섹션(#how, 버튼 placement=how) 추가.
+  "너만 올리면 네컷 완성." + 광고 fourcut_hearts_motion 과 같은 9초 흐름(2026-10-28, .collage--hearts: 친구 알림 2/4·3/4가 오며 칸이 채워짐 → "너만 남았어!" + 빈 칸 두근 → 찰칵 → 4/4 하트 완성 스탬프, CTA 흔들기도 9초 동기).
+  그림은 광고 하트 네컷 그대로 fourcut-hearts-full.webp / 영어 en-fourcut-hearts-full.webp, 빈 칸 위치는 Figma 네컷 프레임 칸 좌표(%). 문제 공감 다음에 "친구랑 같이 찍는 법" 3단계 섹션(#how, 버튼 placement=how) 추가.
   1단계 그림은 갸루 야호 프레임(frame-gyaru, 2026-10-27 사용자 선택 — 패치워크 webp 는 보관), 2단계 "각자 폰으로 한 컷씩" 그림은 광고 네컷①-C 하트 프레임(3/4 채워진 상태, fourcut-hearts-fill.webp, 원본 assets/raw/fourcut/hearts-fill.png).
   **인물 3명이 Figma AI 생성(2026-10-27 결정, 2026-10-28부터 AI 이미지 전면 허용)**. 실사 하트 사진이 생기면 교체 + 영상 프레임 대신 채워지는 네컷 콜라주
   (`.collage--fourcut`: 마지막 칸 `.cell-empty` 가 7초 루프 안에서 채워지고 3/4 → 4/4). 문제 공감은 줄·모임·비용 3장. 광고 URL 은 utm_content=fourcut_b

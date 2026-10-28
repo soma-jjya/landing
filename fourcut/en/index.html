@@ -84,27 +84,23 @@
           <span class="sticker sticker--orange booth__free" style="--r:12deg" aria-hidden="true">Free<br>now!</span>
         </div>
 
-                <div class="collage collage--fourcut">
+        <div class="collage collage--fourcut collage--hearts">
+          <!-- 2026-10-28: 하트 광고(fourcut_hearts_motion)와 같은 9초 흐름 — 친구 알림이 오며 칸이 하나씩 채워짐 → "너만 남았어" + 빈 칸 두근 → 마지막 칸 찰칵 → 4/4 하트 완성 스탬프.
+               칸 위치는 Figma 네컷 프레임(476×562)의 칸 좌표를 % 로 옮긴 것 -->
           <figure class="fourcut fourcut--hero fourcut--hearts" style="--r:-2.5deg">
-            <span class="tape" style="left:10%; top:-10px; --tr:-7deg"></span>
             <img src="/assets/img/en-fourcut-hearts-full.webp" width="800" height="944" alt="Four friends each added a shot to make one big heart" loading="lazy">
-            <span class="cell-empty" aria-hidden="true"><b>+</b>1 shot left!</span>
-            <span class="pin pin--3" style="--x:50%; --y:0" aria-hidden="true">3 / 4 done</span>
-            <span class="pin pin--4" style="--x:50%; --y:0" aria-hidden="true">4 / 4 done</span>
+            <span class="hc-cell hc-cell--2" aria-hidden="true"><b>+</b></span>
+            <span class="hc-cell hc-cell--3" aria-hidden="true"><b>+</b></span>
+            <span class="hc-cell hc-cell--4" aria-hidden="true"><b>+</b>1 shot left!</span>
+            <span class="hc-flash" aria-hidden="true"></span>
           </figure>
+          <ul class="hc-toasts" aria-hidden="true">
+            <li class="hc-toast hc-toast--1"><i>peakpic.</i><small>5m ago</small><span>Emma added a shot · 2/4</span></li>
+            <li class="hc-toast hc-toast--2"><i>peakpic.</i><small>Just now</small><span>Olivia added a shot · 3/4</span></li>
+            <li class="hc-toast hc-toast--3"><i>peakpic.</i><small>Now</small><span>Your turn! Add the last shot!</span></li>
+          </ul>
+          <span class="hc-stamp" aria-hidden="true">4/4<br>Heart done!</span>
           <span class="cut cut--svg cut--1" aria-hidden="true"><img src="/assets/img/char-bear.svg" width="120" height="120" alt=""></span>
-          <span class="cut cut--svg cut--2" aria-hidden="true"><img src="/assets/img/char-cat.svg" width="120" height="120" alt="" loading="lazy"></span>
-          <span class="logo-sticker" aria-hidden="true"><img src="/assets/img/sticker-diecut.svg" alt="" width="920" height="540"></span>
-          <span class="bubble bubble--a" style="--r:3deg" aria-hidden="true">Your turn — add a shot!</span>
-          <span class="bubble bubble--orange bubble--b" style="--r:-5deg" aria-hidden="true">Added. Done!</span>
-          <span class="sticker" style="--r:9deg" aria-hidden="true">no line<br>needed</span>
-          <span class="spin" aria-hidden="true">
-            <svg viewBox="0 0 120 120">
-              <circle cx="60" cy="60" r="59" fill="#000"/>
-              <text><textPath href="#spin-path">PEAK PIC • PHOTO BOOTH •</textPath></text>
-              <circle cx="60" cy="60" r="11" fill="#FF5A47"/>
-            </svg>
-          </span>
         </div>
       </div>
     </section>
