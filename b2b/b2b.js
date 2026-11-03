@@ -93,6 +93,13 @@
     }
     return el.type === 'checkbox' ? el.checked : String(el.value || '').trim();
   }
+  /* 연락처 정규화: 공백·하이픈·괄호·점을 지우고 숫자(맨 앞 + 허용)만 보낸다. 010 1234 5678, 010-1234-5678, (02)1234-5678 모두 같은 값 */
+  function normalizePhone(raw) {
+    var v = String(raw || '').trim();
+    var plus = v.charAt(0) === '+' ? '+' : '';
+    return plus + v.replace(/[^0-9]/g, '');
+  }
+
   function showError(text) {
     errBox.textContent = text;
     errBox.hidden = false;
@@ -123,7 +130,7 @@
       type: val('type'),
       organization: val('organization'),
       contactName: val('contactName'),
-      phone: val('phone'),
+      phone: normalizePhone(val('phone')),
       privacyAgreed: true,
       marketingAgreed: val('marketingAgreed') === true,
       landingPath: location.pathname,

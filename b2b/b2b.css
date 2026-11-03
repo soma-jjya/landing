@@ -57,6 +57,7 @@ html[data-b2b="other"] .b2b-frame--goheung .b2b-pin, html:not([data-b2b]) .b2b-f
 .b2b-form-section__inner { display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px; }
 .b2b-card { position: relative; background: var(--white); border: 1.5px solid var(--black); border-radius: 20px; padding: 24px 18px; box-shadow: 0 18px 40px -24px rgba(0, 0, 0, .35); }
 .b2b-form { display: flex; flex-direction: column; gap: 16px; }
+.b2b-form[hidden] { display: none; }   /* 접수 성공 뒤 form.hidden — display:flex 가 hidden 속성을 이기지 않게 */
 .b2b-form__title { font-size: clamp(24px, 6vw, 32px); font-weight: 900; letter-spacing: -0.03em; line-height: 1.2; }
 .b2b-form__sub { margin-top: -10px; font-size: 14px; color: var(--ink-55); }
 .b2b-form__sub b, .b2b-field b { color: var(--orange); }
