@@ -37,7 +37,7 @@ B2B 메타 광고(카페·매장 / 축제·행사·관광공사)의 **도착지*
 | `scale` | 규모 | 선택 | 셀렉트: 하루 손님 50명 미만 / 50~200 / 200 이상 / 행사 방문객 1천 미만 / 1천~1만 / 1만 이상 |
 | `website` | 인스타그램·홈페이지 | 선택 | text, 200자 |
 | `message` | 문의 내용 | 선택 | textarea, 500자 카운터 |
-| `privacyAgreed` | 개인정보 수집·이용 동의 | 필수 | 체크박스. 문구: "상담을 위해 업체명·성함·연락처·이메일을 수집하며, 상담 종료 후 1년 보관합니다." + `/privacy.html` 링크 |
+| `privacyAgreed` | 개인정보 수집·이용 동의 | 필수 | 체크박스. 문구: "상담을 위해 업체명·성함·연락처·이메일을 수집하며, 상담 종료 후 1년 보관합니다." + `https://peakpic.app/privacy/` 링크(peakpic.app Worker 가 서비스하는 처리방침. 랜딩의 privacy.html 이 아니다) |
 | `marketingAgreed` | 피크픽 소식 받기 | 선택 | 체크박스, 기본 해제 |
 | `utm` | (숨김) | | `{source, medium, campaign, content, term}` — 주소창 `utm_*` 그대로. 없으면 생략 |
 | `landingPath` | (숨김) | | `location.pathname` |
