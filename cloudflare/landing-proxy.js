@@ -1,6 +1,6 @@
 /* peakpic.app 의 랜딩 경로만 Vercel 랜딩으로 넘기는 분배 코드 — peakpic-app-site Worker 에 붙여 넣는다.
  *
- * 넘기는 경로(랜딩): /  /index.html  /couple/…  /fourcut/…  /css/…  /js/…  /assets/…  /ingest/…(PostHog)
+ * 넘기는 경로(랜딩): /  /index.html  /couple/…  /fourcut/…  /b2b/…(2026-11-03 B2B 문의 폼)  /css/…  /js/…  /assets/…  /ingest/…(PostHog)
  * 그 밖의 경로(/fill/, /api/, /.well-known/, /privacy/, /terms/, robots.txt 등)는 지금 Worker 가 그대로 처리한다.
  *
  * 붙이는 법
@@ -9,16 +9,16 @@
  *      if (isLandingPath(new URL(request.url).pathname)) return proxyToLanding(request);
  * 3) wrangler 설정에 "assets"(정적 파일)가 있다면, 정적 파일이 코드보다 먼저 응답해서 "/" 가 안 넘어간다.
  *    아래처럼 랜딩 경로는 코드가 먼저 돌게 한다 (또는 Worker 의 기존 루트 index.html 을 지운다).
- *      wrangler.jsonc  "assets": { ..., "run_worker_first": ["/", "/index.html", "/couple/*", "/fourcut/*", "/css/*", "/js/*", "/assets/*", "/ingest/*"] }
- *      wrangler.toml   [assets]  run_worker_first = ["/", "/index.html", "/couple/*", "/fourcut/*", "/css/*", "/js/*", "/assets/*", "/ingest/*"]
- *    ※ Worker 가 /couple, /fourcut, /css, /js, /assets 같은 경로를 이미 쓰고 있지 않은지 먼저 확인
+ *      wrangler.jsonc  "assets": { ..., "run_worker_first": ["/", "/index.html", "/couple/*", "/fourcut/*", "/b2b/*", "/css/*", "/js/*", "/assets/*", "/ingest/*"] }
+ *      wrangler.toml   [assets]  run_worker_first = ["/", "/index.html", "/couple/*", "/fourcut/*", "/b2b/*", "/css/*", "/js/*", "/assets/*", "/ingest/*"]
+ *    ※ Worker 가 /couple, /fourcut, /b2b, /css, /js, /assets 같은 경로를 이미 쓰고 있지 않은지 먼저 확인
  * 4) 배포 후 확인: https://peakpic.app/ 이 새 랜딩, https://peakpic.app/fill/ 과 /.well-known/assetlinks.json 은 그대로
  */
 const LANDING_ORIGIN = 'https://landing-pi-umber.vercel.app';
 
 function isLandingPath(p) {
   return p === '/' || p === '/index.html'
-    || /^\/(couple|fourcut)(\/|$)/.test(p)
+    || /^\/(couple|fourcut|b2b)(\/|$)/.test(p)
     || /^\/(css|js|assets|ingest)\//.test(p);
 }
 

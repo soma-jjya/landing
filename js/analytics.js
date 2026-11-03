@@ -13,6 +13,9 @@
    - cta_click {cta, placement} 헤더·고정 "앱 다운로드" (설치 섹션으로 스크롤)
    - store_click {store, placement, os}  스토어로 가는 링크 클릭(단일 버튼·공식 배지 모두) = 랜딩의 전환 지표
    - hero_video_play           시연 영상이 실제로 재생된 경우 1회
+   - /b2b/ 문의 폼(2026-11-03, landing_variant=b2b): b2b/b2b.js 가 아래 window.peakpicTrack 으로 보낸다
+     b2b_inquiry_started {type} 첫 입력 · b2b_inquiry_submitted {type, utm_content, has_email, has_message} 접수 성공 = B2B 전환 지표
+     b2b_inquiry_failed {status} · b2b_inquiry_invalid {fields, first_field} · b2b_inquiry_abandoned {last_field, filled_count} · b2b_more_opened · cta_click {cta:'b2b_inquiry', placement: hero|sticky} · section_viewed {section:'inquiry'}
    퍼널: $pageview → section_viewed(install) → store_click, breakdown by ad_creative
 
    Meta 픽셀 (2026-10-20, 광고 최적화용 — PEAKPIC_ANALYTICS.metaPixelId 가 있을 때만)
@@ -20,7 +23,8 @@
    - ViewContent  (표준, 2026-10-26) 페이지 로드 시 {content_name: 변형}
    - Lead         (표준, 2026-10-26) store_click 과 같은 순간 — 새 캠페인(리드 목표)의 최적화 이벤트
    - StoreClick   (custom) store_click 과 같은 순간. 기존 테스트 캠페인 호환용으로 유지 {store, placement, os, landing_variant, ad_creative}
-                  광고 관리자에서 "맞춤 전환"으로 만들어 최적화·성과 지표로 쓴다 */
+                  광고 관리자에서 "맞춤 전환"으로 만들어 최적화·성과 지표로 쓴다
+   - /b2b/ 는 Lead 를 문의 접수 성공 때만 보낸다(b2b.js → window.peakpicMeta). 접수 화면의 "앱 구경하기" 스토어 클릭은 StoreClick 만 */
 (function () {
   'use strict';
   var cfg = window.PEAKPIC_ANALYTICS || {};
@@ -39,6 +43,7 @@
     metaTrack = function (name, props) { try { fbq('trackCustom', name, props || {}); } catch (e) { /* 수집 실패는 무시 */ } };
     metaStd = function (name, props) { try { fbq('track', name, props || {}); } catch (e) { /* 수집 실패는 무시 */ } };
   }
+  window.peakpicMeta = metaStd;   // 페이지 전용 스크립트(b2b/b2b.js)가 표준 이벤트를 보낼 때
 
   if (!cfg.key) return;
 
@@ -78,9 +83,10 @@
   var track = function (name, props) { try { posthog.capture(name, props || {}); } catch (e) { /* 수집 실패는 무시 */ } };
   // 페이지를 떠나는 순간의 이벤트(스토어 클릭)는 배치 대기 없이 바로 보낸다 — iOS 인앱 브라우저에서 유실이 컸다(2026-10-24 분석)
   var trackNow = function (name, props) { try { posthog.capture(name, props || {}, { send_instantly: true, transport: 'sendBeacon' }); } catch (e) { /* 수집 실패는 무시 */ } };
+  window.peakpicTrack = function (name, props, now) { (now ? trackNow : track)(name, props); };   // b2b/b2b.js 용
 
   // 1) 섹션 노출
-  var sections = [['hero', '.hero'], ['pain', '.pain'], ['how', '#how'], ['mirroring', '#mirroring'], ['pose', '#pose'], ['my-frame', '#my-frame'], ['install', '#install']];   // how = /fourcut/ '친구랑 같이 찍는 법'(2026-10-27), 없는 페이지에선 건너뜀
+  var sections = [['hero', '.hero, .b2b-hero'], ['pain', '.pain'], ['how', '#how'], ['mirroring', '#mirroring'], ['pose', '#pose'], ['my-frame', '#my-frame'], ['install', '#install'], ['inquiry', '#inquiry']];   // how = /fourcut/ '친구랑 같이 찍는 법'(2026-10-27), 없는 페이지에선 건너뜀
   if ('IntersectionObserver' in window) {
     sections.forEach(function (s) {
       var el = document.querySelector(s[1]); if (!el) return;
@@ -108,6 +114,7 @@
     if (el.closest('.hero')) return 'hero';
     if (el.closest('.install')) return 'install';
     if (el.closest('.how')) return 'how';   // 2026-10-27 네컷 '친구랑 같이 찍는 법' 섹션 버튼
+    if (el.closest('.b2b-done')) return 'b2b_done';   // /b2b/ 문의 접수 화면의 "앱 구경하기"
     return 'other';
   };
   document.addEventListener('click', function (e) {
@@ -116,7 +123,7 @@
     var store = /play\.google\.com/.test(href) ? 'google_play' : (/apps\.apple\.com/.test(href) ? 'app_store' : null);
     if (store) {
       trackNow('store_click', { store: store, placement: placementOf(a), os: os });
-      metaStd('Lead', { content_name: cfg.variant || 'main', content_category: store });
+      if (cfg.variant !== 'b2b') metaStd('Lead', { content_name: cfg.variant || 'main', content_category: store });   // b2b 의 Lead 는 문의 접수만
       metaTrack('StoreClick', { store: store, placement: placementOf(a), os: os, landing_variant: cfg.variant || 'main', ad_creative: params.utm_content || '(none)' });
     } else if (href === '#install') {
       track('cta_click', { cta: 'app_download', placement: placementOf(a) });

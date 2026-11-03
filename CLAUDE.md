@@ -79,6 +79,13 @@
   <html lang="en"> 이면 js/main.js 가 국가 없는 스토어 주소(apps.apple.com/app/…, Play hl=en)로 보낸다. 배지는 google-play-badge-en.png·app-store-badge-en.svg. 포즈 추천 목업(pose-*.webp)은 아직 한국어 UI — 영어 앱 화면 받으면 교체
   한국어 변형을 고치면 영어 변형도 같이 고칠 것
 
+B2B 문의 폼(2026-11-03, 브리프 docs/b2b-inquiry-form-brief.md): `/b2b/`(variant=b2b) — B2B 메타 광고(캠페인 b2b_1103, 세트 b2b_cafe·b2b_event)의 도착지. 설치가 아니라 **문의 접수**가 목표.
+  b2b/index.html·b2b.css·b2b.js. head 인라인 스크립트가 utm_content 를 보고 `<html data-b2b="cafe|festival|tourism|other">`(cafe / tour / festival·event / 그 외) → CSS 가 `[data-v]` 문구만 보여준다.
+  카피·조건은 Figma B2B v6 포스터와 같다(설치비 0원·상주 인력 0명·거치대 + 폰 1대, 손님 3단계). 그림: 카페 frame-dessert, 축제 frame-goheung(2026 고흥유자축제 실제 프레임, 원본 assets/raw/b2b)
+  전송 POST https://api.peakpic.app/inquiries (서버 caestro-server contracts/b2b-inquiries.md, CORS 는 peakpic.app 만 → 로컬에선 전송 실패가 정상). 허니팟 fax.
+  지표: PostHog b2b_inquiry_started / b2b_inquiry_submitted / b2b_inquiry_failed / b2b_inquiry_invalid{first_field} / b2b_inquiry_abandoned{last_field} / b2b_more_opened (대시보드 2296402 "B2B 문의 폼": 퍼널·소재별·이탈 칸·막힌 칸·날짜별·노출 위치·전송 실패), 메타 픽셀 **Lead 는 접수 성공 때만**(b2b 페이지의 스토어 클릭은 Lead 안 보냄 — analytics.js). 개인정보 링크는 peakpic.app/privacy/
+  Worker 에 /b2b/* 를 넘겨야 peakpic.app/b2b/ 가 열린다(cloudflare/landing-proxy.js 반영, Worker 배포는 팀원)
+
 1. 히어로: 시연 영상(자동재생·음소거·루프 — 영상 오기 전엔 home 화면 목업+포스터) +
    슬로건 + **단일 "앱 다운로드" 버튼(주 CTA, OS 별 스토어 직행)**
    히어로 모션(2026-10-16, my4cut-official.com 참고): 7초 루프로 말풍선 팝업 → "찰칵" 흔들림 → 프레임 플래시, 폴라로이드 부유, 로고 스티커 스윙.
