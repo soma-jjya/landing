@@ -81,12 +81,14 @@
 필리핀 변형(2026-11-04, 동남아 광고 sea_en_1029 의 *_ph 소재 도착지): `/couple/ph/`(couple_ph)·`/fourcut/ph/`(fourcut_ph). /couple/en/·/fourcut/en/ 구조 그대로, 카피만 타글리시(영어+타갈로그).
   <html lang="en-PH"> 라 js/main.js 가 영어 페이지처럼 국가 없는 스토어 주소로 보낸다. 커플 사진은 필리핀 광고와 같은 K-pop 느낌 AI 모델(ph-couple-hero / ph-couple-bts, 원본 assets/raw/ph),
   네컷 how 2단계는 필리핀 하트 프레임 3/4(ph-fourcut-hearts-fill). 영어 변형을 고치면 필리핀 변형도 같이 고칠 것
+  2026-11-04 21시: sea_en_1029 는 필리핀만(말레이시아 제외)·AN 끔, 영어판 광고 삭제 → _ph 4종만. 대시보드 2270281 의 7번 표가 같은 광고의 영어판(10/29~11/4) vs 필리핀판 비교(AN 제외)
 
 B2B 문의 폼(2026-11-03, 브리프 docs/b2b-inquiry-form-brief.md): `/b2b/`(variant=b2b) — B2B 메타 광고(캠페인 b2b_1103, 세트 b2b_cafe·b2b_event)의 도착지. 설치가 아니라 **문의 접수**가 목표.
   b2b/index.html·b2b.css·b2b.js. head 인라인 스크립트가 utm_content 를 보고 `<html data-b2b="cafe|festival|tourism|other">`(cafe / tour / festival·event / 그 외) → CSS 가 `[data-v]` 문구만 보여준다.
-  카피·조건은 Figma B2B v6 포스터와 같다(설치비 0원·상주 인력 0명·거치대 + 폰 1대, 손님 3단계). 그림: 카페 frame-dessert, 축제 frame-goheung(2026 고흥유자축제 실제 프레임, 원본 assets/raw/b2b)
+  카피·조건은 Figma B2B v6 포스터 기반(설치비 0원·상주 인력 0명, 손님 3단계). 2026-11-04 사용자 확인: 실제 제공은 **QR 포스터 1장 + 손님 폰**(거치대·폰 설치 아님) → "필요한 것 QR 포스터 1장", 2단계 "손님 폰으로 촬영". 카페 변형 버튼·폼 제목은 카페 광고 움짤 CTA 와 같은 "무료로 우리 가게 프레임 받기"·"무료 체험 신청"(무료 사전 체험 기간). 그림: 카페 frame-dessert, 축제 frame-goheung(2026 고흥유자축제 실제 프레임, 원본 assets/raw/b2b)
   전송 POST https://api.peakpic.app/inquiries (서버 caestro-server contracts/b2b-inquiries.md, CORS 는 peakpic.app 만 → 로컬에선 전송 실패가 정상). 허니팟 fax.
   지표: PostHog b2b_inquiry_started / b2b_inquiry_submitted / b2b_inquiry_failed / b2b_inquiry_invalid{first_field} / b2b_inquiry_abandoned{last_field} / b2b_more_opened (대시보드 2296402 "B2B 문의 폼": 퍼널·소재별·이탈 칸·막힌 칸·날짜별·노출 위치·전송 실패), 메타 픽셀 **Lead 는 접수 성공 때만**(b2b 페이지의 스토어 클릭은 Lead 안 보냄 — analytics.js). 개인정보 링크는 peakpic.app/privacy/
+  2026-11-04 게시: 카페 세트에 b2b_cafe_space(공간·포토존)·b2b_cafe_promote(홍보) 2종(utm_term={{placement}}), 둘 다 cafe 문구로 열림. 축제·관광 세트는 보류
   Worker 에 /b2b/* 를 넘겨야 peakpic.app/b2b/ 가 열린다(cloudflare/landing-proxy.js 반영, Worker 배포는 팀원)
 
 1. 히어로: 시연 영상(자동재생·음소거·루프 — 영상 오기 전엔 home 화면 목업+포스터) +
