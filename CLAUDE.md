@@ -78,6 +78,9 @@
   커플 모델 사진은 Figma AI 생성(2026-10-28, 지중해 해안 골든아워 같은 인물 2장: en-couple-hero-v2 / en-couple-bts-v2, 원본 assets/raw/en). 네컷은 "Korean photo booth" 감성이 장점이라 한국 사진 그대로, how 2단계만 EN 포스터 하트 칸(en-fourcut-hearts-fill).
   <html lang="en"> 이면 js/main.js 가 국가 없는 스토어 주소(apps.apple.com/app/…, Play hl=en)로 보낸다. 배지는 google-play-badge-en.png·app-store-badge-en.svg. 포즈 추천 목업(pose-*.webp)은 아직 한국어 UI — 영어 앱 화면 받으면 교체
   한국어 변형을 고치면 영어 변형도 같이 고칠 것
+필리핀 변형(2026-11-04, 동남아 광고 sea_en_1029 의 *_ph 소재 도착지): `/couple/ph/`(couple_ph)·`/fourcut/ph/`(fourcut_ph). /couple/en/·/fourcut/en/ 구조 그대로, 카피만 타글리시(영어+타갈로그).
+  <html lang="en-PH"> 라 js/main.js 가 영어 페이지처럼 국가 없는 스토어 주소로 보낸다. 커플 사진은 필리핀 광고와 같은 K-pop 느낌 AI 모델(ph-couple-hero / ph-couple-bts, 원본 assets/raw/ph),
+  네컷 how 2단계는 필리핀 하트 프레임 3/4(ph-fourcut-hearts-fill). 영어 변형을 고치면 필리핀 변형도 같이 고칠 것
 
 B2B 문의 폼(2026-11-03, 브리프 docs/b2b-inquiry-form-brief.md): `/b2b/`(variant=b2b) — B2B 메타 광고(캠페인 b2b_1103, 세트 b2b_cafe·b2b_event)의 도착지. 설치가 아니라 **문의 접수**가 목표.
   b2b/index.html·b2b.css·b2b.js. head 인라인 스크립트가 utm_content 를 보고 `<html data-b2b="cafe|festival|tourism|other">`(cafe / tour / festival·event / 그 외) → CSS 가 `[data-v]` 문구만 보여준다.
@@ -169,6 +172,10 @@ B2B 문의 폼(2026-11-03, 브리프 docs/b2b-inquiry-form-brief.md): `/b2b/`(va
   2026-10-26 결정: 정적 포스터는 집행 안 함 — 커플 couple_d_motion·couple_mirror_motion, 네컷 fourcut_hearts_motion·fourcut_booth_motion 2026-10-26 결정: 네컷 실사(①-B) 모션은 집행 안 함, 프레임 꾸미기(fourcut_frame)는 단독 광고 폐기
   EN 모션 4종(2026-10-28, Figma 같은 페이지 y=-8570 줄 "EN · v4 …" 섹션, 한국 모션을 복제해 문구만 현지화): `couple_d_motion_en`·`couple_mirror_motion_en` → `/couple/en/`(모델은 Figma AI 지중해 해안 여성·BEFORE 컷 새로 생성),
   `fourcut_hearts_motion_en`·`fourcut_booth_motion_en` → `/fourcut/en/`(하트는 서구권 AI 모델 4명으로 교체 — 금발 여성·갈색머리 남성·라틴계 여성·흑인 남성, 포토부스는 한국 사진 그대로). couple_d EN 의 BEFORE 는 남친이 폰을 대충 드는 뒷모습 컷. 가격표 "Pro $3.99/mo · Free for now!". 캠페인은 한국과 분리 `global_en_1029`(utm_campaign), 국가 묶음별 광고 세트
+  필리핀 버전(2026-11-04, Figma 같은 줄 맨 오른쪽 "SEA · v4 커플① 모션 B"): 필리핀에서 한국 사진 포토부스 광고가 서양인 미러링 광고보다 스토어 클릭률 2배(48% vs 26%, AN 제외)라
+  미러링 모션의 모델을 K-pop 느낌 한국인 AI 모델(서울 루프탑·남산타워 골든아워)로, 문구를 타글리시로 바꿈("Bye na sa / bad BF pics.", "I-download na, libre!", "Libre ngayon!"). `couple_mirror_motion_ph` → `/couple/ph/`
+  같은 날 나머지 3종도(그 오른쪽 "SEA · …" 섹션, 사용자 요청: 고미모 K-pop AI 모델 + "AI 느낌 최대한 줄이기" → gemini-3.1-flash-image 로 폰 사진 질감·피부결·잔머리를 살린 사진으로 교체): `couple_d_motion_ph`(BEFORE 도 같은 모델·남친 뒷모습) → `/couple/ph/`,
+  `fourcut_hearts_motion_ph`(친구 이름 Bea·Joy. 칸별로 따로 만들면 팔 방향이 어긋나서 2×2 한 장을 생성해 칸마다 CROP — 위 두 칸이 하트 윗부분, 아래 두 칸이 바깥 위로 뻗은 V, "Ikaw na lang, / kumpleto na!"), `fourcut_booth_motion_ph`(사진은 디저트 네컷 그대로, "Photo booth, / libre sa phone!") → `/fourcut/ph/`
   v2 값(`fourcut_b`, `mirror_a`, `pose_c`)은 보관용. 포스터 CTA 바(2026-10-16)는 왼쪽 "지금 무료로 다운로드 →" + 오른쪽 가격표 스티커 "~~Pro 월 3,900원~~ 현재 무료!"(스토어 배지 없음 — 클릭하면 랜딩으로 가므로).
   무료 종료 시점이 미정이라 기간("3개월" 등)은 쓰지 않는다. Pro 가격은 사용자가 준 값 — 가격이 바뀌거나 무료가 끝나면 포스터 8장 모두 고칠 것(표시광고 사실관계)
 - super property `landing_variant`(main/couple/fourcut) 로 변형별 비교. 핵심 비교 지표 = 변형별 `store_click` 전환율
