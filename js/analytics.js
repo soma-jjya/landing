@@ -15,7 +15,7 @@
    - hero_video_play           시연 영상이 실제로 재생된 경우 1회
    - /b2b/ 문의 폼(2026-11-03, landing_variant=b2b): b2b/b2b.js 가 아래 window.peakpicTrack 으로 보낸다
      b2b_inquiry_started {type} 첫 입력 · b2b_inquiry_submitted {type, utm_content, has_email, has_message} 접수 성공 = B2B 전환 지표
-     b2b_inquiry_failed {status} · b2b_inquiry_invalid {fields, first_field} · b2b_inquiry_abandoned {last_field, filled_count} · b2b_more_opened · cta_click {cta:'b2b_inquiry', placement: hero|sticky} · section_viewed {section:'inquiry'}
+     b2b_inquiry_failed {status} · b2b_inquiry_invalid {fields, first_field} · b2b_inquiry_abandoned {last_field, filled_count} · b2b_more_opened · cta_click {cta:'b2b_inquiry', placement: hero|sticky} · section_viewed {section: proof|examples|steps|faq|inquiry}
    퍼널: $pageview → section_viewed(install) → store_click, breakdown by ad_creative
 
    Meta 픽셀 (2026-10-20, 광고 최적화용 — PEAKPIC_ANALYTICS.metaPixelId 가 있을 때만)
@@ -86,7 +86,8 @@
   window.peakpicTrack = function (name, props, now) { (now ? trackNow : track)(name, props); };   // b2b/b2b.js 용
 
   // 1) 섹션 노출
-  var sections = [['hero', '.hero, .b2b-hero'], ['pain', '.pain'], ['how', '#how'], ['mirroring', '#mirroring'], ['pose', '#pose'], ['my-frame', '#my-frame'], ['install', '#install'], ['inquiry', '#inquiry']];   // how = /fourcut/ '친구랑 같이 찍는 법'(2026-10-27), 없는 페이지에선 건너뜀
+  var sections = [['hero', '.hero, .b2b-hero'], ['pain', '.pain'], ['how', '#how'], ['mirroring', '#mirroring'], ['pose', '#pose'], ['my-frame', '#my-frame'], ['install', '#install'], ['proof', '#proof'], ['examples', '#examples'], ['steps', '#b2b-how'], ['faq', '#faq'], ['inquiry', '#inquiry']];   // proof·examples·steps·faq = /b2b/ (2026-11-07)
+    // how = /fourcut/ '친구랑 같이 찍는 법'(2026-10-27), 없는 페이지에선 건너뜀
   if ('IntersectionObserver' in window) {
     sections.forEach(function (s) {
       var el = document.querySelector(s[1]); if (!el) return;
