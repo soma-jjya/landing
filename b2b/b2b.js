@@ -14,7 +14,7 @@
   var API = 'https://api.peakpic.app/inquiries';
   // 연락 방법 선택(이메일·인스타 DM) 스위치 — 서버가 phone 없는 접수를 받기 전(caestro-server feat/b2b-contact-method 배포 + DB phone NULL 허용)엔 false.
   // false 면 '전화·문자'만 보이고 예전처럼 전화번호로만 받는다. 서버 배포 뒤 true 로 바꾸고 ?v= 를 올려 배포
-  var MULTI_CONTACT = false;
+  var MULTI_CONTACT = true;   // 2026-11-07 서버 PR #234 운영 배포 확인 → 켬
   var MAIL = 'asmjjya@gmail.com';
   var form = document.getElementById('b2b-form');
   if (!form) return;
