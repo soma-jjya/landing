@@ -69,10 +69,12 @@
   var ua = navigator.userAgent || '';
   var isIOS = /iPhone|iPad|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
   var isAndroid = !isIOS && /Android/.test(ua);
-  // 영어 페이지(/couple/en/ 등, <html lang="en">)는 국가 없는 스토어 주소 — 방문자 나라의 스토어로 자동 연결된다
-  var isEn = /^en/i.test(document.documentElement.lang || '');
+  // 한국어가 아닌 페이지(/couple/en/·/ph/·/ja/·/vn/ 등)는 국가 없는 스토어 주소 — 방문자 나라의 스토어로 자동 연결된다.
+  // Play 화면 언어(hl)는 페이지 언어(en·ja·vi) 그대로 (2026-11-09 일본·베트남 추가)
+  var pageLang = (document.documentElement.lang || 'ko').toLowerCase().split('-')[0];
+  var isEn = pageLang !== 'ko';
   var STORE = isEn ? {
-    play: { url: 'https://play.google.com/store/apps/details?id=soma.project.caestro&hl=en' },
+    play: { url: 'https://play.google.com/store/apps/details?id=soma.project.caestro&hl=' + pageLang },
     app: { url: 'https://apps.apple.com/app/peakpic/id6807646621' }
   } : {
     play: { url: 'https://play.google.com/store/apps/details?id=soma.project.caestro&hl=ko' },

@@ -83,6 +83,9 @@
   네컷 how 2단계는 필리핀 하트 프레임 3/4(ph-fourcut-hearts-fill). 영어 변형을 고치면 필리핀 변형도 같이 고칠 것
   2026-11-04 21시: sea_en_1029 는 필리핀만(말레이시아 제외)·AN 끔, 영어판 광고 삭제 → _ph 4종만. 대시보드 2270281 의 7번 표가 같은 광고의 영어판(10/29~11/4) vs 필리핀판 비교(AN 제외)
 
+일본·베트남 변형(2026-11-09, 광고 *_jp·*_vn 도착지): `/couple/ja/`(couple_ja)·`/fourcut/ja/`(fourcut_ja)는 /…/en/ 구조 + 한국 광고 모델(couple-hero-beach, ja-couple-bts, ja-fourcut-hearts-fill), 글꼴 Pretendard JP(일본어 자형)·word-break normal.
+  `/couple/vn/`(couple_vn)·`/fourcut/vn/`(fourcut_vn)는 /…/ph/ 구조 + 같은 K-pop 모델, vn-fourcut-hearts-fill, 글꼴 Be Vietnam Pro 우선(Pretendard 에 베트남어 성조 글자 없음). 히어로 문구는 Figma JP·VN 광고와 같게.
+  js/main.js 는 lang 이 ko 가 아니면 국가 없는 스토어 주소 + Play hl=페이지 언어(2026-11-09). 원어민 검수 전
 B2B 문의 폼(2026-11-03, 브리프 docs/b2b-inquiry-form-brief.md): `/b2b/`(variant=b2b) — B2B 메타 광고(캠페인 b2b_1103, 세트 b2b_cafe·b2b_event)의 도착지. 설치가 아니라 **문의 접수**가 목표.
   b2b/index.html·b2b.css·b2b.js. head 인라인 스크립트가 utm_content 를 보고 `<html data-b2b="cafe|festival|tourism|other">`(cafe / tour / festival·event / 그 외) → CSS 가 `[data-v]` 문구만 보여준다.
   카피·조건은 Figma B2B v6 포스터 기반(설치비 0원·상주 인력 0명, 손님 3단계). 2026-11-04 사용자 확인: 실제 제공은 **QR 포스터 1장 + 손님 폰**(거치대·폰 설치 아님) → "필요한 것 QR 포스터 1장", 2단계 "손님 폰으로 촬영". 카페 변형 버튼·폼 제목은 카페 광고 움짤 CTA 와 같은 "무료로 우리 가게 프레임 받기"·"무료 체험 신청"(무료 사전 체험 기간). 그림: 카페 frame-dessert, 축제 frame-goheung(2026 고흥유자축제 실제 프레임, 원본 assets/raw/b2b)
