@@ -181,6 +181,9 @@ B2B 문의 폼(2026-11-03, 브리프 docs/b2b-inquiry-form-brief.md): `/b2b/`(va
   미러링 모션의 모델을 K-pop 느낌 한국인 AI 모델(서울 루프탑·남산타워 골든아워)로, 문구를 타글리시로 바꿈("Bye na sa / bad BF pics.", "I-download na, libre!", "Libre ngayon!"). `couple_mirror_motion_ph` → `/couple/ph/`
   같은 날 나머지 3종도(그 오른쪽 "SEA · …" 섹션, 사용자 요청: 고미모 K-pop AI 모델 + "AI 느낌 최대한 줄이기" → gemini-3.1-flash-image 로 폰 사진 질감·피부결·잔머리를 살린 사진으로 교체): `couple_d_motion_ph`(BEFORE 도 같은 모델·남친 뒷모습) → `/couple/ph/`,
   `fourcut_hearts_motion_ph`(친구 이름 Bea·Joy. 칸별로 따로 만들면 팔 방향이 어긋나서 2×2 한 장을 생성해 칸마다 CROP — 위 두 칸이 하트 윗부분, 아래 두 칸이 바깥 위로 뻗은 V, "Ikaw na lang, / kumpleto na!"), `fourcut_booth_motion_ph`(사진은 디저트 네컷 그대로, "Photo booth, / libre sa phone!") → `/fourcut/ph/`
+  일본·베트남 버전(2026-11-09, Figma 같은 페이지 y=-23500 줄 "JP · …", y=-27600 줄 "VN · …"): 일본은 한국 모션 4종을 복제해 일본어로(모델 그대로, 글꼴 Noto Sans JP — Noto Sans KR 에 가나 없음),
+  베트남은 필리핀(SEA) 모션 4종을 복제해 베트남어로(K-pop 모델 그대로, 글꼴 Noto Sans — KR 글꼴에 베트남어 성조 글자 없음). 소재 이름 `<기존>_jp`·`<기존>_vn`(couple_d_motion_jp 등). 가격표는 EN 과 같은 USD("Pro 月額$3.99"·"Pro $3.99/tháng").
+  친구 이름: JP ゆい·みお, VN Linh·Trang. MP4 16개는 ~/Downloads/peakpic-ads-jp-vn/. 도착 랜딩(/…/ja/·/…/vn/)은 아직 없음
   v2 값(`fourcut_b`, `mirror_a`, `pose_c`)은 보관용. 포스터 CTA 바(2026-10-16)는 왼쪽 "지금 무료로 다운로드 →" + 오른쪽 가격표 스티커 "~~Pro 월 3,900원~~ 현재 무료!"(스토어 배지 없음 — 클릭하면 랜딩으로 가므로).
   무료 종료 시점이 미정이라 기간("3개월" 등)은 쓰지 않는다. Pro 가격은 사용자가 준 값 — 가격이 바뀌거나 무료가 끝나면 포스터 8장 모두 고칠 것(표시광고 사실관계)
 - super property `landing_variant`(main/couple/fourcut) 로 변형별 비교. 핵심 비교 지표 = 변형별 `store_click` 전환율
