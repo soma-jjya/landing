@@ -85,6 +85,8 @@
 
 일본·베트남 변형(2026-11-09, 광고 *_jp·*_vn 도착지): `/couple/ja/`(couple_ja)·`/fourcut/ja/`(fourcut_ja)는 /…/en/ 구조 + 한국 광고 모델(couple-hero-beach, ja-couple-bts, ja-fourcut-hearts-fill), 글꼴 Pretendard JP(일본어 자형)·word-break normal.
   `/couple/vn/`(couple_vn)·`/fourcut/vn/`(fourcut_vn)는 /…/ph/ 구조 + 같은 K-pop 모델, vn-fourcut-hearts-fill, 글꼴 Be Vietnam Pro 우선(Pretendard 에 베트남어 성조 글자 없음). 히어로 문구는 Figma JP·VN 광고와 같게.
+  2026-11-09 게시: 캠페인 jp_1109(세트 jp_couple·jp_fourcut, 일본만)·vn_1109(vn_couple·vn_fourcut, 베트남만), 리드 목표, AN 제외. PostHog 대시보드 2323867 "해외③ 일본·베트남" —
+  메타 심사 방문(visitor_tz America/Los_Angeles, 노출 위치 Facebook_Right_Column 으로 찍힘)은 표에서 뺀다
   js/main.js 는 lang 이 ko 가 아니면 국가 없는 스토어 주소 + Play hl=페이지 언어(2026-11-09). 원어민 검수 전
 B2B 문의 폼(2026-11-03, 브리프 docs/b2b-inquiry-form-brief.md): `/b2b/`(variant=b2b) — B2B 메타 광고(캠페인 b2b_1103, 세트 b2b_cafe·b2b_event)의 도착지. 설치가 아니라 **문의 접수**가 목표.
   b2b/index.html·b2b.css·b2b.js. head 인라인 스크립트가 utm_content 를 보고 `<html data-b2b="cafe|festival|tourism|other">`(cafe / tour / festival·event / 그 외) → CSS 가 `[data-v]` 문구만 보여준다.
