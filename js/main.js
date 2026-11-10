@@ -69,17 +69,21 @@
   var ua = navigator.userAgent || '';
   var isIOS = /iPhone|iPad|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
   var isAndroid = !isIOS && /Android/.test(ua);
-  // 한국어가 아닌 페이지(/couple/en/·/ph/·/ja/·/vn/ 등)는 국가 없는 스토어 주소 — 방문자 나라의 스토어로 자동 연결된다.
-  // Play 화면 언어(hl)는 페이지 언어(en·ja·vi) 그대로 (2026-11-09 일본·베트남 추가)
-  var pageLang = (document.documentElement.lang || 'ko').toLowerCase().split('-')[0];
+  // 한국어가 아닌 페이지(/couple/en/·/ph/·/ja/·/vn/ 등)의 App Store 는 국가 없는 주소 — 방문자 나라의 스토어로 자동 연결된다.
+  // Play 는 팀원이 나라별 스토어 등록정보를 만들어서(2026-11-10) 페이지 언어별로 나라(gl)·언어(hl)를 팀원 링크와 같게 맞춘다.
+  // 영어 페이지는 여러 나라 광고가 같이 쓰므로 나라 없이 hl=en-US
+  var htmlLang = (document.documentElement.lang || 'ko').toLowerCase();
+  var pageLang = htmlLang.split('-')[0];
   var isEn = pageLang !== 'ko';
-  var STORE = isEn ? {
-    play: { url: 'https://play.google.com/store/apps/details?id=soma.project.caestro&hl=' + pageLang },
-    app: { url: 'https://apps.apple.com/app/peakpic/id6807646621' }
-  } : {
-    play: { url: 'https://play.google.com/store/apps/details?id=soma.project.caestro&hl=ko' },
-    app: { url: 'https://apps.apple.com/kr/app/peakpic/id6807646621' }
+  var PLAY_LOCALE = { ko: 'gl=KR&hl=ko', ja: 'gl=JP&hl=ja', vi: 'gl=VN&hl=vi', 'en-ph': 'gl=PH&hl=fil', en: 'hl=en-US' };
+  var playUrl = 'https://play.google.com/store/apps/details?id=soma.project.caestro&' +
+    (PLAY_LOCALE[htmlLang] || PLAY_LOCALE[pageLang] || 'hl=' + pageLang);
+  var STORE = {
+    play: { url: playUrl },
+    app: { url: isEn ? 'https://apps.apple.com/app/peakpic/id6807646621' : 'https://apps.apple.com/kr/app/peakpic/id6807646621' }
   };
+  // 설치 섹션의 공식 Play 배지도 같은 주소로 (아래 4)에서 referrer 가 붙는다)
+  Array.prototype.forEach.call(document.querySelectorAll('a[href*="play.google.com"]'), function (a) { a.href = playUrl; });
   var target = isIOS ? STORE.app : (isAndroid ? STORE.play : null);
   if (target) {
     Array.prototype.forEach.call(document.querySelectorAll('.btn-store'), function (a) {

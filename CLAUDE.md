@@ -88,7 +88,8 @@
   2026-11-09 게시: 캠페인 jp_1109(세트 jp_couple·jp_fourcut, 일본만)·vn_1109(vn_couple·vn_fourcut, 베트남만), 리드 목표, AN 제외. PostHog 대시보드 나라별로 분리: 2323893 "해외③ 일본 jp_1109"·2323894 "해외④ 베트남 vn_1109" —
   메타 심사 방문(visitor_tz America/Los_Angeles, 노출 위치 Facebook_Right_Column 으로 찍힘)은 표에서 뺀다.
   맨 위에 그래프 4개(소재별 전환 퍼널·날짜별 소재 방문자·버튼 위치별 스토어 클릭·시간대별), 그 아래 SQL 표 5개
-  js/main.js 는 lang 이 ko 가 아니면 국가 없는 스토어 주소 + Play hl=페이지 언어(2026-11-09). 원어민 검수 전
+  js/main.js 는 lang 이 ko 가 아니면 국가 없는 App Store 주소(2026-11-09). 원어민 검수 전
+  2026-11-10: 팀원이 Play 나라별 스토어 등록정보를 만들어 Play 주소를 페이지 언어별로 팀원 링크와 같게(js/main.js PLAY_LOCALE): ko gl=KR&hl=ko · ja gl=JP&hl=ja · vi gl=VN&hl=vi · en-PH gl=PH&hl=fil · en hl=en-US(여러 나라 광고라 gl 없음). 설치 섹션 배지도 같은 주소. App Store 나라별 설정은 아직(맞춤 제품 페이지면 ppid 필요)
 B2B 문의 폼(2026-11-03, 브리프 docs/b2b-inquiry-form-brief.md): `/b2b/`(variant=b2b) — B2B 메타 광고(캠페인 b2b_1103, 세트 b2b_cafe·b2b_event)의 도착지. 설치가 아니라 **문의 접수**가 목표.
   b2b/index.html·b2b.css·b2b.js. head 인라인 스크립트가 utm_content 를 보고 `<html data-b2b="cafe|festival|tourism|other">`(cafe / tour / festival·event / 그 외) → CSS 가 `[data-v]` 문구만 보여준다.
   카피·조건은 Figma B2B v6 포스터 기반(설치비 0원·상주 인력 0명, 손님 3단계). 2026-11-04 사용자 확인: 실제 제공은 **QR 포스터 1장 + 손님 폰**(거치대·폰 설치 아님) → "필요한 것 QR 포스터 1장", 2단계 "손님 폰으로 촬영". 카페 변형 버튼·폼 제목은 카페 광고 움짤 CTA 와 같은 "무료로 우리 가게 프레임 받기"·"무료 체험 신청"(무료 사전 체험 기간). 그림: 카페 frame-dessert, 축제 frame-goheung(2026 고흥유자축제 실제 프레임, 원본 assets/raw/b2b)
