@@ -105,6 +105,8 @@ B2B 문의 폼(2026-11-03, 브리프 docs/b2b-inquiry-form-brief.md): `/b2b/`(va
   A `b2b_cafe_space_v8`("포토부스는 / 자리를 먹습니다." + 렌탈 포토부스 1.5평 vs 피크픽 포스터 한 장 + 30만 명 배지 + "그 자리에 테이블 하나 더 놓으세요."),
   B `b2b_cafe_promote_v8`("인스타 광고비, / 쓰지 마세요." + 손님 인스타 게시물 속 고흥 프레임 "이 자리에 우리 가게 이름" + 축제 방문객 30만·홍보 광고비 0원). PNG ~/Downloads/peakpic-ads-b2b-v8/
   같은 날 2차(사용자 요청 "프레임 안에 모델, 최대한 감성"): 고흥 프레임 네 칸에 AI 모델 사진(gpt-image-2.5-sunburst, 늦가을 카페 창가에서 유자차 든 친구 둘·필름 톤 2×2 → assets/raw/b2b/model-2026-11/yuja-friends-grid.png)을 깔고(합성본 assets/raw/b2b/goheung-filled-yuja.png — 칸만 흰색 플러드필로 뚫어 스티커는 위에 남김), 사진을 크게·마스킹 테이프·그림자. AI 인물이라 메타 AI 표시 확인
+  움짤(2026-11-10): 둘 다 8.5초 GIF(1080×1350)·MP4 — 형광펜 긋기 → 실적 배지/설명 → 사진(게시물) 등장 → 네 칸이 찰칵 플래시와 함께 하나씩 채워짐 → 비교 카드·말풍선·숫자 → CTA 흔들기. ~/Downloads/peakpic-ads-b2b-v8/*.gif·mp4.
+  만드는 법: Figma 에서 요소별로 1080×1350 투명 프레임에 복제해 스크린샷(레이어 PNG) → scripts/animate-b2b-v8.py(레이어 폴더 L/·고흥 프레임·모델 그리드 경로는 스크립트 머리 참고) → ffmpeg. 포스터를 고치면 레이어부터 다시 뽑을 것
   Worker 에 /b2b/* 를 넘겨야 peakpic.app/b2b/ 가 열린다(cloudflare/landing-proxy.js 반영, Worker 배포는 팀원)
 
 1. 히어로: 시연 영상(자동재생·음소거·루프 — 영상 오기 전엔 home 화면 목업+포스터) +
