@@ -99,6 +99,8 @@ B2B 문의 폼(2026-11-03, 브리프 docs/b2b-inquiry-form-brief.md): `/b2b/`(va
   2026-11-07 개편 — 연락 방법 선택은 b2b.js MULTI_CONTACT 스위치(11/7 서버 PR #234 배포 후 true)(PostHog: 폼을 본 사람 79% 중 입력 시작 5% → 판단할 근거 부족): 폼은 맨 아래, 위에 실적(#proof, 고흥유자축제 "30만 명 방문(작년 기준)" + 앱 "누적 사용자 3,000명+"(축제 방문객 중 1%로 읽히지 않게 앱 전체 수치로 — 2026-11-07) — 팀 피드백 수치, 히어로 배지와 같이 고칠 것) → 프레임 예시(#examples, 눌러서 확대) → 사장님 할 일·손님 흐름 그림(#b2b-how) → 자주 묻는 질문(#faq, 정해지지 않은 가격·기간은 쓰지 않음). 섹션마다 폼으로 가는 버튼(cta_click placement=섹션).
   고흥 프레임은 Figma 📷 Peakpic_Design node 92:16258 의 새 버전(frame-goheung-cat·frame-goheung-classic, 회색 칸을 흰색으로). 디저트 예시는 원래 앱 결과물 fourcut-dessert(사용자 요청으로 되돌림), 그 옆에 자연스러운 필름 사진 흑발 모델 2×2(Figma AI)를 빈티지 프레임에 깐 fourcut-vintage-model(1차 디저트판 fourcut-dessert-model 은 보관). 손님 흐름 1·2단계 사진도 AI(b2b-how-qr/shoot). 30만 명은 '작년 기준' 작게 표기. 재생성 scripts/compose-b2b.py
   연락 방법 선택(전화·이메일·인스타 DM 중 하나, b2b.js normalizeContact 로 정규화) — 서버가 phone 필수라 **docs/b2b-contact-method-server.md 의 서버 변경이 운영에 나간 뒤에 배포**
+  2026-11-10 포스터 v7(Figma 광고 페이지 섹션 2661:854 "B2B v7 · 랜딩 /b2b/ 와 같은 디자인 + 고흥유자축제 실적"): 기존 카페 광고가 랜딩과 느낌이 달라서 랜딩 히어로 디자인(점 무늬 종이·검정 Black 헤드라인·오렌지 형광펜·검정 알약 배지·설치비 상자·검정 CTA)으로 다시 그림.
+  A `b2b_cafe_photozone`(헤드라인이 랜딩 히어로와 같은 "손님 폰이 곧, 우리 가게 포토존." + 30만 명 배지 + 고흥 프레임·디저트 네컷), B `b2b_cafe_goheung`("30만 명이 찾은 축제 네컷, 이제 우리 가게에도." + 30만·3,000명+ 숫자 카드). 둘 다 utm_content 에 cafe 가 있어 랜딩 카페 문구로 열림. PNG ~/Downloads/peakpic-ads-b2b-v7/
   Worker 에 /b2b/* 를 넘겨야 peakpic.app/b2b/ 가 열린다(cloudflare/landing-proxy.js 반영, Worker 배포는 팀원)
 
 1. 히어로: 시연 영상(자동재생·음소거·루프 — 영상 오기 전엔 home 화면 목업+포스터) +
