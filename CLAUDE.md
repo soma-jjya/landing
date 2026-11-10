@@ -104,6 +104,7 @@ B2B 문의 폼(2026-11-03, 브리프 docs/b2b-inquiry-form-brief.md): `/b2b/`(va
   2026-11-10 포스터 v8(같은 페이지 섹션 2663:854, v7 오른쪽): v7 은 광고 목적(공간·홍보)이 흐려졌다는 피드백 → 기존 움짤 광고의 메시지를 v7 디자인 + 고흥유자축제 실적으로 다시 그림.
   A `b2b_cafe_space_v8`("포토부스는 / 자리를 먹습니다." + 렌탈 포토부스 1.5평 vs 피크픽 포스터 한 장 + 30만 명 배지 + "그 자리에 테이블 하나 더 놓으세요."),
   B `b2b_cafe_promote_v8`("인스타 광고비, / 쓰지 마세요." + 손님 인스타 게시물 속 고흥 프레임 "이 자리에 우리 가게 이름" + 축제 방문객 30만·홍보 광고비 0원). PNG ~/Downloads/peakpic-ads-b2b-v8/
+  같은 날 2차(사용자 요청 "프레임 안에 모델, 최대한 감성"): 고흥 프레임 네 칸에 AI 모델 사진(gpt-image-2.5-sunburst, 늦가을 카페 창가에서 유자차 든 친구 둘·필름 톤 2×2 → assets/raw/b2b/model-2026-11/yuja-friends-grid.png)을 깔고(합성본 assets/raw/b2b/goheung-filled-yuja.png — 칸만 흰색 플러드필로 뚫어 스티커는 위에 남김), 사진을 크게·마스킹 테이프·그림자. AI 인물이라 메타 AI 표시 확인
   Worker 에 /b2b/* 를 넘겨야 peakpic.app/b2b/ 가 열린다(cloudflare/landing-proxy.js 반영, Worker 배포는 팀원)
 
 1. 히어로: 시연 영상(자동재생·음소거·루프 — 영상 오기 전엔 home 화면 목업+포스터) +
