@@ -7,7 +7,7 @@ L = os.path.join(HERE, 'L')
 P = os.path.join(HERE, '..', 'b2bposter')
 OUT = os.path.join(HERE, 'frames')
 W, H = 1080, 1350
-FPS = 15
+FPS = 30
 
 def lay(n): return Image.open(os.path.join(L, n + '.png')).convert('RGBA')
 
@@ -129,21 +129,21 @@ def make_space():
         # 사진: 떨어지듯 들어옴
         p = prog(t, 0.8, 1.35)
         if p > 0:
-            img = fourcut(cell_states(t, 1.7, 0.5), (372, 496))
+            img = fourcut(cell_states(t, 1.45, 0.35), (372, 496))
             bordered = Image.new('RGBA', (388, 512), (255, 255, 255, 255)); bordered.alpha_composite(img, (8, 8))
             s = 1 + 0.12 * (1 - ease_back(p, 1.4))
             put_center(c, shadowed(bordered), 246.2, 936.4 - (1 - ease_out(p)) * 40, rot=-4 - 5 * (1 - ease_out(p)), sc=s, op=ease_out(p))
         p = ease_back(prog(t, 1.3, 1.6));
         if p > 0: put_center(c, tape, 266.5, 663.4, rot=5, sc=max(p, 0.01), op=min(1, p))
-        p = ease_out(prog(t, 3.9, 4.3)); place(c, booth, p, dx=(1 - p) * 60)
-        wipe(c, strike, ease_out(prog(t, 4.35, 4.65)))
-        p = ease_out(prog(t, 4.65, 4.9)); place(c, arrow, p, dy=(1 - p) * -20)
-        p = prog(t, 4.9, 5.3); place(c, peak, min(1, p * 2), sc=0.85 + 0.15 * ease_back(p))
-        p = ease_out(prog(t, 5.35, 5.7)); place(c, line, p, dy=(1 - p) * 16)
-        p = ease_out(prog(t, 5.55, 5.9)); place(c, sub, p, dy=(1 - p) * 16)
-        q = prog(t, 6.0, 6.6); place(c, cta, 1, sc=1 + 0.045 * math.sin(q * math.pi * 2) * (1 - q * 0.3) if q > 0 else 1)
+        p = ease_out(prog(t, 2.75, 3.1)); place(c, booth, p, dx=(1 - p) * 60)
+        wipe(c, strike, ease_out(prog(t, 3.1, 3.35)))
+        p = ease_out(prog(t, 3.3, 3.5)); place(c, arrow, p, dy=(1 - p) * -20)
+        p = prog(t, 3.45, 3.8); place(c, peak, min(1, p * 2), sc=0.85 + 0.15 * ease_back(p))
+        p = ease_out(prog(t, 3.8, 4.1)); place(c, line, p, dy=(1 - p) * 16)
+        p = ease_out(prog(t, 3.95, 4.25)); place(c, sub, p, dy=(1 - p) * 16)
+        q = prog(t, 4.5, 5.1); place(c, cta, 1, sc=1 + 0.045 * math.sin(q * math.pi * 2) * (1 - q * 0.3) if q > 0 else 1)
         return c
-    render('space', 8.5, draw)
+    render('space', 7.0, draw)
 
 # ---------- B 홍보 ----------
 def make_promote():
@@ -156,16 +156,16 @@ def make_promote():
         p = ease_out(prog(t, 0.5, 0.9)); place(c, lede, p, dy=(1 - p) * 18)
         p = prog(t, 0.9, 1.45)
         if p > 0:
-            card = post.copy(); card.alpha_composite(fourcut(cell_states(t, 1.9, 0.5), (336, 448)), (24, 62))
+            card = post.copy(); card.alpha_composite(fourcut(cell_states(t, 1.6, 0.35), (336, 448)), (24, 62))
             put_center(c, shadowed(card), 256.0, 911.6 + (1 - ease_out(p)) * 120, rot=-3, op=ease_out(p))
         p = prog(t, 1.4, 1.7); place(c, pin, min(1, p * 2), sc=0.8 + 0.2 * ease_back(p))
-        p = prog(t, 4.05, 4.4); place(c, bubble, min(1, p * 2), sc=0.6 + 0.4 * ease_back(p, 2.4))
-        p = ease_out(prog(t, 4.5, 4.9)); place(c, n1, p, dx=(1 - p) * 50)
-        p = ease_out(prog(t, 4.75, 5.15)); place(c, n2, p, dx=(1 - p) * 50)
-        p = ease_out(prog(t, 5.2, 5.55)); place(c, info, p, dy=(1 - p) * 16)
-        q = prog(t, 5.8, 6.4); place(c, cta, 1, sc=1 + 0.045 * math.sin(q * math.pi * 2) * (1 - q * 0.3) if q > 0 else 1)
+        p = prog(t, 2.8, 3.1); place(c, bubble, min(1, p * 2), sc=0.6 + 0.4 * ease_back(p, 2.4))
+        p = ease_out(prog(t, 3.05, 3.4)); place(c, n1, p, dx=(1 - p) * 50)
+        p = ease_out(prog(t, 3.25, 3.6)); place(c, n2, p, dx=(1 - p) * 50)
+        p = ease_out(prog(t, 3.6, 3.9)); place(c, info, p, dy=(1 - p) * 16)
+        q = prog(t, 4.3, 4.9); place(c, cta, 1, sc=1 + 0.045 * math.sin(q * math.pi * 2) * (1 - q * 0.3) if q > 0 else 1)
         return c
-    render('promote', 8.5, draw)
+    render('promote', 7.0, draw)
 
 which = sys.argv[1:] or ['space', 'promote']
 if 'space' in which: make_space()
