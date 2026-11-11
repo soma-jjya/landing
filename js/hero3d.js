@@ -7,13 +7,20 @@
    - 변형별: 히어로에 폴라로이드 콜라주(.collage > .reel)가 있으면(루트·/couple/) 그 사진까지 3D. /fourcut/(.booth)·/b2b/(.b2b-frames)는 히어로 그림은 DOM 그대로 두고 둘레 카드만.
      루트 밖에서는 떠다니는 카드 사진을 그 페이지에 실린 사진에서 먼저 고른다(나라별 모델 사진이 그대로 쓰인다)
    위치·크기·기울기는 DOM 을 재서 옮긴다 → 배치는 css/style.css 만 고치면 된다. 말풍선·스티커·글은 DOM 그대로(캔버스 위).
-   - 꺼지는 경우: 모션 최소화 설정(전부), 데이터 절약 모드·WebGL 없음/컨텍스트 유실(3D 만) → 원래 DOM 페이지가 그대로 보인다
+   - 꺼지는 경우: 모션 최소화 설정(전부), 데이터 절약 모드·느린 회선(2g·3g)·메모리 4GB 미만 기기·WebGL 없음/컨텍스트 유실(3D 만) → 원래 DOM 페이지가 그대로 보인다
    - three.js 는 load + idle 뒤에 동적 import (LCP·초기 로드 예산에 넣지 않는다). 섹션 사진은 그 섹션이 가까워질 때 받는다
+   - 로딩(2026-11-11 5차 "모바일에서 느리다"): three.js 는 쓰는 것만 묶은 js/vendor/three.peakpic.min.js(gzip 128KB, 전체판 171KB).
+     다시 만들기: `export { WebGLRenderer, Scene, PerspectiveCamera, Group, Mesh, PlaneGeometry, ShapeGeometry, ExtrudeGeometry, Shape, MeshBasicMaterial, CanvasTexture, VideoTexture, Vector3, SRGBColorSpace } from 'three'`
+     한 줄짜리 entry.js 를 `esbuild entry.js --bundle --format=esm --minify --target=es2019` (three@0.170.0). 여기서 THREE.xxx 를 새로 쓰면 그 목록에도 추가할 것.
+     셰이더는 첫 프레임 전에 멈춤 없이 미리 컴파일(warmUp). 좁은 화면에서는 무거운 사진(onboarding-*, 각 110KB 이상)을 떠다니는 카드에 쓰지 않는다
    - 탭이 숨겨지면 렌더 루프를 멈춘다 */
 
 const collage = document.querySelector('.hero .collage');
 const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-const saveData = navigator.connection && navigator.connection.saveData;
+const conn = navigator.connection;
+const saveData = conn && conn.saveData;
+const slowNet = conn && /(^|-)2g$|^3g$/.test(conn.effectiveType || '');
+const lowMem = navigator.deviceMemory && navigator.deviceMemory < 4;
 const hasCards = !!(collage && collage.querySelector('.reel'));
 const anchor = hasCards ? collage : document.querySelector('.hero .booth, .b2b-hero .b2b-frames');   // 히어로 무대의 중심
 const root = document.documentElement;
@@ -26,7 +33,7 @@ function stageOff() {
 
 if (anchor && !reduce) {
   videoUi();
-  if (!saveData) {
+  if (!saveData && !slowNet && !lowMem) {
     const kick = () => {
       const run = () => init().catch(stageOff);
       if ('requestIdleCallback' in window) window.requestIdleCallback(run, { timeout: 1500 });
@@ -53,7 +60,7 @@ function videoUi() {
 }
 
 async function init() {
-  const THREE = await import('./vendor/three.module.min.js');
+  const THREE = await import('./vendor/three.peakpic.min.js');
 
   const canvas = document.createElement('canvas');
   canvas.className = 'stage3d';
@@ -685,13 +692,42 @@ async function init() {
     else if (!on && raf) { cancelAnimationFrame(raf); raf = 0; }
   }
 
+  // 셰이더를 첫 프레임 전에, 화면을 멈추지 않고 미리 컴파일한다(첫 프레임에서 한꺼번에 하면 폰에서 수백 ms 멈춘다).
+  // 이 파일이 쓰는 재질 조합 4가지(그림 있음/없음 × 불투명/투명)를 작은 판으로 만들어 넘긴다. 판의 재질은 버리지 않는다(버리면 컴파일한 프로그램도 같이 사라진다)
+  async function warmUp() {
+    renderer.debug.checkShaderErrors = false;
+    const dc = document.createElement('canvas');
+    dc.width = dc.height = 2;
+    const t = tex(dc), geo = new THREE.PlaneGeometry(1, 1);
+    const tmps = [{ map: t }, { map: t, transparent: true }, { color: 0xffffff }, { color: 0xffffff, transparent: true, opacity: 0 }].map((o) => {
+      const sc = new THREE.Scene();
+      sc.add(new THREE.Mesh(geo, new THREE.MeshBasicMaterial(o)));
+      return sc;
+    });
+    try {
+      if (renderer.compileAsync && renderer.extensions.has('KHR_parallel_shader_compile')) {
+        // 병렬 컴파일을 지원하면(대부분의 폰) 기다리는 동안 화면이 멈추지 않는다
+        await Promise.race([Promise.all(tmps.map((sc) => renderer.compileAsync(sc, camera))), new Promise((r) => setTimeout(r, 4000))]);
+      } else {
+        // 지원하지 않으면 한 프레임에 하나씩 나눠서(한 번에 길게 멈추지 않게). 캔버스는 아직 투명이라 보이지 않는다
+        for (let i = 0; i < tmps.length; i++) {
+          renderer.render(tmps[i], camera);
+          await new Promise((r) => requestAnimationFrame(r));
+        }
+        renderer.clear();
+      }
+    } catch (e) { /* 그냥 첫 프레임에서 컴파일 */ }
+  }
+
   // ---------- 시작 ----------
   document.body.insertBefore(canvas, document.body.firstChild);
   buildAll();
   if (!built) { canvas.remove(); return; }
+  await warmUp();
 
   if (autoFire) anchor.addEventListener('click', () => fire(performance.now()));
-  Promise.all(CLOUD.map((c) => loadImage(c.url || IMG + c.src))).then((imgs) => { cloudImgs = imgs; buildCloud(); buildAmbient(); });
+  const light = window.innerWidth < 900;                     // 좁은 화면: 무거운 사진은 받지 않는다(그 자리 카드는 없음)
+  Promise.all(CLOUD.map((c) => (light && /^onboarding-/.test(c.src) ? null : loadImage(c.url || IMG + c.src)))).then((imgs) => { cloudImgs = imgs; buildCloud(); buildAmbient(); });
   if (video) video.addEventListener('playing', attachVideo);
   if ('IntersectionObserver' in window) {                    // 섹션 사진은 그 섹션이 한 화면 반 앞까지 왔을 때 받는다
     const io = new IntersectionObserver((entries) => {
