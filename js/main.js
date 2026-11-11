@@ -3,7 +3,8 @@
    2) 히어로 시연 영상: 파일이 없거나 재생 불가면 포스터 이미지 유지
    3) 단일 "앱 다운로드" 버튼을 방문자 OS 의 스토어로 연결 (+ 데스크톱 배지 순서)
    4) 광고 UTM → 스토어 설치 귀속(Play 리퍼러 · App Store 캠페인 링크)
-   5) 푸터 연도 */
+   5) 푸터 연도
+   6) 스크롤 모션: 섹션 등장 · 콜라주 시차 · 숫자 세기 */
 (function () {
   'use strict';
 
@@ -126,6 +127,58 @@
       }
     }
   } catch (e) { /* URLSearchParams 미지원 시 무시 */ }
+
+  // 6) 스크롤 모션 (2026-11-11): 묶음이 화면에 들어오면 .is-in → css 가 차례로 등장시킨다. 콜라주 묶음은 스크롤 위치(--p)로 부품마다 다르게 움직인다.
+  //    모션 최소화 설정이거나 IntersectionObserver 가 없으면 아무것도 하지 않는다(전부 그냥 보임)
+  var noMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!noMotion && 'IntersectionObserver' in window) {
+    var groups = document.querySelectorAll('.hero__copy, .pain__copy, .feature__copy, .install__copy, .how__steps, .proof__list, .cluster, .notes, .install__side');
+    var floaters = [];
+    Array.prototype.forEach.call(groups, function (g) {
+      Array.prototype.forEach.call(g.children, function (c, i) { c.style.setProperty('--i', i); });
+      if (g.classList.contains('cluster') || g.classList.contains('notes') || g.classList.contains('install__side')) floaters.push(g);
+    });
+    var countUp = function (el) {
+      var to = parseInt(el.getAttribute('data-count'), 10), t0 = 0;
+      if (!to) return;
+      var step = function (now) {
+        if (!t0) t0 = now;
+        var k = Math.min(1, (now - t0) / 1200);
+        el.textContent = Math.round(to * (1 - Math.pow(1 - k, 3))).toLocaleString('ko-KR');
+        if (k < 1) requestAnimationFrame(step);
+      };
+      el.textContent = '0';
+      requestAnimationFrame(step);
+    };
+    document.documentElement.classList.add('js-motion');
+    var revealIO = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        var g = e.target;
+        revealIO.unobserve(g);
+        g.classList.add('is-in');
+        Array.prototype.forEach.call(g.querySelectorAll('[data-count]'), countUp);
+        setTimeout(function () { g.classList.add('is-done'); }, 1600);
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -6% 0px' });
+    Array.prototype.forEach.call(groups, function (g) { revealIO.observe(g); });
+
+    var ticking = false;
+    var parallax = function () {
+      ticking = false;
+      var vh = window.innerHeight || 1;
+      floaters.forEach(function (g) {
+        if (!g.classList.contains('is-in')) return;
+        var r = g.getBoundingClientRect();
+        if (r.bottom < -80 || r.top > vh + 80) return;
+        var p = Math.max(-1, Math.min(1, (r.top + r.height / 2 - vh / 2) / vh));
+        g.style.setProperty('--p', p.toFixed(3));
+      });
+    };
+    window.addEventListener('scroll', function () {
+      if (!ticking) { ticking = true; requestAnimationFrame(parallax); }
+    }, { passive: true });
+  }
 
   // 5) 연도
   var year = document.querySelector('[data-year]');

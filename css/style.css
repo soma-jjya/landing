@@ -637,3 +637,75 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--orange); outlin
 .cluster--frame .deco--star { left: -1%; top: 1%; --r: 12deg; }
 .cluster--frame .deco--heart { left: 30%; top: 44%; --r: -14deg; }
 
+
+/* ---------- 페이지 전체 3D 무대 (three.js, 2026-11-11 · 루트 `/` 만) ----------
+   js/hero3d.js 가 WebGL 준비를 마치면 <html> 에 .has-stage, 히어로 .collage 에 .is-3d 를 붙인다.
+   캔버스(.stage3d)는 화면에 고정되어 섹션 배경 위·내용(.container) 아래에 깔린다 → 사진 카드는 배경 위를 흐르고 글·버튼은 항상 그 위.
+   3D 로 옮겨 그린 부품(히어로 폴라로이드·로고 스티커, 기능 섹션의 큰 사진·폰 화면·네컷 = .in-3d)은 DOM 쪽을 투명하게만 둔다(대체 텍스트 유지).
+   말풍선·스티커·회전 뱃지는 DOM 그대로. 3D 가 꺼지면 원래 페이지 */
+.stage3d { position: fixed; left: 0; top: 0; width: 100%; height: 100%; max-width: none; z-index: 1; pointer-events: none; opacity: 0; transition: opacity .35s ease; }
+.has-stage .stage3d { opacity: 1; }
+.has-stage main .container, .has-stage .ticker, .has-stage .proof { position: relative; z-index: 2; }
+.has-stage .footer { position: relative; z-index: 2; background: var(--white); }
+.collage.is-3d { cursor: pointer; }
+.collage.is-3d > .pola, .collage.is-3d > .logo-sticker { opacity: 0; animation: none; transition: opacity .35s ease; }
+.has-stage .in-3d { opacity: 0 !important; }
+
+/* 영상 느낌: 헤더 아래 재생 막대(스크롤 진행) + 헤더의 "영상처럼 보기" 버튼(자동 스크롤). 둘 다 js/hero3d.js 가 만든다 */
+.reel-bar { position: fixed; left: 0; top: var(--header-h); z-index: 41; width: 100%; height: 3px; pointer-events: none; }
+.reel-bar i { display: block; height: 100%; background: var(--orange); transform-origin: 0 50%; transform: scaleX(var(--k, 0)); }
+.autoplay {
+  display: inline-flex; align-items: center; gap: 7px; height: 34px; padding: 0 13px; border-radius: 999px;
+  border: 1.5px solid var(--black); background: var(--white); font-size: 13px; font-weight: 800; line-height: 1;
+}
+.autoplay::before { content: ""; border-left: 8px solid var(--orange); border-top: 5px solid transparent; border-bottom: 5px solid transparent; }
+.autoplay[aria-pressed="true"] { background: var(--black); color: var(--white); }
+.autoplay[aria-pressed="true"]::before { width: 3px; height: 10px; border: 0; border-left: 3px solid var(--orange); border-right: 3px solid var(--orange); box-sizing: content-box; }
+
+/* ---------- 스크롤 모션 (2026-11-11, 모든 변형 공통) ----------
+   js/main.js 가 <html> 에 .js-motion 을 붙이고(모션 최소화·IntersectionObserver 없음이면 안 붙음 → 전부 그냥 보인다),
+   묶음(.feature__copy·.cluster·.notes 등)이 화면에 들어오면 .is-in 을 붙인다. 자식 순서 --i 는 JS 가 넣는다.
+   - 글 묶음: 아래에서 차례로 올라온다
+   - 콜라주 묶음: 스티커 붙이듯 통통 튀며 차례로 붙고, 그 뒤엔 스크롤 위치(--p, -1~1)에 따라 부품마다 다른 속도로 움직인다(--d)
+   - 형광펜(.hl)·낙서 밑줄(.scribble)은 묶음이 들어올 때 그어진다
+   transform 은 기울기에 쓰고 있어 개별 속성(translate·scale·rotate)만 쓴다. 자체 애니메이션이 있는 .cut--paste·.cut-arrow 는 제외 */
+.js-motion :is(.pain__copy, .feature__copy, .install__copy, .how__steps, .proof__list) > * {
+  opacity: 0; translate: 0 26px;
+  transition: opacity .6s ease, translate .7s cubic-bezier(.2, .8, .2, 1); transition-delay: calc(var(--i, 0) * 80ms);
+}
+.js-motion :is(.pain__copy, .feature__copy, .install__copy, .how__steps, .proof__list).is-in > * { opacity: 1; translate: 0 0; }
+
+.js-motion :is(.cluster, .notes, .install__side) > :not(.cut--paste):not(.cut-arrow) {
+  opacity: 0; scale: .82; translate: 0 34px; rotate: var(--pr, -6deg);
+  transition: opacity .45s ease, scale .7s cubic-bezier(.34, 1.56, .64, 1), translate .7s cubic-bezier(.2, .8, .2, 1), rotate .7s cubic-bezier(.34, 1.56, .64, 1);
+  transition-delay: calc(var(--i, 0) * 70ms);
+}
+.js-motion :is(.cluster, .notes, .install__side) > :nth-child(even) { --pr: 7deg; }
+.js-motion :is(.cluster, .notes, .install__side).is-in > :not(.cut--paste):not(.cut-arrow) {
+  opacity: 1; scale: 1; rotate: 0deg; translate: 0 calc(var(--p, 0) * var(--d, 0px));
+}
+.js-motion :is(.cluster, .notes, .install__side).is-done > :not(.cut--paste):not(.cut-arrow) { transition: translate .2s linear; transition-delay: 0s; }
+.js-motion :is(.cluster, .install__side) > .bubble { --d: -30px; }
+.js-motion :is(.cluster, .install__side) > .sticker, .js-motion .install__side > .spin { --d: 24px; }
+.js-motion :is(.cluster, .install__side) > .logo-sticker { --d: -16px; }
+.js-motion .cluster > :is(.cut, .deco) { --d: 36px; }
+.js-motion .cluster > .cutout { --d: -18px; }
+.js-motion .cluster > .shot--sub { --d: 18px; }
+.js-motion .notes > .note:nth-child(odd) { --d: -10px; }
+.js-motion .notes > .note:nth-child(even) { --d: 12px; }
+
+.js-motion :is(.hero__copy, .pain__copy, .feature__copy, .install__copy) .hl::before { clip-path: inset(0 100% 0 0); transition: clip-path .55s cubic-bezier(.2, .8, .2, 1) .5s; }
+.js-motion :is(.hero__copy, .pain__copy, .feature__copy, .install__copy).is-in .hl::before { clip-path: inset(0 0 0 0); }
+.js-motion .pain__copy .scribble path { stroke-dasharray: 240; stroke-dashoffset: 240; transition: stroke-dashoffset .8s ease .5s; }
+.js-motion .pain__copy.is-in .scribble path { stroke-dashoffset: 0; }
+
+/* ---------- 숫자 띠 (2026-11-11, 루트 `/` 만): 티커 바로 아래 신뢰 요소. 숫자는 js/main.js 가 0부터 센다([data-count]) ---------- */
+.proof { background: var(--white); border-bottom: 1.5px solid var(--black); }
+.proof__list { display: grid; grid-template-columns: repeat(3, 1fr); }
+.proof__list li { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 18px 6px; text-align: center; }
+.proof__list li + li { border-left: 1.5px solid var(--black); }
+.proof__list b { font-size: clamp(24px, 6.4vw, 42px); font-weight: 900; line-height: 1.1; letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
+.proof__list b i { font-style: normal; color: var(--orange); }
+.proof__list span { font-size: clamp(12px, 3.2vw, 15px); font-weight: 700; color: var(--ink-55); }
+.proof__list b span { font: inherit; color: inherit; }
+@media (min-width: 900px) { .proof__list li { padding: 28px 12px; } }
