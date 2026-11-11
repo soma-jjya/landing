@@ -1,9 +1,11 @@
-/* PeakPic 랜딩 — 페이지 전체 3D 무대 (three.js r170, 2026-11-11 3차 "전체를 3D 로, 영상 보듯이") — 루트 `/` 전용
+/* PeakPic 랜딩 — 페이지 전체 3D 무대 (three.js r170, 2026-11-11 3차 "전체를 3D 로, 영상 보듯이") — 모든 랜딩(루트·/couple/·/fourcut/ + 다국어·/b2b/, 같은 날 4차)
    화면에 고정된 캔버스 하나(.stage3d)가 섹션 배경 위·글 아래에 깔리고, 스크롤이 곧 영상의 재생 위치가 된다.
    - 히어로: 폴라로이드 2장·테이프·로고 스티커 + 둘레에 떠다니는 사진 카드(CLOUD). "찰칵"(7초 루프·콜라주 누르기)마다 플래시, 카드가 튕기고 한 장이 튀어나온다
    - 기능 섹션(.cluster): 큰 사진·폰 화면·네컷이 3D 카드가 되어, 스크롤에 맞춰 뒤에서 돌며 날아와 자리 잡고 지나가면 카메라 쪽으로 빠져나간다
    - 페이지 전체: 깊이가 다른 사진 카드들이 스크롤을 따라 흘러간다(가까운 건 빠르게, 먼 건 느리게)
-   - 영상 느낌: 헤더 아래 재생 막대(스크롤 진행) + 헤더의 "영상처럼 보기"(자동으로 천천히 스크롤, 건드리면 멈춤)
+   - 영상 느낌: 헤더 아래 재생 막대(스크롤 진행)
+   - 변형별: 히어로에 폴라로이드 콜라주(.collage > .reel)가 있으면(루트·/couple/) 그 사진까지 3D. /fourcut/(.booth)·/b2b/(.b2b-frames)는 히어로 그림은 DOM 그대로 두고 둘레 카드만.
+     루트 밖에서는 떠다니는 카드 사진을 그 페이지에 실린 사진에서 먼저 고른다(나라별 모델 사진이 그대로 쓰인다)
    위치·크기·기울기는 DOM 을 재서 옮긴다 → 배치는 css/style.css 만 고치면 된다. 말풍선·스티커·글은 DOM 그대로(캔버스 위).
    - 꺼지는 경우: 모션 최소화 설정(전부), 데이터 절약 모드·WebGL 없음/컨텍스트 유실(3D 만) → 원래 DOM 페이지가 그대로 보인다
    - three.js 는 load + idle 뒤에 동적 import (LCP·초기 로드 예산에 넣지 않는다). 섹션 사진은 그 섹션이 가까워질 때 받는다
@@ -12,7 +14,8 @@
 const collage = document.querySelector('.hero .collage');
 const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const saveData = navigator.connection && navigator.connection.saveData;
-const isRoot = collage && collage.querySelector('.reel');
+const hasCards = !!(collage && collage.querySelector('.reel'));
+const anchor = hasCards ? collage : document.querySelector('.hero .booth, .b2b-hero .b2b-frames');   // 히어로 무대의 중심
 const root = document.documentElement;
 
 function stageOff() {
@@ -21,7 +24,7 @@ function stageOff() {
   Array.prototype.forEach.call(document.querySelectorAll('.in-3d'), (el) => el.classList.remove('in-3d'));
 }
 
-if (isRoot && !reduce) {
+if (anchor && !reduce) {
   videoUi();
   if (!saveData) {
     const kick = () => {
@@ -34,7 +37,7 @@ if (isRoot && !reduce) {
   }
 }
 
-// ---------- 영상 느낌: 재생 막대 + "영상처럼 보기"(자동 스크롤) ----------
+// ---------- 영상 느낌: 재생 막대(스크롤 진행) ----------
 function videoUi() {
   const bar = document.createElement('div');
   bar.className = 'reel-bar';
@@ -47,45 +50,6 @@ function videoUi() {
   window.addEventListener('scroll', () => { if (!barTick) { barTick = true; requestAnimationFrame(drawBar); } }, { passive: true });
   drawBar();
 
-  const inner = document.querySelector('.header__inner');
-  if (!inner) return;
-  const btn = document.createElement('button');
-  btn.type = 'button';
-  btn.className = 'autoplay';
-  inner.appendChild(btn);
-  let playing = false, pos = 0, last = 0;
-  const label = () => {
-    btn.textContent = playing ? '멈춤' : '영상처럼 보기';
-    btn.setAttribute('aria-pressed', playing ? 'true' : 'false');
-  };
-  const stop = () => {
-    if (!playing) return;
-    playing = false;
-    root.style.scrollBehavior = '';
-    label();
-  };
-  const step = (now) => {
-    if (!playing) return;
-    const dt = Math.min(0.05, last ? (now - last) / 1000 : 0.016);
-    last = now;
-    pos += window.innerHeight * 0.22 * dt;                 // 한 화면을 4~5초에
-    if (pos >= maxScroll()) { window.scrollTo(0, maxScroll()); stop(); return; }
-    window.scrollTo(0, pos);
-    requestAnimationFrame(step);
-  };
-  btn.addEventListener('click', () => {
-    if (playing) { stop(); return; }
-    playing = true; last = 0;
-    pos = window.scrollY >= maxScroll() - 4 ? 0 : window.scrollY;
-    root.style.scrollBehavior = 'auto';                    // css 의 smooth 와 겹치지 않게
-    label();
-    requestAnimationFrame(step);
-  });
-  ['wheel', 'touchstart', 'keydown'].forEach((type) => window.addEventListener(type, (e) => {
-    if (e.target === btn) return;
-    stop();
-  }, { passive: true }));
-  label();
 }
 
 async function init() {
@@ -99,13 +63,15 @@ async function init() {
     renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, powerPreference: 'low-power' });
   } catch (e) { return; }
 
-  const hero = collage.closest('.hero');
-  const reel = collage.querySelector('.reel');
-  const side = collage.querySelector('.pola--side');
-  const stickerEl = collage.querySelector(':scope > .logo-sticker');
-  const video = reel.querySelector('video');
+  const hero = anchor.closest('section');
+  const reel = hasCards ? collage.querySelector('.reel') : null;
+  const side = hasCards ? collage.querySelector('.pola--side') : null;
+  const stickerEl = hasCards ? collage.querySelector(':scope > .logo-sticker') : null;
+  const video = reel && reel.querySelector('video');
   const sideImg = side && side.querySelector('img');
-  const loopEl = collage.querySelector('.bubble--b');
+  const loopEl = hasCards ? collage.querySelector('.bubble--b') : null;
+  const isB2b = anchor.classList.contains('b2b-frames');
+  const autoFire = !isB2b;                                   // 문의 페이지는 차분하게: 7초마다 튕기는 "찰칵" 없음
 
   // 자산: 페이지가 이미 받은 파일을 그대로 다시 쓴다(캐시)
   const [mainPhoto, sidePhoto, stickerImg] = await Promise.all([
@@ -114,7 +80,6 @@ async function init() {
     stickerEl ? loadSvg(stickerEl.querySelector('img').src, 920, 540) : null,
     document.fonts && document.fonts.ready
   ]);
-  if (!mainPhoto) return;
 
   // 떠다니는 카드에 쓰는 사진. 히어로 둘레 자리: x·y(화면에서 보이는 자리)·z(깊이)·w 는 콜라주 폭(cw) 배수, 원점은 콜라주 한가운데(y 위쪽 +, z 앞쪽 +).
   // kind p=폴라로이드, s=네컷·프레임 한 장. 같은 사진을 페이지 전체에 흐르는 카드(buildAmbient)에도 돌려 쓴다
@@ -130,6 +95,20 @@ async function init() {
     { src: 'fourcut-cut-4.webp', kind: 'p', x: 0.68, y: -0.56, z: 0.45, w: 0.20, r: 10 },
     { src: 'fourcut-vintage-model.webp', kind: 's', x: -0.24, y: -0.68, z: -0.50, w: 0.24, r: -8 }
   ];
+  // 루트 밖: 그 페이지에 실린 사진(나라별 모델·프레임)을 먼저 쓰고, 모자라면 위 기본 사진으로 채운다. 자리(x·y·z·w·r)는 그대로
+  if (!/^\/(index\.html)?$/.test(location.pathname)) {
+    const seen = {}, own = [];
+    Array.prototype.forEach.call(document.querySelectorAll('main img'), (im) => {
+      const name = (im.getAttribute('src') || '').split('/').pop().split('?')[0];
+      if (!/\.webp$/.test(name) || /^(pose-|frame-(?!goheung))/.test(name) || seen[name]) return;   // 폰 목업(투명)·빈 프레임 제외
+      seen[name] = 1;
+      if (anchor.contains(im)) return;                       // 히어로 그림에 이미 나온 사진은 둘레에 또 띄우지 않는다
+      own.push({ name, url: im.src, kind: /^(fourcut-(?!cut)|frame-)|hearts/.test(name) ? 's' : 'p' });
+    });
+    const rest = CLOUD.filter((c) => !seen[c.src] && !(isB2b && /^(couple|onboarding)/.test(c.src))).map((c) => ({ name: c.src, url: IMG + c.src, kind: c.kind }));
+    const pick = own.concat(rest);
+    CLOUD.forEach((c, i) => { const o = pick[i % pick.length]; c.src = o.name; c.url = o.url; c.kind = o.kind; });
+  }
   const K = 22, C = 5.5;     // 카드 스프링(탄성·감쇠)
   const T = 4;               // 폴라로이드 두께(px)
   const Z_SIDE = 46, Z_STICKER = 78;
@@ -141,7 +120,7 @@ async function init() {
   const rig = new THREE.Group();             // 히어로 무대(콜라주 한가운데가 중심)
   const maxAniso = renderer.capabilities.getMaxAnisotropy();
 
-  let vw = 0, vh = 0, D = 1200, cw = 0, ch = 0, texScale = 2, buildId = 0;
+  let vw = 0, vh = 0, D = 1200, cw = 0, ch = 0, texScale = 2, buildId = 0, built = false;
   let main = null, sideCard = null, sticker = null, flash = null, sheenMat = null, softShadow = null, fronts = [];
   let cloud = [], cloudImgs = null, cloudT0 = -1, ejectI = 0, ambient = [];
   const sets = Array.prototype.map.call(document.querySelectorAll('main .cluster'), (el) => ({ el, pivot: null, items: [], wanted: false }));
@@ -418,7 +397,7 @@ async function init() {
       (Array.isArray(o.material) ? o.material : [o.material]).forEach((mt) => { if (mt.map) mt.map.dispose(); mt.dispose(); });
     });
     scene.clear(); rig.clear();
-    fronts = []; cloud = []; ambient = []; main = sideCard = sticker = flash = null;
+    fronts = []; cloud = []; ambient = []; main = sideCard = sticker = flash = null; built = false;
     sets.forEach((s) => { s.pivot = null; s.items = []; });
   }
 
@@ -443,19 +422,24 @@ async function init() {
     sheenMat = new THREE.MeshBasicMaterial({ map: tex(gc), transparent: true, depthWrite: false, opacity: 0 });
 
     // 히어로: 스크롤 0 일 때의 콜라주 자리가 기준
-    cw = collage.clientWidth; ch = collage.clientHeight;
+    cw = anchor.clientWidth; ch = anchor.clientHeight;
     if (!cw || !ch) return;
-    const cb = collage.getBoundingClientRect(), box = { w: cw, h: ch, cq: cw / 100 };
+    built = true;
+    const cb = anchor.getBoundingClientRect(), box = { w: cw, h: ch, cq: cw / 100 };
     const P = { x: cb.left + cb.width / 2 - vw / 2, y: vh / 2 - (cb.top + window.scrollY + cb.height / 2) };
-    main = makeCard(reel, mainPhoto, 0, box, rig, P);
-    const r = main.userData.photo;
-    flash = new THREE.Mesh(new THREE.PlaneGeometry(r.w, r.h), new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0, depthWrite: false }));
-    flash.position.set(r.x, r.y, 0.6);
-    flash.renderOrder = 1;
-    main.add(flash);
-    if (side && sidePhoto) sideCard = makeCard(side, sidePhoto, Z_SIDE, box, rig, P);
-    if (stickerEl && stickerImg) sticker = makeImage(stickerEl, stickerImg, Z_STICKER, box, rig, P, { blur: 12, oy: 8, alpha: 0.18, rot: -8, order: 3 });
-    attachVideo();
+    if (reel && mainPhoto) {                                 // 폴라로이드 콜라주가 있는 히어로(루트·/couple/)
+      main = makeCard(reel, mainPhoto, 0, box, rig, P);
+      const r = main.userData.photo;
+      flash = new THREE.Mesh(new THREE.PlaneGeometry(r.w, r.h), new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0, depthWrite: false }));
+      flash.position.set(r.x, r.y, 0.6);
+      flash.renderOrder = 1;
+      main.add(flash);
+      if (side && sidePhoto) sideCard = makeCard(side, sidePhoto, Z_SIDE, box, rig, P);
+      if (stickerEl && stickerImg) sticker = makeImage(stickerEl, stickerImg, Z_STICKER, box, rig, P, { blur: 12, oy: 8, alpha: 0.18, rot: -8, order: 3 });
+      attachVideo();
+    } else {
+      cw = Math.min(cw, 520);                                // 둘레 카드 자리·크기의 기준 폭
+    }
     buildCloud();
     buildAmbient();
     sets.forEach((s) => { if (s.wanted) buildSet(s); });
@@ -463,10 +447,11 @@ async function init() {
 
   // ---------- 히어로 둘레 카드 ----------
   function buildCloud() {
-    if (!cloudImgs || !main || cloud.length) return;
+    if (!cloudImgs || !built || cloud.length) return;
     CLOUD.forEach((c, i) => {
       const img = cloudImgs[i];
       if (!img) return;
+      if (!main && vw < 900 && (isB2b ? c.y > 0.3 : c.y < -0.3)) return;   // 한 단(모바일): 글 쪽으로 가는 카드는 뺀다(/fourcut/ 는 글이 아래, /b2b/ 는 위)
       const card = makeLoose(img, c.kind === 'p', c.w * cw);
       rig.add(card.group);
       // x·y 는 화면에서 보이는 자리 → 깊이만큼 보정(뒤에 있는 카드가 가운데로 몰려 큰 사진 뒤에 숨지 않게). 한 단(모바일)에서는 위쪽 카드가 글을 덜 덮게 낮춘다
@@ -485,13 +470,15 @@ async function init() {
 
   // ---------- 페이지 전체에 흐르는 카드: 히어로 아래부터 끝까지, 좌우 번갈아·깊이 제각각 ----------
   function buildAmbient() {
-    if (!cloudImgs || !main || ambient.length) return;
+    if (!cloudImgs || !built || ambient.length) return;
     const imgs = cloudImgs.map((img, i) => ({ img, isP: CLOUD[i].kind === 'p' })).filter((o) => o.img);
     if (!imgs.length) return;
     let seed = 7;
     const rnd = () => { seed = (seed * 16807) % 2147483647; return seed / 2147483647; };
     const wide = vw >= 900;
-    const start = hero.offsetTop + hero.offsetHeight + vh * 0.2, end = root.scrollHeight - vh * 0.5;
+    const formSec = document.querySelector('.b2b-form-section');       // 문의 폼 둘레에는 카드를 흘리지 않는다
+    const start = hero.offsetTop + hero.offsetHeight + vh * 0.2;
+    const end = formSec ? formSec.getBoundingClientRect().top + window.scrollY - vh * 0.4 : root.scrollHeight - vh * 0.5;
     let i = 0;
     for (let y = start; y < end; y += vh * (wide ? 0.34 : 0.42), i++) {
       const o = imgs[(i * 4 + 3) % imgs.length], sideSign = i % 2 ? 1 : -1;
@@ -511,10 +498,10 @@ async function init() {
   // ---------- 기능 섹션 무대(.cluster): 큰 사진·폰 화면·네컷을 3D 카드로 ----------
   function buildSet(s) {
     const id = buildId;
-    const els = Array.prototype.slice.call(s.el.querySelectorAll(':scope > .pola:not(.cutout), :scope > .shot, :scope > .fourcut'));
+    const els = Array.prototype.slice.call(s.el.querySelectorAll(':scope > .pola:not(.cutout), :scope > .shot, :scope > .fourcut, :scope > .frame-card'));
     if (!els.length) return;
     Promise.all(els.map((el) => loadImage((el.querySelector('img') || {}).src))).then((imgs) => {
-      if (id !== buildId || s.pivot || !main) return;
+      if (id !== buildId || s.pivot || !built) return;
       const w = s.el.clientWidth, h = s.el.clientHeight;
       if (!w || !h) return;
       const b = s.el.getBoundingClientRect(), box = { w, h, cq: w / 100 };
@@ -527,6 +514,7 @@ async function init() {
         let group;
         if (el.classList.contains('pola')) group = makeCard(el, img, 0, box, pivot, P);
         else if (el.classList.contains('shot')) group = makeImage(el, img, el.classList.contains('shot--main') ? 34 : -34, box, pivot, P, { blur: 28, oy: 26, alpha: 0.26 });
+        else if (el.classList.contains('frame-card')) group = makeImage(el, img, el.classList.contains('frame-card--main') ? 30 : -30, box, pivot, P, { blur: 22, oy: 18, alpha: 0.2, radius: 4 });
         else group = makeImage(el, img, 0, box, pivot, P, { blur: 30, oy: 16, alpha: 0.3, radius: 10, rot: -3 });
         const cx = el.offsetLeft + el.offsetWidth / 2 - w / 2;
         s.items.push({ group, el, i: s.items.length, side: els.length > 1 ? (cx < 0 ? -1 : 1) : (b.left + b.width / 2 < vw / 2 ? -1 : 1), fresh: true });
@@ -576,7 +564,7 @@ async function init() {
 
   function frame(now) {
     raf = requestAnimationFrame(frame);
-    if (!main) return;
+    if (!built) return;
     const t = now / 1000, dt = Math.min(0.05, last ? (now - last) / 1000 : 0.016);
     last = now;
     live = Math.min(1, live + dt / 1.4);
@@ -595,7 +583,7 @@ async function init() {
     fronts.forEach((mt) => mt.color.setScalar(shade));
 
     // ----- 히어로 -----
-    const cb = collage.getBoundingClientRect();
+    const cb = anchor.getBoundingClientRect();
     rig.visible = cb.bottom > -vh && cb.top < vh * 2;
     if (rig.visible) {
       const scrollP = clamp(sy / (hero.offsetHeight || 1), 0, 1);
@@ -604,14 +592,16 @@ async function init() {
       rig.rotation.x = tiltX + scrollP * 0.3;
 
       // "찰칵": css 7초 루프의 35% 지점마다 + 콜라주를 누르면 바로
-      const lp = loopProgress(now), u = main.userData;
-      if (prevLp < 0.35 && lp >= 0.35 && scrollP < 0.9) fire(now);
+      const lp = loopProgress(now);
+      if (autoFire && prevLp < 0.35 && lp >= 0.35 && scrollP < 0.9) fire(now);
       prevLp = lp;
-      const e = (now - shutterT) / 1000;
-      flash.material.opacity = e < 0.1 ? e / 0.1 * 0.9 : e < 0.38 ? (1 - (e - 0.1) / 0.28) * 0.9 : 0;
-      const s = clamp(e / 0.63, 0, 1), punch = Math.sin(s * Math.PI) * (1 - s);
-      main.position.z = u.z + punch * 60;
-      main.rotation.z = u.rot + Math.sin(s * Math.PI * 3) * 0.02 * (1 - s);
+      if (main) {
+        const u = main.userData, e = (now - shutterT) / 1000;
+        flash.material.opacity = e < 0.1 ? e / 0.1 * 0.9 : e < 0.38 ? (1 - (e - 0.1) / 0.28) * 0.9 : 0;
+        const s = clamp(e / 0.63, 0, 1), punch = Math.sin(s * Math.PI) * (1 - s);
+        main.position.z = u.z + punch * 60;
+        main.rotation.z = u.rot + Math.sin(s * Math.PI * 3) * 0.02 * (1 - s);
+      }
 
       if (sideCard) {
         const su = sideCard.userData;
@@ -686,7 +676,7 @@ async function init() {
     });
 
     renderer.render(scene, camera);
-    if (!shown) { shown = true; collage.classList.add('is-3d'); root.classList.add('has-stage'); }
+    if (!shown) { shown = true; if (main) collage.classList.add('is-3d'); root.classList.add('has-stage'); }
   }
   function setRunning() {
     if (raf < 0) return;
@@ -698,10 +688,10 @@ async function init() {
   // ---------- 시작 ----------
   document.body.insertBefore(canvas, document.body.firstChild);
   buildAll();
-  if (!main) { canvas.remove(); return; }
+  if (!built) { canvas.remove(); return; }
 
-  collage.addEventListener('click', () => fire(performance.now()));
-  Promise.all(CLOUD.map((c) => loadImage(IMG + c.src))).then((imgs) => { cloudImgs = imgs; buildCloud(); buildAmbient(); });
+  if (autoFire) anchor.addEventListener('click', () => fire(performance.now()));
+  Promise.all(CLOUD.map((c) => loadImage(c.url || IMG + c.src))).then((imgs) => { cloudImgs = imgs; buildCloud(); buildAmbient(); });
   if (video) video.addEventListener('playing', attachVideo);
   if ('IntersectionObserver' in window) {                    // 섹션 사진은 그 섹션이 한 화면 반 앞까지 왔을 때 받는다
     const io = new IntersectionObserver((entries) => {

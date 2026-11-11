@@ -651,16 +651,9 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--orange); outlin
 .collage.is-3d > .pola, .collage.is-3d > .logo-sticker { opacity: 0; animation: none; transition: opacity .35s ease; }
 .has-stage .in-3d { opacity: 0 !important; }
 
-/* 영상 느낌: 헤더 아래 재생 막대(스크롤 진행) + 헤더의 "영상처럼 보기" 버튼(자동 스크롤). 둘 다 js/hero3d.js 가 만든다 */
+/* 영상 느낌: 헤더 아래 재생 막대(스크롤 진행). js/hero3d.js 가 만든다 */
 .reel-bar { position: fixed; left: 0; top: var(--header-h); z-index: 41; width: 100%; height: 3px; pointer-events: none; }
 .reel-bar i { display: block; height: 100%; background: var(--orange); transform-origin: 0 50%; transform: scaleX(var(--k, 0)); }
-.autoplay {
-  display: inline-flex; align-items: center; gap: 7px; height: 34px; padding: 0 13px; border-radius: 999px;
-  border: 1.5px solid var(--black); background: var(--white); font-size: 13px; font-weight: 800; line-height: 1;
-}
-.autoplay::before { content: ""; border-left: 8px solid var(--orange); border-top: 5px solid transparent; border-bottom: 5px solid transparent; }
-.autoplay[aria-pressed="true"] { background: var(--black); color: var(--white); }
-.autoplay[aria-pressed="true"]::before { width: 3px; height: 10px; border: 0; border-left: 3px solid var(--orange); border-right: 3px solid var(--orange); box-sizing: content-box; }
 
 /* ---------- 스크롤 모션 (2026-11-11, 모든 변형 공통) ----------
    js/main.js 가 <html> 에 .js-motion 을 붙이고(모션 최소화·IntersectionObserver 없음이면 안 붙음 → 전부 그냥 보인다),
