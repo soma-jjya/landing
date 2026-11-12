@@ -33,7 +33,7 @@
   https://apps.apple.com/kr/app/peakpic/id6807646621
 - **CTA 는 단일 "앱 다운로드" 버튼** (2026-10-15 결정, 모든 변형 공통): `<html class="os-android|os-ios|os-other">`(head 인라인 스크립트)를 보고
   js/main.js 가 `.btn-store` 를 방문자 OS 의 스토어로 직행시킨다. 데스크톱·JS 없음(os-other)은 #install 로 스크롤 → 설치 섹션에만 공식 배지 2개 + QR.
-  공식 배지는 설치 섹션 외에 두지 않는다
+  공식 배지는 설치 섹션 외에 두지 않는다 → **2026-11-13 사용자 요청으로 히어로 CTA 아래(.hero__stores)에도 공식 배지 2개**(모든 기기에서 보임, b2b 제외)
   2026-10-27: 헤더(네브바)의 "앱 다운로드" 버튼은 모든 변형에서 삭제(사용자 요청). 버튼은 히어로·하단 고정·설치 섹션만
 - 푸터에 Google·Apple 상표 고지 유지. "iOS 준비 중" 류 표기는 전부 폐기
 
@@ -90,6 +90,7 @@
   맨 위에 그래프 4개(소재별 전환 퍼널·날짜별 소재 방문자·버튼 위치별 스토어 클릭·시간대별), 그 아래 SQL 표 5개
   js/main.js 는 lang 이 ko 가 아니면 국가 없는 App Store 주소(2026-11-09). 원어민 검수 전
   2026-11-10: 팀원이 Play 나라별 스토어 등록정보를 만들어 Play 주소를 페이지 언어별로 팀원 링크와 같게(js/main.js PLAY_LOCALE): ko gl=KR&hl=ko · ja gl=JP&hl=ja · vi gl=VN&hl=vi · en-PH gl=PH&hl=fil · en hl=en-US(여러 나라 광고라 gl 없음). 설치 섹션 배지도 같은 주소. App Store 나라별 설정은 아직(맞춤 제품 페이지면 ppid 필요)
+  2026-11-13: App Store 도 페이지 언어별 나라 주소로(js/main.js APP_LOCALE, 설치 섹션 배지도 같게): ko apps.apple.com/kr · en /us · ja /jp · vi /vn?l=vi. en-PH 는 사용자 목록에 없어 국가 없는 주소 유지. /cn 주소는 받았지만 중국어 페이지가 없어 아직 안 씀
 B2B 문의 폼(2026-11-03, 브리프 docs/b2b-inquiry-form-brief.md): `/b2b/`(variant=b2b) — B2B 메타 광고(캠페인 b2b_1103, 세트 b2b_cafe·b2b_event)의 도착지. 설치가 아니라 **문의 접수**가 목표.
   b2b/index.html·b2b.css·b2b.js. head 인라인 스크립트가 utm_content 를 보고 `<html data-b2b="cafe|festival|tourism|other">`(cafe / tour / festival·event / 그 외) → CSS 가 `[data-v]` 문구만 보여준다.
   카피·조건은 Figma B2B v6 포스터 기반(설치비 0원·상주 인력 0명, 손님 3단계). 2026-11-04 사용자 확인: 실제 제공은 **QR 포스터 1장 + 손님 폰**(거치대·폰 설치 아님) → "필요한 것 QR 포스터 1장", 2단계 "손님 폰으로 촬영". 카페 변형 버튼·폼 제목은 카페 광고 움짤 CTA 와 같은 "무료로 우리 가게 프레임 받기"·"무료 체험 신청"(무료 사전 체험 기간). 그림: 카페 frame-dessert, 축제 frame-goheung(2026 고흥유자축제 실제 프레임, 원본 assets/raw/b2b)
