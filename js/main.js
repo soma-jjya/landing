@@ -70,21 +70,25 @@
   var ua = navigator.userAgent || '';
   var isIOS = /iPhone|iPad|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
   var isAndroid = !isIOS && /Android/.test(ua);
-  // 한국어가 아닌 페이지(/couple/en/·/ph/·/ja/·/vn/ 등)의 App Store 는 국가 없는 주소 — 방문자 나라의 스토어로 자동 연결된다.
+  // App Store 도 페이지 언어별 나라 스토어로 (2026-11-13 사용자 목록): ko kr · en us · ja jp · vi vn(l=vi).
+  // 필리핀(en-PH)은 목록에 없어 지금처럼 국가 없는 주소 — 방문자 나라의 스토어로 자동 연결된다.
   // Play 는 팀원이 나라별 스토어 등록정보를 만들어서(2026-11-10) 페이지 언어별로 나라(gl)·언어(hl)를 팀원 링크와 같게 맞춘다.
   // 영어 페이지는 여러 나라 광고가 같이 쓰므로 나라 없이 hl=en-US
   var htmlLang = (document.documentElement.lang || 'ko').toLowerCase();
   var pageLang = htmlLang.split('-')[0];
-  var isEn = pageLang !== 'ko';
   var PLAY_LOCALE = { ko: 'gl=KR&hl=ko', ja: 'gl=JP&hl=ja', vi: 'gl=VN&hl=vi', 'en-ph': 'gl=PH&hl=fil', en: 'hl=en-US' };
   var playUrl = 'https://play.google.com/store/apps/details?id=soma.project.caestro&' +
     (PLAY_LOCALE[htmlLang] || PLAY_LOCALE[pageLang] || 'hl=' + pageLang);
+  var APP_LOCALE = { ko: 'kr/app/peakpic/id6807646621', ja: 'jp/app/peakpic/id6807646621', vi: 'vn/app/peakpic/id6807646621?l=vi',
+    'en-ph': 'app/peakpic/id6807646621', en: 'us/app/peakpic/id6807646621' };
+  var appUrl = 'https://apps.apple.com/' + (APP_LOCALE[htmlLang] || APP_LOCALE[pageLang] || 'app/peakpic/id6807646621');
   var STORE = {
     play: { url: playUrl },
-    app: { url: isEn ? 'https://apps.apple.com/app/peakpic/id6807646621' : 'https://apps.apple.com/kr/app/peakpic/id6807646621' }
+    app: { url: appUrl }
   };
   // 설치 섹션의 공식 Play 배지도 같은 주소로 (아래 4)에서 referrer 가 붙는다)
   Array.prototype.forEach.call(document.querySelectorAll('a[href*="play.google.com"]'), function (a) { a.href = playUrl; });
+  Array.prototype.forEach.call(document.querySelectorAll('a[href*="apps.apple.com"]'), function (a) { a.href = appUrl; });
   var target = isIOS ? STORE.app : (isAndroid ? STORE.play : null);
   if (target) {
     Array.prototype.forEach.call(document.querySelectorAll('.btn-store'), function (a) {
