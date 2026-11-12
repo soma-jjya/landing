@@ -24,7 +24,7 @@
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="preload" as="image" href="/assets/img/couple-hero-beach.webp" fetchpriority="high">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
-  <link rel="stylesheet" href="/css/style.css?v=20261111f">
+  <link rel="stylesheet" href="/css/style.css?v=20261113a">
   <!-- PostHog: key 를 넣으면 js/analytics.js 가 켜진다. host 는 vercel.json 의 /ingest 리라이트(광고 차단 우회). EU 프로젝트면 vercel.json 과 uiHost 를 eu 로 -->
   <script>window.PEAKPIC_ANALYTICS = { key: 'phc_s3GaoSttixdo2SRtthMVFuatqAKc4tY6A2wF44iq7cJD', host: '/ingest', uiHost: 'https://us.posthog.com', metaPixelId: '1758731071879086', appStorePt: '129647718', variant: 'couple' };</script>
   <!-- 방문자 OS 를 <html> 클래스로 (os-android / os-ios / os-other). 단일 "앱 다운로드" 버튼이 어느 스토어로 갈지 CSS·JS 가 이걸 본다 -->
@@ -60,11 +60,7 @@
           <h1 id="hero-title" class="hero__title">똥손 남친도<br><span class="hl">인생샷</span> 찍어줌<span class="dot">.</span></h1>
           <p class="hero__lede">연인 폰의 카메라 화면이 내 폰에 그대로 보여요.<br class="br-desktop"> 구도는 내가 맞추고 셔터도 내가 눌러요. 다시 찍어달라는 말은 이제 그만.</p>
 
-          <!-- 단일 CTA: js/main.js 가 방문자 OS 의 스토어로 href 를 바꾼다 (Android→Google Play, iPhone→App Store). 데스크톱·JS 없음 → 설치 섹션의 공식 배지 2개 -->
-          <div class="store-cta hero__cta">
-            <a class="btn btn--dot btn-store" href="#install">앱 다운로드</a>
-            <p class="stores__note">무료 · 로그인 없이 바로 시작할 수 있어요.</p>
-          </div>
+          <!-- 히어로 CTA: 공식 배지 2개 (2026-11-13, 버튼 대신). js/main.js 가 페이지 언어의 나라 스토어로 href 를 맞추고 방문자 OS 의 스토어를 앞으로 -->
           <div class="stores hero__stores">
             <a class="badge-play" href="https://play.google.com/store/apps/details?id=soma.project.caestro&amp;gl=KR&amp;hl=ko" target="_blank" rel="noopener">
               <img src="/assets/img/google-play-badge-ko-v2.png" width="646" height="192" alt="Google Play에서 다운로드">
@@ -338,7 +334,7 @@
     <a class="btn btn--dot btn-store" href="#install" tabindex="-1">앱 다운로드</a>
   </div>
 
-  <script src="/js/main.js?v=20261111" defer></script>
+  <script src="/js/main.js?v=20261113a" defer></script>
   <!-- 페이지 전체 3D 무대(three.js) + 재생 막대: load 뒤에 동적 import, 실패하면 원래 페이지 그대로 -->
   <script type="module" src="/js/hero3d.js?v=20261111g"></script>
 </body>

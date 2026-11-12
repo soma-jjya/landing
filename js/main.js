@@ -1,5 +1,5 @@
 /* PeakPic 랜딩 — 최소 JS
-   1) 모바일 고정 CTA: 히어로의 CTA가 화면에서 벗어나면 표시 (설치 섹션이 보이면 숨김)
+   1) 모바일 고정 CTA: 히어로의 스토어 배지가 화면에서 벗어나면 표시 (설치 섹션이 보이면 숨김)
    2) 히어로 시연 영상: 파일이 없거나 재생 불가면 포스터 이미지 유지
    3) 단일 "앱 다운로드" 버튼을 방문자 OS 의 스토어로 연결 (+ 데스크톱 배지 순서)
    4) 광고 UTM → 스토어 설치 귀속(Play 리퍼러 · App Store 캠페인 링크)
@@ -10,7 +10,7 @@
 
   // 1) 고정 CTA
   var sticky = document.querySelector('.sticky-cta');
-  var heroCta = document.querySelector('.hero__cta');
+  var heroCta = document.querySelector('.hero__stores');   // 2026-11-13: 히어로 버튼을 빼고 배지만 남김
   var installSection = document.querySelector('.install');
   if (sticky && heroCta && 'IntersectionObserver' in window) {
     var stickyLink = sticky.querySelector('a');
