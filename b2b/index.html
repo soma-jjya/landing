@@ -25,7 +25,7 @@
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
   <link rel="stylesheet" href="/css/style.css?v=20261113a">
-  <link rel="stylesheet" href="/b2b/b2b.css?v=20261107">
+  <link rel="stylesheet" href="/b2b/b2b.css?v=20261114">
   <script>window.PEAKPIC_ANALYTICS = { key: 'phc_s3GaoSttixdo2SRtthMVFuatqAKc4tY6A2wF44iq7cJD', host: '/ingest', uiHost: 'https://us.posthog.com', metaPixelId: '1758731071879086', appStorePt: '129647718', variant: 'b2b' };</script>
   <script>(function(){var u=navigator.userAgent||'',i=/iPhone|iPad|iPod/.test(u)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);document.documentElement.classList.add(i?'os-ios':(/Android/.test(u)?'os-android':'os-other'));})();</script>
   <!-- 광고 소재(utm_content) → 문구 변형. b2b_event 는 2026-11-02 광고 세트 이름, b2b_festival 은 브리프 이름 — 둘 다 축제 -->
@@ -68,6 +68,7 @@
           <!-- 실적 배지 (2026-11-07 팀 피드백 수치: 고흥유자축제 방문객 30만 명(작년) · 피크픽 앱 누적 사용 3천 명 — 축제 안 비율로 읽히지 않게 앱 전체 수치로 표기) — 숫자가 바뀌면 #proof 도 같이 -->
           <ul class="b2b-badges" aria-label="실적">
             <li><b>30만 명</b> 찾은 고흥유자축제에서 운영<small>작년 기준</small></li>
+            <li><b>식당·사격장·카페</b>에서도 운영 중</li>
             <li><b>3,000명+</b>이 쓰는 네컷 앱</li>
           </ul>
 
@@ -100,13 +101,19 @@
 
     <!-- ===== 2026-11-07 개편: 폼은 맨 아래, 그 위에 실적 → 예시 → 3단계 → 자주 묻는 질문. 섹션마다 폼으로 가는 버튼(data-b2b-cta=섹션) ===== -->
 
-    <!-- 실적: 고흥유자축제 (수치는 히어로 배지와 같게) -->
+    <!-- 실적: 고흥유자축제 + 운영 중인 매장 종류(2026-11-14 식당·사격장·카페 — 매장 이름은 사장님 동의 전이라 업종만) (수치는 히어로 배지와 같게) -->
     <section class="b2b-sec" id="proof" aria-labelledby="proof-title">
       <div class="container b2b-sec__inner b2b-proof">
         <div class="b2b-sec__copy">
           <span class="tag" style="--r:-2deg">real case</span>
-          <h2 id="proof-title" class="b2b-sec__title">30만 명이 찾은 축제에서<br><span class="hl">먼저 써 봤어요</span><span class="dot">.</span></h2>
-          <p class="b2b-sec__desc">2026 고흥유자축제에서 축제 이름이 들어간 전용 네컷 프레임을 운영했어요. 방문객이 자기 폰으로 찍고 그대로 저장·공유했어요.</p>
+          <h2 id="proof-title" class="b2b-sec__title">축제부터 식당·사격장·카페까지,<br><span class="hl">이미 쓰고 있어요</span><span class="dot">.</span></h2>
+          <p class="b2b-sec__desc">30만 명이 찾은 2026 고흥유자축제에서 축제 전용 네컷 프레임을 운영했고, 지금은 식당·사격장·카페에서도 매장 이름이 들어간 프레임을 운영하고 있어요. 손님이 자기 폰으로 찍고 그대로 저장·공유해요.</p>
+          <ul class="b2b-badges b2b-venues" aria-label="운영 중인 곳">
+            <li><b>축제</b> 고흥유자축제</li>
+            <li><b>식당</b></li>
+            <li><b>사격장</b> 제주</li>
+            <li><b>카페</b></li>
+          </ul>
           <dl class="b2b-bignums">
             <div><dt>축제 방문객<small>작년 기준</small></dt><dd>30만<small>명</small></dd></div>
             <div><dt>피크픽 누적 사용자</dt><dd class="is-orange">3,000<small>명+</small></dd></div>
