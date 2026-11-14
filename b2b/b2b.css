@@ -158,7 +158,6 @@ html[data-b2b="other"] .b2b-frame--goheung .b2b-pin, html:not([data-b2b]) .b2b-f
 .b2b-bignums dd small { font-size: 18px; margin-left: 2px; }
 .b2b-bignums dt small { margin-left: 4px; font-size: 11px; font-weight: 600; color: var(--ink-40); }
 .b2b-badges small { margin-left: 2px; font-size: 10px; font-weight: 600; opacity: .6; }
-.b2b-venues { margin: 4px 0 22px; }  /* #proof 운영 중인 곳(업종) */
 .b2b-bignums dd.is-orange { color: var(--orange); }
 
 .b2b-proof__img { position: relative; justify-self: center; width: min(72vw, 320px); margin: 10px 0 0; transform: rotate(3deg); }
