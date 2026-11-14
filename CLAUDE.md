@@ -245,7 +245,7 @@ B2B 문의 폼(2026-11-03, 브리프 docs/b2b-inquiry-form-brief.md): `/b2b/`(va
   2026-10-26 멘토 피드백 반영: 표준 이벤트 `ViewContent`(페이지 로드)·`Lead`(스토어 클릭) 추가. 새 캠페인은 목표 "리드" + 전환 이벤트 Lead 로 최적화(맞춤 전환·트래픽 목표 쓰지 않음).
   StoreClick 은 기존 테스트 캠페인 호환용으로 남김. PostHog store_click 은 즉시 전송(sendBeacon)으로 iOS 인앱 유실을 줄였다
   Conversions API 는 끔. 정식 개인정보처리방침(peakpic.app/privacy/)에 Meta 픽셀 항목 추가 필요(팀원 담당)
-- 설치 귀속·CPI(2026-10-21): 앱에 Meta SDK/MMP 가 없어 Meta 화면에는 설치가 안 잡힌다. 대신 js/main.js 가 스토어 링크에 포스터별 이름을 붙인다:
+- 설치 귀속·CPI(2026-10-21): 앱에 Meta SDK/MMP 가 없어 Meta 화면에는 설치가 안 잡힌다(2026-11-14 사용자: Meta SDK 설치됨 — 단 광고 목적지가 웹(랜딩)이라 메타 화면의 설치 귀속은 보조 확인용, 기준은 아래 스토어 보고서). 대신 js/main.js 가 스토어 링크에 포스터별 이름을 붙인다:
   Google Play 는 referrer 의 utm_campaign 을 `<캠페인>__<소재>`(예 test_1021__couple_d)로 바꿔 Play Console 사용자 확보 보고서에 포스터별 설치가 잡히게,
   App Store 는 head 의 `PEAKPIC_ANALYTICS.appStorePt`(App Store Connect 제공자 토큰, 2026-10-22 팀원이 캠페인 링크 생성으로 확인한 129647718 적용)로 캠페인 링크(pt·ct=같은 이름)로 바꾼다 → App Store Connect 앱 분석 > 획득 > 캠페인.
   CPI = 포스터별 광고비 ÷ (Play 설치 + App Store 설치). App Store 수치는 분석 공유에 동의한 사용자만 잡혀 과소 집계
