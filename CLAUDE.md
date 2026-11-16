@@ -249,6 +249,11 @@ B2B 문의 폼(2026-11-03, 브리프 docs/b2b-inquiry-form-brief.md): `/b2b/`(va
   Google Play 는 referrer 의 utm_campaign 을 `<캠페인>__<소재>`(예 test_1021__couple_d)로 바꿔 Play Console 사용자 확보 보고서에 포스터별 설치가 잡히게,
   App Store 는 head 의 `PEAKPIC_ANALYTICS.appStorePt`(App Store Connect 제공자 토큰, 2026-10-22 팀원이 캠페인 링크 생성으로 확인한 129647718 적용)로 캠페인 링크(pt·ct=같은 이름)로 바꾼다 → App Store Connect 앱 분석 > 획득 > 캠페인.
   CPI = 포스터별 광고비 ÷ (Play 설치 + App Store 설치). App Store 수치는 분석 공유에 동의한 사용자만 잡혀 과소 집계
+  Play Console 통계의 "설치한 사용자 수"는 누적(설치돼 있는 사람)이라 CPI 에 쓰면 안 된다 → 지표 "새 사용자 수"(구간별·일별). 11/1~11/10 국가별 CPI(B2B 제외): 한국 약 1,090원·필리핀 약 716원·영어권 약 3,500원·전체 약 1,180원(안드+iOS, 오가닉 포함이라 실제보다 낮음)
+- 랜딩 경유 vs 바로 스토어 A/B(2026-11-16 20시~, 세 세트 모두 일 25,000원, 같은 AI 카페 커플 영상 — 원본 ~/Downloads/KakaoTalk_Video_2026-11-16-16-1*.mp4, 편집본 ~/Downloads/peakpic-ads-couple-cafe-ai/ 피드 4:5·스토리 9:16, 대사 자막 + 움직이는 엔드카드):
+  A 캠페인 ko_b2c_1028 의 새 세트 ko_couple_cafe_ai, 광고 couple_cafe_ai_ko → /couple/ (utm_campaign=**ko_b2c_1028** — 기존 광고는 b2c_1028 라서 대시보드 2261880 의 모든 표·그래프를 두 값 모두 세도록 고침).
+  B 앱 홍보(수동) 캠페인 app_aos(세트 ko_aos_couple, Google Play)·app_ios(세트 ko_ios_couple, iOS 14+ 캠페인·SKAdNetwork, 광고 couple_cafe_ai_ko_ios) — 랜딩을 안 거쳐 PostHog 에 안 잡히고 메타 SDK 설치 수로 본다(안드는 거의 정확, iOS 는 늦고 대략적 → App Store Connect 소스 "앱 참조"로 대조).
+  캠페인 = OS, 세트 = 나라(나중에 나라별 언어 음성 영상 추가 시 세트 복제). 복제한 앱 광고는 스토어 링크가 안 바뀌므로 iOS 광고는 새로 만들어야 했다
 
 ## 아직 없는 것 (플레이스홀더 진행)
 - [ ] 히어로 시연 영상 (팀 촬영 예정)
