@@ -10,7 +10,7 @@
 
   // 1) 고정 CTA
   var sticky = document.querySelector('.sticky-cta');
-  var heroCta = document.querySelector('.hero__stores');   // 2026-11-13: 히어로 버튼을 빼고 배지만 남김
+  var heroCta = document.querySelector('.hero__cta');   // 2026-11-19: 히어로는 다시 단일 버튼
   var installSection = document.querySelector('.install');
   if (sticky && heroCta && 'IntersectionObserver' in window) {
     var stickyLink = sticky.querySelector('a');

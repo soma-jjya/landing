@@ -24,7 +24,7 @@
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="preload" as="image" href="/assets/img/fourcut-dessert.webp" fetchpriority="high">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
-  <link rel="stylesheet" href="/css/style.css?v=20261119a">
+  <link rel="stylesheet" href="/css/style.css?v=20261119b">
   <!-- PostHog: key 를 넣으면 js/analytics.js 가 켜진다. host 는 vercel.json 의 /ingest 리라이트(광고 차단 우회). EU 프로젝트면 vercel.json 과 uiHost 를 eu 로 -->
   <script>window.PEAKPIC_ANALYTICS = { key: 'phc_s3GaoSttixdo2SRtthMVFuatqAKc4tY6A2wF44iq7cJD', host: '/ingest', uiHost: 'https://us.posthog.com', metaPixelId: '1758731071879086', appStorePt: '129647718', variant: 'fourcut' };</script>
   <!-- 방문자 OS 를 <html> 클래스로 (os-android / os-ios / os-other). 단일 "앱 다운로드" 버튼이 어느 스토어로 갈지 CSS·JS 가 이걸 본다 -->
@@ -60,14 +60,9 @@
           <h1 id="hero-title" class="hero__title">이제 내 폰이<br><span class="hl">공짜 포토부스</span><span class="dot">.</span></h1>
           <p class="hero__lede">내 폰으로 한 컷씩 찍고, 프레임·스티커로 꾸미면 끝.<br class="br-desktop"> 줄도, 돈도 필요 없어요.</p>
 
-          <!-- 히어로 CTA: 공식 배지 2개 (2026-11-13, 버튼 대신). js/main.js 가 페이지 언어의 나라 스토어로 href 를 맞추고 방문자 OS 의 스토어를 앞으로 -->
-          <div class="stores hero__stores">
-            <a class="badge-play" href="https://play.google.com/store/apps/details?id=soma.project.caestro&amp;gl=KR&amp;hl=ko" target="_blank" rel="noopener">
-              <img src="/assets/img/google-play-badge-ko-v2.png" width="646" height="192" alt="Google Play에서 다운로드">
-            </a>
-            <a class="badge-app" href="https://apps.apple.com/kr/app/peakpic/id6807646621" target="_blank" rel="noopener">
-              <img src="/assets/img/app-store-badge-ko.svg" width="130" height="40" alt="App Store에서 다운로드">
-            </a>
+          <!-- 단일 CTA (2026-11-19): js/main.js 가 방문자 OS 의 스토어로 href 를 바꾼다 (Android→Google Play, iPhone→App Store). 데스크톱·JS 없음 → 설치 섹션의 공식 배지 2개 -->
+          <div class="store-cta hero__cta">
+            <a class="btn btn--dot btn-store" href="#install">앱 다운로드</a>
           </div>
           <!-- 2026-10-27: 광고 소재에 따라 히어로를 광고와 똑같이. 기본(포토부스 광고·직접 유입) = 찰칵 4번 → 한 장 → 꾸미기,
                하트·친구 광고(utm_content 에 hearts·friends) = 문구만 "너만 올리면 네컷 완성."으로. 그림은 2026-10-28부터 모두 포토부스 장면 -->
@@ -383,7 +378,7 @@
     <a class="btn btn--dot btn-store" href="#install" tabindex="-1">앱 다운로드</a>
   </div>
 
-  <script src="/js/main.js?v=20261113a" defer></script>
+  <script src="/js/main.js?v=20261119b" defer></script>
   <!-- 페이지 전체 3D 무대(three.js) + 재생 막대: load 뒤에 동적 import, 실패하면 원래 페이지 그대로 -->
   <script type="module" src="/js/hero3d.js?v=20261111g"></script>
 </body>
