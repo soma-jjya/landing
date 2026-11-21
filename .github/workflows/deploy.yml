@@ -1,0 +1,31 @@
+name: Cloudflare 배포
+
+# main 에 push 되면 Worker `peakpic-landing` 에 올린다 (빌드 없음, 레포 파일 그대로. 제외 목록은 .assetsignore).
+# 필요한 레포 시크릿: CLOUDFLARE_API_TOKEN
+#   peakpic.app 존을 가진 팀 Cloudflare 계정(account_id 는 wrangler.toml)에서 템플릿 "Edit Cloudflare Workers"로 발급.
+#   peakpic-b2b-admin 레포가 쓰는 것과 같은 토큰이면 된다.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-peakpic-landing
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Worker 배포
+        run: npx -y wrangler@4 deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          WRANGLER_SEND_METRICS: "false"

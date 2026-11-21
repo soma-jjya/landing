@@ -1,0 +1,7 @@
+# 정적 파일 캐시: css·js·이미지는 4시간 (파일을 바꾸면 html 의 ?v= 를 올린다). html 은 기본값(매번 확인)
+/css/*
+  Cache-Control: public, max-age=14400
+/js/*
+  Cache-Control: public, max-age=14400
+/assets/*
+  Cache-Control: public, max-age=14400

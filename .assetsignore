@@ -1,0 +1,17 @@
+# peakpic-landing Worker 에 올리지 않는 파일 (wrangler.toml 의 [assets] directory = ".")
+.git
+.github
+.gitignore
+.assetsignore
+.wrangler
+.DS_Store
+**/.DS_Store
+Thumbs.db
+node_modules
+wrangler.toml
+vercel.json
+CLAUDE.md
+docs
+scripts
+cloudflare
+assets/raw

@@ -56,7 +56,7 @@
 톤: 가볍고 친근한 존댓말. 기술 용어(WebRTC·P2P·세션) 노출 금지.
 
 ## 페이지 구조
-변형(2026-10-15~): 레포·Vercel 프로젝트 하나에 폴더로 나눈다. `/` 범용(스토어 심사 URL·QR·직접 유입), `/couple/` 커플 타깃(광고 D 도착지),
+변형(2026-10-15~): 레포·Worker 하나에 폴더로 나눈다. `/` 범용(스토어 심사 URL·QR·직접 유입), `/couple/` 커플 타깃(광고 D 도착지),
 `/fourcut/` 네컷 타깃(광고 B 도착지). 변형은 **히어로·문제 공감·기능 순서·카피만** 다르고 헤더·티커·설치·푸터·CSS·JS 는 공유한다.
 하위 폴더 페이지는 자산 경로를 `/assets/...` 처럼 루트 기준으로. 공통 부분을 고치면 모든 변형 파일에 반영할 것(빌드 도구 없음).
 변형별 PostHog 속성 `landing_variant` 는 각 페이지 head 의 `PEAKPIC_ANALYTICS.variant`.
@@ -117,7 +117,7 @@ B2B 문의 폼(2026-11-03, 브리프 docs/b2b-inquiry-form-brief.md): `/b2b/`(va
   업종을 줄줄이 나열하면 구구절절하다는 피드백으로 **"여러 매장"**으로만 쓴다(매장 이름도 동의 전이라 안 씀). 랜딩: 히어로 배지 "여러 매장에서도 운영 중" + #proof 제목 "축제부터 여러 매장까지, 이미 쓰고 있어요."
   포스터: v7-A·v8-A 배지 "30만 명 찾은 축제부터 여러 매장까지 (축제 작년 기준)", v7-B 오렌지 태그·v8-B 설명 "여러 매장에서 운영 중", 갈색 2종 윗줄 "축제부터 여러 매장까지 운영 중", 갈색 버튼 글자는 버튼 가운데 정렬
   2026-11-14 사용자 결정: "작년 기준" 표기는 랜딩·포스터 모두 삭제(Figma 는 숨김). 갈색 홍보는 폴라로이드 카드를 90%로 줄이고 "광고비 0원"을 카드 바로 아래 가운데로
-  Worker 에 /b2b/* 를 넘겨야 peakpic.app/b2b/ 가 열린다(cloudflare/landing-proxy.js 반영, Worker 배포는 팀원)
+  peakpic.app/b2b/ 는 wrangler.toml routes 의 /b2b·/b2b/* 패턴으로 이 레포의 Worker 가 받는다
 
 1. 히어로: 시연 영상(자동재생·음소거·루프 — 영상 오기 전엔 home 화면 목업+포스터) +
    슬로건 + **단일 "앱 다운로드" 버튼(주 CTA, OS 별 스토어 직행)**
@@ -168,13 +168,15 @@ B2B 문의 폼(2026-11-03, 브리프 docs/b2b-inquiry-form-brief.md): `/b2b/`(va
 ## 기술 스택
 - 프레임워크·빌드 도구 없는 정적 사이트: index.html + CSS + 최소 JS. 모바일 우선 반응형
   (광고 유입은 대부분 모바일)
-- 배포: Vercel(main 자동 배포, https://landing-pi-umber.vercel.app). S3/CloudFront 계획은 폐기
-- 도메인 peakpic.app(2026-10-16 연결 완료, 팀원이 Worker 에 분배 코드 배포): DNS·도메인은 팀원의 Cloudflare Worker `peakpic-app-site`(peakpic-app-site.peakpic-app-site.workers.dev)가 갖고 있고
-  /fill/(네컷 친구 채우기)·/api/(그 임시 서버, KV FRAMES)·/.well-known/assetlinks.json(안드로이드 앱 링크)·/privacy/·/terms/ 를 서빙한다 → **DNS 를 Vercel 로 돌리지 말 것**(공유 기능이 깨짐).
-  대신 그 Worker 가 랜딩 경로(/, /couple/, /fourcut/, /css, /js, /assets, /ingest)만 Vercel 로 넘긴다: 붙여 넣을 코드 cloudflare/landing-proxy.js (요청에 x-peakpic-proxy: 1 헤더를 붙임).
-  새 경로를 랜딩에 추가하면 그 파일의 isLandingPath 와 Worker 의 run_worker_first 에도 추가할 것.
-  canonical·og:url·og:image 는 https://peakpic.app/... 절대 URL. vercel.json 이 landing-pi-umber.vercel.app 직접 접속을 peakpic.app 으로 307 리다이렉트한다
-  (x-peakpic-proxy 헤더가 있으면 제외 — 이 조건을 빼면 무한 루프로 peakpic.app 전체가 죽는다)
+- 배포: **Cloudflare Worker `peakpic-landing`**(2026-11-22~, main push 시 .github/workflows/deploy.yml 이 `wrangler deploy`, 레포 시크릿 CLOUDFLARE_API_TOKEN 필요).
+  2026-11-21 16:28 KST 부터 Vercel 프로젝트(landing-pi-umber.vercel.app)가 402 DEPLOYMENT_DISABLED 로 꺼져 랜딩 전체가 안 열려서 옮겼다. Vercel 은 더 쓰지 않는다(vercel.json 삭제)
+  빌드 없음: 레포 루트를 그대로 정적 파일로 올린다(wrangler.toml [assets] directory = "."). **올리면 안 되는 파일은 .assetsignore 에 추가**(지금: CLAUDE.md·docs·scripts·cloudflare·assets/raw·설정 파일)
+  정적 파일 요청은 Worker 코드를 거치지 않는다(무료·무제한). 코드(cloudflare/worker.js)는 /ingest/* PostHog 프록시에서만 돈다. 캐시 헤더는 _headers(css·js·assets 4시간)
+  수동 배포: 레포 루트에서 `npx wrangler deploy`(팀 Cloudflare 계정 로그인). 로컬 확인: `npx wrangler dev` → http://localhost:8787/ (PostHog·픽셀은 peakpic.app 에서만 켜짐)
+- 도메인 peakpic.app: 존은 팀 Cloudflare 계정. `peakpic.app/*` 는 Worker `peakpic-app-site`(soma-jjya/peakpic.app 레포)가 받아 /fill/·/pair/·/f/·/.well-known/·/privacy/·/terms/ 를 서빙하고,
+  /admin·/go·/_next 는 `peakpic-admin`. 랜딩 경로(/, /index.html, /couple, /fourcut, /b2b, /css, /js, /assets, /ingest)는 **이 레포 wrangler.toml 의 routes** 가 더 구체적인 패턴이라 이 Worker 로 온다(peakpic.app·www 둘 다).
+  **새 최상위 경로를 랜딩에 만들면 wrangler.toml routes 에 peakpic.app·www 패턴을 추가할 것**(안 하면 peakpic-app-site 로 가서 안 열린다).
+  workers.dev·미리보기 주소는 꺼 둬서 공개 주소는 peakpic.app 뿐. canonical·og:url·og:image 는 https://peakpic.app/... 절대 URL
   개인정보처리방침·이용약관은 팀원 사이트의 https://peakpic.app/privacy/ · /terms/ 가 정본(랜딩 푸터가 링크). 레포의 privacy.html·terms.html 초안은 미사용
 
 - 히어로 3D(2026-11-11, **루트 `/` 만**, 2026-11-11 main 배포): js/hero3d.js 가 three.js r170(js/vendor/three.peakpic.min.js — 쓰는 것만 묶은 판, gzip 약 128KB — load·idle 뒤 동적 import 라 초기 로드 예산 밖)로
@@ -201,8 +203,8 @@ B2B 문의 폼(2026-11-03, 브리프 docs/b2b-inquiry-form-brief.md): `/b2b/`(va
 
 ## 지표 (PostHog, 2026-10-13 추가)
 - 설정: index.html <head> 의 `window.PEAKPIC_ANALYTICS = { key, host:'/ingest', uiHost }`. key 가 비면 꺼진다.
-  2026-10-27: hostname 이 peakpic.app 이 아니면(로컬·같은 와이파이 IP·Vercel 미리보기) PostHog·메타 픽셀 모두 꺼진다. 로컬 확인: `python3 -m http.server 8000` → http://localhost:8000/fourcut/
-  `/ingest` 는 vercel.json 리라이트(광고 차단 우회) → S3/CloudFront 로 옮기면 CloudFront 동작 또는 host 를 https://us.i.posthog.com 으로
+  2026-10-27: hostname 이 peakpic.app 이 아니면(로컬·같은 와이파이 IP·미리보기) PostHog·메타 픽셀 모두 꺼진다. 로컬 확인: `python3 -m http.server 8000` → http://localhost:8000/fourcut/
+  `/ingest` 는 cloudflare/worker.js 가 PostHog 로 넘긴다(광고 차단 우회, /ingest/static/* → us-assets.i.posthog.com, 나머지 → us.i.posthog.com)
 - 이벤트 스키마는 js/analytics.js 머리 주석이 원본. section_viewed 의 section 에 `how`(/fourcut/ 친구랑 같이 찍는 법) 추가(2026-10-27). 대시보드 2261880 의 '마지막 본 섹션' 표도 네컷 순서에 반영 핵심 전환 = `store_click`(store, placement, os). 모든 이벤트에
   super property `ad_creative`(=utm_content)·`ad_campaign`·`ad_source`·`visitor_os`·`ad_placement`(=utm_term, 2026-10-26) 가 붙는다
 - 광고 URL 규칙: `https://peakpic.app<변형 경로>?utm_source=meta&utm_medium=paid_social&utm_campaign=<캠페인>&utm_content=<소재>`
@@ -236,8 +238,8 @@ B2B 문의 폼(2026-11-03, 브리프 docs/b2b-inquiry-form-brief.md): `/b2b/`(va
 - super property `landing_variant`(main/couple/fourcut) 로 변형별 비교. 핵심 비교 지표 = 변형별 `store_click` 전환율
 - 측정 범위: 랜딩 도착 → 스토어 클릭까지. 설치·앱 내 행동은 Meta SDK/MMP 또는 앱 쪽 PostHog 와 연결해야 보인다
 - 해외 대시보드(2026-10-28, 10/29 0시~): 2270280 "해외① 영어권 en_tier1_1029", 2270281 "해외② 동남아 sea_en_1029" — 한국 대시보드와 같은 표 + 나라별 표.
-  **나라는 $geoip 가 아니라 visitor_tz(기기 시간대)로 본다**: Worker→Vercel→PostHog 프록시를 거쳐서 IP 가 Cloudflare/Vercel 것이 되어 $geoip_country_name 이 틀린다(한국만 타기팅한 광고에서 40%가 미국·홍콩·일본·싱가포르로 찍힘).
-  고치려면 Worker 가 /ingest 를 PostHog 로 직접 보내면서 X-Forwarded-For 에 CF-Connecting-IP 를 넣어야 함(팀원 작업)
+  **나라는 $geoip 가 아니라 visitor_tz(기기 시간대)로 본다**: 2026-11-21 까지는 Worker→Vercel→PostHog 프록시를 거쳐서 IP 가 Cloudflare/Vercel 것이 되어 $geoip_country_name 이 틀렸다(한국만 타기팅한 광고에서 40%가 미국·홍콩·일본·싱가포르로 찍힘).
+  2026-11-22 부터 cloudflare/worker.js 가 X-Forwarded-For 에 방문자 IP(CF-Connecting-IP)를 넣어 $geoip 도 맞게 잡힌다. 그 전 기간 비교는 계속 visitor_tz 로
 - JS·CSS 를 고치면 모든 페이지의 `?v=날짜` 를 올릴 것(Cache-Control max-age 4시간이라 안 올리면 반영이 늦다)
 - 개인정보처리방침에 분석 도구 사용 항목 필요(privacy.html 에 초안 문장 있음)
 - Meta 픽셀(2026-10-20): 데이터 세트 `peakpic` ID 1758731071879086, 광고 계정 peakpic 에 연결됨. 각 페이지 head 의 `PEAKPIC_ANALYTICS.metaPixelId` 로 켠다(js/analytics.js).
