@@ -256,6 +256,10 @@ B2B 문의 폼(2026-11-03, 브리프 docs/b2b-inquiry-form-brief.md): `/b2b/`(va
   A 캠페인 ko_b2c_1028 의 새 세트 ko_couple_cafe_ai, 광고 couple_cafe_ai_ko → /couple/ (utm_campaign=**ko_b2c_1028** — 기존 광고는 b2c_1028 라서 대시보드 2261880 의 모든 표·그래프를 두 값 모두 세도록 고침).
   B 앱 홍보(수동) 캠페인 app_aos(세트 ko_aos_couple, Google Play)·app_ios(세트 ko_ios_couple, iOS 14+ 캠페인·SKAdNetwork, 광고 couple_cafe_ai_ko_ios) — 랜딩을 안 거쳐 PostHog 에 안 잡히고 메타 SDK 설치 수로 본다(안드는 거의 정확, iOS 는 늦고 대략적 → App Store Connect 소스 "앱 참조"로 대조).
   캠페인 = OS, 세트 = 나라(나중에 나라별 언어 음성 영상 추가 시 세트 복제). 복제한 앱 광고는 스토어 링크가 안 바뀌므로 iOS 광고는 새로 만들어야 했다
+  2026-11-21 PostHog 대조: 앱의 `Application Installed` 가 안드로이드 새 사용자의 약 45%에게 안 찍힌다(iOS 는 정확) → 설치 수는 "첫 이벤트 날짜 기준 새 person" 으로 셀 것. 실제 CPI 추정: 안드 앱 캠페인 1,300~1,600원, iOS 약 3,000원(메타 iOS 수치는 SKAN 지연으로 1~2일 뒤에 올라감)
+- 인스타 프로필 링크 → 스토어 직행(2026-11-22, **루트 `/` 만**): 루트 head 의 인라인 스크립트가 `utm_medium=bio` 또는 `?go=store` 가 있으면 휴대폰은 페이지를 그리기 전에 OS 스토어로 `location.replace`
+  (utm 은 main.js 4)와 같은 규칙으로 Play referrer `ig_bio__link_in_bio`·App Store ct 에 실림), 데스크톱은 랜딩 #install. PostHog 는 아직 안 떠서 그 방문은 안 잡히고 설치만 스토어 보고서에 잡힌다.
+  프로필 링크(그대로 둠): `https://peakpic.app/?utm_source=instagram&utm_medium=bio&utm_campaign=ig_bio&utm_content=link_in_bio`. 랜딩을 거치게 하고 싶으면 utm_medium 을 bio 가 아닌 값(예 profile)으로. `/go` 경로는 peakpic-admin Worker 가 쓰므로 새 경로 대신 쿼리로 한다
 
 ## 아직 없는 것 (플레이스홀더 진행)
 - [ ] 히어로 시연 영상 (팀 촬영 예정)
