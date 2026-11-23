@@ -17,15 +17,22 @@
   <meta property="og:site_name" content="피크픽 peakpic.">
   <meta property="og:title" content="우리 공간 전용 네컷 프레임 — 피크픽 상담">
   <meta property="og:description" content="QR 포스터 한 장이면 시작, 상주 인력 0명. 손님·방문객이 우리 이름이 들어간 네컷을 직접 찍고 SNS에 올려요.">
-  <meta property="og:image" content="https://peakpic.app/assets/img/frame-goheung-cat.webp">
+  <meta property="og:image" content="https://peakpic.app/assets/img/og-b2b.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="우리 이름 단 네컷, QR 한 장이면 시작. 2026 지스타 코스어분들과 만든 네컷">
   <meta property="og:locale" content="ko_KR">
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="우리 공간 전용 네컷 프레임 — 피크픽 상담">
+  <meta name="twitter:description" content="QR 포스터 한 장이면 시작, 상주 인력 0명. 손님·방문객이 우리 이름이 들어간 네컷을 직접 찍고 SNS에 올려요.">
+  <meta name="twitter:image" content="https://peakpic.app/assets/img/og-b2b.jpg">
 
   <link rel="icon" type="image/svg+xml" href="/assets/logo.svg">
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
   <link rel="stylesheet" href="/css/style.css?v=20261119b">
-  <link rel="stylesheet" href="/b2b/b2b.css?v=20261123g">
+  <link rel="stylesheet" href="/b2b/b2b.css?v=20261123h">
   <script>window.PEAKPIC_ANALYTICS = { key: 'phc_s3GaoSttixdo2SRtthMVFuatqAKc4tY6A2wF44iq7cJD', host: '/ingest', uiHost: 'https://us.posthog.com', metaPixelId: '1758731071879086', appStorePt: '129647718', variant: 'b2b' };</script>
   <script>(function(){var u=navigator.userAgent||'',i=/iPhone|iPad|iPod/.test(u)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);document.documentElement.classList.add(i?'os-ios':(/Android/.test(u)?'os-android':'os-other'));})();</script>
   <!-- 광고 소재(utm_content) → 문구 변형. b2b_event 는 2026-11-02 광고 세트 이름, b2b_festival 은 브리프 이름 — 둘 다 축제 -->
@@ -137,7 +144,7 @@
     <!-- 업종별 실제 사례 (2026-11-23 사용자 요청: 폼의 '어디에 쓰시나요'와 같은 분류로 예시를 다르게, 스크롤할수록 다른 예시 + 화려한 효과):
          카페·술집·매장 = 제주 88실탄사격장 인스타 릴스(https://www.instagram.com/p/Dfq-tjZhBxF/, 사용자가 받아서 쓰라고 함 — 미리보기 b2b-case-shop.mp4, 누르면 원본 b2b-case-shop-full.mp4 를 소리와 함께),
          축제·행사 = 2026 지스타 쇼츠, 관광공사·지자체 = 2026 고흥유자축제 쇼츠(누르면 유튜브 창). 매장 이름은 글로 쓰지 않는다(영상 속에만).
-         JS 가 .is-live 를 붙이면 무대(.b2b-story__stage)가 화면에 붙고(sticky) 스크롤 위치로 장면이 바뀐다: 배경색·큰 글자 띠·장식이 바뀌고 카드가 3D 로 뒤집히며 종이 조각이 터진다.
+         JS 가 .is-live 를 붙이면 무대(.b2b-story__stage)가 화면에 붙고(sticky) 스크롤 위치로 장면이 바뀐다: 업종 사진 벽(반투명 검정을 씌움)·굵은 글자 테이프·장식이 바뀌고, 비눗방울이 계속 떠오르고, 카드가 3D 로 뒤집히며 종이 조각이 터진다 (2026-11-23 사용자 요청으로 사진 벽·비눗방울·굵은 글자).
          JS 없음·모션 최소화면 세 장면이 차례로 그냥 놓인다 -->
     <section class="b2b-sec paper b2b-story" id="cases" aria-labelledby="cases-title">
       <div class="container">
@@ -147,10 +154,20 @@
       </div>
       <div class="b2b-story__track">
         <div class="b2b-story__stage" data-cat="shop">
-          <div class="b2b-story__fx" aria-hidden="true">
-            <span class="b2b-story__big" data-cat="shop">SHOP · CAFE · BAR · SHOP · CAFE · BAR ·</span>
-            <span class="b2b-story__big" data-cat="festival">GAME · FESTIVAL · GAME · FESTIVAL ·</span>
-            <span class="b2b-story__big" data-cat="tourism">LOCAL · FESTIVAL · LOCAL · FESTIVAL ·</span>
+          <div class="b2b-story__fx" aria-hidden="true" data-no-float>
+            <!-- 사진 벽: JS 가 data-imgs 로 기둥을 만들어 천천히 흘린다. 위에 반투명 검정(.b2b-story__shade). 사진은 실제 현장 것만 -->
+            <div class="b2b-story__wall" data-cat="shop" data-imgs="/assets/img/b2b-wall-shop-1.webp /assets/img/b2b-wall-shop-7.webp /assets/img/b2b-wall-shop-4.webp /assets/img/b2b-wall-shop-2.webp /assets/img/b2b-wall-shop-8.webp /assets/img/b2b-wall-shop-5.webp /assets/img/b2b-wall-shop-3.webp /assets/img/b2b-wall-shop-6.webp"></div>
+            <div class="b2b-story__wall" data-cat="festival" data-imgs="/assets/img/fourcut-cos-3ryh9f.webp /assets/img/fourcut-cos-egstk5.webp /assets/img/fourcut-cos-65sccx.webp /assets/img/fourcut-cos-jh54zq.webp /assets/img/fourcut-cos-ktps8y.webp /assets/img/b2b-how-qr-gstar.webp /assets/img/fourcut-cos-p78f9w.webp /assets/img/fourcut-cos-pcvf9d.webp /assets/img/fourcut-cos-hz72b9.webp /assets/img/fourcut-cos-fdp8gp.webp /assets/img/fourcut-cos-kfycac.webp /assets/img/fourcut-cos-b28d4p.webp /assets/img/fourcut-cos-ptnpnn.webp /assets/img/fourcut-cos-ewu26k.webp /assets/img/b2b-how-shoot-gstar.webp /assets/img/fourcut-cos-cy7hlg.webp /assets/img/fourcut-cos-ghv3mh.webp /assets/img/fourcut-cos-c78j37.webp /assets/img/fourcut-cos-lrtk9j.webp /assets/img/fourcut-cos-pn6kql.webp /assets/img/fourcut-cos-ra24vs.webp /assets/img/fourcut-cos-xkl5dn.webp /assets/img/fourcut-cos-rjrpck.webp /assets/img/fourcut-cos-6eczme.webp"></div>
+            <div class="b2b-story__wall" data-cat="tourism" data-imgs="/assets/img/fourcut-real-yuja-tuxzrx.webp /assets/img/frame-goheung.webp /assets/img/fourcut-real-yuja-3y55w6.webp /assets/img/fourcut-real-yuja-s78vq9.webp /assets/img/frame-goheung-cat.webp /assets/img/fourcut-real-yuja-bbagu7.webp /assets/img/fourcut-real-yuja-duh5fp.webp /assets/img/frame-goheung-classic.webp"></div>
+            <span class="b2b-story__shade"></span>
+            <!-- 굵은 글자 테이프 두 줄(서로 반대로 흐른다). 글은 JS 가 data-words 로 채운다 -->
+            <span class="b2b-tape b2b-tape--a" data-cat="shop" data-words="CAFE BAR SHOP"></span>
+            <span class="b2b-tape b2b-tape--b" data-cat="shop" data-words="카페 술집 매장"></span>
+            <span class="b2b-tape b2b-tape--a" data-cat="festival" data-words="GAME FESTIVAL G-STAR"></span>
+            <span class="b2b-tape b2b-tape--b" data-cat="festival" data-words="축제 행사 지스타"></span>
+            <span class="b2b-tape b2b-tape--a" data-cat="tourism" data-words="LOCAL FESTIVAL YUJA"></span>
+            <span class="b2b-tape b2b-tape--b" data-cat="tourism" data-words="관광공사 지자체 고흥유자축제"></span>
+            <span class="b2b-story__bubbles"></span>
             <span class="b2b-deco b2b-deco--ring" data-cat="shop" style="--x:6%;--y:14%;--s:1"></span>
             <span class="b2b-deco b2b-deco--ring" data-cat="shop" style="--x:87%;--y:46%;--s:1.4"></span>
             <span class="b2b-deco b2b-deco--ring" data-cat="shop" style="--x:76%;--y:7%;--s:.7"></span>
@@ -158,10 +175,6 @@
             <span class="b2b-deco b2b-deco--star" data-cat="festival" style="--x:88%;--y:12%;--s:.8"><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.6 7.1.7-5.4 4.8 1.6 7L12 17.4 5.8 21l1.6-7L2 9.3l7.1-.7z"/></svg></span>
             <span class="b2b-deco b2b-deco--star" data-cat="festival" style="--x:90%;--y:50%;--s:1.3"><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.6 7.1.7-5.4 4.8 1.6 7L12 17.4 5.8 21l1.6-7L2 9.3l7.1-.7z"/></svg></span>
             <span class="b2b-deco b2b-deco--star" data-cat="festival" style="--x:2%;--y:46%;--s:.7"><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.6 7.1.7-5.4 4.8 1.6 7L12 17.4 5.8 21l1.6-7L2 9.3l7.1-.7z"/></svg></span>
-            <span class="b2b-deco b2b-deco--dot" data-cat="tourism" style="--x:7%;--y:11%;--s:1.3"></span>
-            <span class="b2b-deco b2b-deco--dot" data-cat="tourism" style="--x:87%;--y:19%;--s:.8"></span>
-            <span class="b2b-deco b2b-deco--dot" data-cat="tourism" style="--x:90%;--y:52%;--s:1.4"></span>
-            <span class="b2b-deco b2b-deco--dot" data-cat="tourism" style="--x:2%;--y:46%;--s:.9"></span>
             <span class="b2b-story__burst"></span>
           </div>
           <div class="b2b-story__tabs" role="tablist" aria-label="업종">
@@ -520,7 +533,7 @@
 
   <script src="/js/main.js?v=20261119b" defer></script>
   <!-- 페이지 전체 3D 무대(three.js) + 재생 막대: load 뒤에 동적 import, 실패하면 원래 페이지 그대로 -->
-  <script type="module" src="/js/hero3d.js?v=20261111g"></script>
-  <script src="/b2b/b2b.js?v=20261123e" defer></script>
+  <script type="module" src="/js/hero3d.js?v=20261123"></script>
+  <script src="/b2b/b2b.js?v=20261123f" defer></script>
 </body>
 </html>

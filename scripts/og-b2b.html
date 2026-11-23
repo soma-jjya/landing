@@ -1,0 +1,58 @@
+<!doctype html>
+<!-- /b2b/ 링크 공유 썸네일 원본 (2026-11-23). 저장소 루트를 정적 서버로 띄우고 /scripts/og-b2b.html 을 1200x630 으로 찍어 assets/img/og-b2b.jpg (JPEG q86) 로 저장.
+     사진은 지스타 코스어분들과 만든 실제 네컷(-l.webp)만. AI 사진 금지. scripts/ 는 배포에 안 올라간다(.assetsignore) -->
+<html lang="ko"><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+  * { box-sizing: border-box; margin: 0; }
+  html, body { width: 1200px; height: 630px; overflow: hidden; }
+  body { position: relative; font-family: "Pretendard Variable", Pretendard, sans-serif; color: #000; background-color: #fff;
+    background-image: radial-gradient(rgba(0,0,0,.09) 1.2px, transparent 1.5px); background-size: 22px 22px; }
+  .frame { position: absolute; inset: 0; border-bottom: 10px solid #ff5a47; }
+  .left { position: absolute; left: 64px; top: 66px; width: 640px; display: flex; flex-direction: column; align-items: flex-start; }
+  .logo svg { height: 46px; width: auto; display: block; }
+  .tag { margin-top: 30px; display: inline-flex; align-items: center; gap: 10px; padding: 9px 16px; border-radius: 10px; border: 2px solid #000; background: #fff;
+    font-size: 21px; font-weight: 800; transform: rotate(-2deg); }
+  .tag::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: #ff5a47; }
+  h1 { margin-top: 24px; font-size: 82px; font-weight: 900; line-height: 1.1; letter-spacing: -0.045em; }
+  .hl { position: relative; display: inline-block; z-index: 0; white-space: nowrap; }
+  .hl::before { content: ""; position: absolute; z-index: -1; left: -.08em; right: -.08em; bottom: .04em; height: .46em; background: #ff5a47; border-radius: .1em; transform: rotate(-1.4deg) skewX(-10deg); }
+  .sub { margin-top: 24px; font-size: 26px; font-weight: 600; color: rgba(0,0,0,.66); letter-spacing: -0.02em; }
+  .pills { margin-top: 28px; display: flex; gap: 10px; flex-wrap: wrap; }
+  .pill { padding: 10px 18px 11px; border-radius: 999px; background: #000; color: #fff; font-size: 21px; font-weight: 800; letter-spacing: -0.02em; }
+  .pill b { color: #ff5a47; margin-right: 6px; }
+  .right { position: absolute; right: 0; top: 0; width: 520px; height: 630px; }
+  .card { position: absolute; width: 238px; padding: 7px; background: #fff; border-radius: 10px; box-shadow: 0 26px 48px -20px rgba(0,0,0,.55), 0 0 0 1.5px rgba(0,0,0,.08); }
+  .card img { display: block; width: 100%; border-radius: 5px; }
+  .c1 { left: -6px; top: 196px; rotate: -12deg; }
+  .c3 { left: 288px; top: 176px; rotate: 11deg; }
+  .c2 { left: 124px; top: 92px; width: 270px; rotate: -2deg; z-index: 2; }
+  .stamp { position: absolute; z-index: 3; left: 330px; top: 452px; padding: 10px 18px; border-radius: 12px; background: #ff5a47; color: #111; font-size: 24px; font-weight: 900; letter-spacing: .08em;
+    rotate: -8deg; box-shadow: 0 10px 22px -10px rgba(0,0,0,.6); }
+  .pin { position: absolute; z-index: 3; left: 146px; top: 62px; display: inline-flex; align-items: center; gap: 9px; padding: 9px 16px; border-radius: 999px; background: #000; color: #fff;
+    font-size: 20px; font-weight: 800; rotate: -6deg; box-shadow: 0 10px 20px -10px rgba(0,0,0,.6); }
+  .pin::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: #ff5a47; }
+  .qr { position: absolute; z-index: 3; right: 36px; bottom: 54px; width: 112px; padding: 10px; background: #fff; border: 2px solid #000; border-radius: 14px; rotate: 8deg; box-shadow: 6px 6px 0 #000; }
+  .qr svg { display: block; width: 100%; height: auto; }
+  .qr span { display: block; margin-top: 4px; text-align: center; font-size: 15px; font-weight: 900; }
+</style></head>
+<body>
+  <div class="frame"></div>
+  <div class="left">
+    <div class="logo"><svg viewBox="138 316 748 390"><image href="/assets/logo.svg" width="1024" height="1024"></image></svg></div>
+    <span class="tag">축제·매장·지자체 네컷 프레임</span>
+    <h1>우리 이름 단 네컷,<br><span class="hl">QR 한 장이면 시작</span></h1>
+    <p class="sub">장비 설치 없이 QR 포스터 한 장. 상주 인력 0명.</p>
+    <div class="pills">
+      <span class="pill"><b>2026 지스타</b>캐릭터 프레임</span>
+      <span class="pill"><b>30만 명</b>고흥유자축제</span>
+    </div>
+  </div>
+  <div class="right">
+    <div class="card c1"><img src="/assets/img/fourcut-cos-fdp8gp-l.webp"></div>
+    <div class="card c3"><img src="/assets/img/fourcut-cos-jh54zq-l.webp"></div>
+    <div class="card c2"><img src="/assets/img/fourcut-cos-pcvf9d-l.webp"></div>
+    <span class="pin">2026 지스타 현장</span>
+    <span class="stamp">FESTIVAL</span>
+  </div>
+</body></html>
