@@ -108,6 +108,7 @@ async function init() {
     Array.prototype.forEach.call(document.querySelectorAll('main img'), (im) => {
       const name = (im.getAttribute('src') || '').split('/').pop().split('?')[0];
       if (!/\.webp$/.test(name) || /^(pose-|frame-(?!goheung))/.test(name) || seen[name]) return;   // 폰 목업(투명)·빈 프레임 제외
+      if (im.closest('[data-no-float]')) return;            // 배경 장식(b2b 사례 무대의 사진 벽 등)은 둘레 카드로 쓰지 않는다
       seen[name] = 1;
       if (anchor.contains(im)) return;                       // 히어로 그림에 이미 나온 사진은 둘레에 또 띄우지 않는다
       own.push({ name, url: im.src, kind: /^(fourcut-(?!cut)|frame-)|hearts/.test(name) ? 's' : 'p' });

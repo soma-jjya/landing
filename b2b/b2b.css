@@ -289,13 +289,14 @@ html:not(.os-other) .b2b-done__alt { display: none; }   /* 폰은 OS 스토어�
 
 /* ---------- 업종별 실제 사례 (2026-11-23, #cases): 스크롤 무대 ----------
    기본(JS 없음·모션 최소화) = 세 장면이 차례로 놓인다. b2b.js 가 .b2b-story 에 .is-live 를 붙이면 무대가 화면에 붙고(sticky) 장면이 겹쳐 바뀐다.
-   장면마다 색: shop 버건디 · festival 남색 · tourism 유자 노랑. 무대 data-cat 이 바뀌면 배경·큰 글자 띠·장식·카드·글이 함께 바뀐다 */
+   장면마다 그 업종의 실제 사진이 벽처럼 깔리고 반투명 검정이 덮는다(셋 다 어두운 무대, 강조색만 다르다: shop 빨강 · festival 노랑 · tourism 유자색).
+   무대 data-cat 이 바뀌면 사진 벽·글자 테이프·장식·카드·글이 함께 바뀐다. 비눗방울은 장면과 상관없이 계속 떠오른다 */
 .b2b-story { padding-bottom: 40px; }
 .b2b-story__track { margin-top: 20px; }
 .b2b-story__stage { --bg: #1c0b10; --fg: #fff; --sub: rgba(255, 255, 255, .72); --accent: #ff5a47; --line: rgba(255, 255, 255, .22);
   position: relative; display: flex; flex-direction: column; gap: 28px; padding: 28px var(--gutter) 36px; background: var(--bg); color: var(--fg); }
 .b2b-story__stage[data-cat="festival"] { --bg: #0c1846; --accent: #ffd400; --line: rgba(255, 255, 255, .2); }
-.b2b-story__stage[data-cat="tourism"] { --bg: #ffe47a; --fg: #171719; --sub: rgba(0, 0, 0, .62); --accent: #ff5a47; --line: rgba(0, 0, 0, .16); }
+.b2b-story__stage[data-cat="tourism"] { --bg: #241a02; --accent: #ffc21a; --line: rgba(255, 255, 255, .2); }
 .b2b-story__fx, .b2b-story__tabs { display: none; }
 .b2b-scene { display: grid; gap: 16px; justify-items: center; }
 .b2b-scene__card { position: relative; display: block; width: min(64vw, 260px); color: inherit; text-decoration: none; }
@@ -345,22 +346,68 @@ html:not(.os-other) .b2b-done__alt { display: none; }   /* 폰은 OS 스토어�
 .b2b-story.is-live .b2b-scene.is-on .b2b-scene__text { opacity: 1; translate: 0 0; transition-delay: .18s; }
 .b2b-story.is-live .b2b-scene.is-on .b2b-scene__stamp { animation: b2b-stamp .7s cubic-bezier(.2, .9, .3, 1.4) .25s both; }
 @keyframes b2b-stamp { 0% { scale: 0; rotate: -40deg; } 70% { scale: 1.25; rotate: 6deg; } 100% { scale: 1; rotate: 0deg; } }
-/* 큰 글자 띠: 스크롤(--x)에 따라 흐르고, 지금 장면 것만 보인다 */
-.b2b-story__big { position: absolute; left: 0; top: 50%; white-space: nowrap; font-size: clamp(90px, 24vw, 300px); font-weight: 900; letter-spacing: -0.04em; line-height: 1;
-  color: transparent; -webkit-text-stroke: 2px var(--line); opacity: 0; translate: var(--x, 0px) -50%; transition: opacity .6s ease; }
-.b2b-story__stage[data-cat="shop"] .b2b-story__big[data-cat="shop"],
-.b2b-story__stage[data-cat="festival"] .b2b-story__big[data-cat="festival"],
-.b2b-story__stage[data-cat="tourism"] .b2b-story__big[data-cat="tourism"] { opacity: 1; }
-/* 장식: 매장 = 과녁 고리, 축제 = 반짝이는 별, 지자체 = 유자 동그라미. 장면에 들어오면 튀어나온다 */
+/* 사진 벽: 비스듬한 기둥들이 위아래로 엇갈려 천천히 흐른다(b2b.js 가 기둥을 만든다). 지금 장면 것만 보이고 나머지는 멈춘다 */
+.b2b-story__wall { position: absolute; inset: -30% -18%; display: flex; gap: 12px; rotate: -8deg; opacity: 0; visibility: hidden; scale: 1.12;
+  transition: opacity .8s ease, scale 1.2s cubic-bezier(.2, .8, .2, 1), visibility 0s linear .8s; }
+.b2b-story__wall.is-on { opacity: 1; visibility: visible; scale: 1; transition: opacity .8s ease, scale 1.2s cubic-bezier(.2, .8, .2, 1), visibility 0s; }
+.b2b-wall__col { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 12px; animation: b2b-wall var(--wd, 60s) linear var(--wdl, 0s) infinite; }
+.b2b-wall__col:nth-child(even) { animation-direction: reverse; }
+.b2b-wall__col img { display: block; width: 100%; height: auto; border-radius: 10px; background: #222; }
+.b2b-wall__col img:last-child { margin-bottom: 0; }
+@keyframes b2b-wall { to { transform: translateY(calc(-50% - 6px)); } }   /* 같은 목록 두 벌, 한 벌 + 간격 반만큼 */
+.b2b-story__wall:not(.is-on) .b2b-wall__col, .b2b-story.is-idle .b2b-wall__col { animation-play-state: paused; }
+/* 사진 위 반투명 검정: 가운데는 조금 밝고 가장자리·아래는 더 어둡게, 아래쪽에만 업종 색을 살짝 */
+.b2b-story__shade { position: absolute; inset: 0;
+  background: radial-gradient(120% 85% at 60% 45%, transparent 30%, rgba(0, 0, 0, .5) 100%), linear-gradient(0deg, var(--bg) 0%, transparent 45%), rgba(0, 0, 0, .64);
+  transition: background-color .6s ease; }
+/* 굵은 글자 테이프 두 줄: 강조색 띠(검은 글자)와 흰 띠(검은 글자)가 엇갈려 반대로 흐른다. 지금 장면 것만 펴진다 */
+.b2b-tape { position: absolute; left: -10%; right: -10%; top: var(--ty, 27%); display: block; overflow: hidden; padding: .16em 0 .2em; white-space: nowrap;
+  font-size: clamp(24px, 6.4vw, 30px); font-weight: 900; line-height: 1.1; letter-spacing: -0.01em; color: #111;
+  background: var(--accent); box-shadow: 0 16px 34px -14px rgba(0, 0, 0, .75), inset 0 3px 0 rgba(0, 0, 0, .14), inset 0 -3px 0 rgba(0, 0, 0, .14);
+  rotate: var(--tr, -5deg); opacity: 0; transform: scaleX(.4); transition: opacity .35s ease, transform .7s cubic-bezier(.2, .9, .25, 1.1); }
+.b2b-tape--b { --ty: 47%; --tr: 4deg; background: #fff; }   /* 폰: 두 줄 모두 카드 뒤로 지나가 글과 안 겹친다 */
+.b2b-tape > span { display: inline-block; animation: b2b-tape 26s linear infinite paused; }
+.b2b-tape--b > span { animation-duration: 32s; animation-direction: reverse; }
+.b2b-tape b { font-weight: 900; }
+.b2b-tape b::after { content: ""; display: inline-block; width: .62em; height: .62em; margin: 0 .55em; vertical-align: .08em; background: currentColor;
+  clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%); }
+@keyframes b2b-tape { to { transform: translateX(-50%); } }
+.b2b-story__stage[data-cat="shop"] .b2b-tape[data-cat="shop"],
+.b2b-story__stage[data-cat="festival"] .b2b-tape[data-cat="festival"],
+.b2b-story__stage[data-cat="tourism"] .b2b-tape[data-cat="tourism"] { opacity: 1; transform: none; }
+.b2b-story__stage[data-cat="shop"] .b2b-tape--b[data-cat="shop"],
+.b2b-story__stage[data-cat="festival"] .b2b-tape--b[data-cat="festival"],
+.b2b-story__stage[data-cat="tourism"] .b2b-tape--b[data-cat="tourism"] { transition-delay: .08s; }
+.b2b-story__stage[data-cat="shop"] .b2b-tape[data-cat="shop"] > span,
+.b2b-story__stage[data-cat="festival"] .b2b-tape[data-cat="festival"] > span,
+.b2b-story__stage[data-cat="tourism"] .b2b-tape[data-cat="tourism"] > span { animation-play-state: running; }
+.b2b-story.is-idle .b2b-story__stage .b2b-tape > span { animation-play-state: paused; }
+/* 비눗방울: 아래에서 흔들리며 떠오르고 위에서 사라진다(b2b.js 가 크기·위치·속도를 섞어 만든다). 에셋은 수식으로 그린 투명 PNG */
+.b2b-story__bubbles { position: absolute; inset: 0; container-type: size; }
+.b2b-bubble { position: absolute; left: var(--x); top: 100%; width: var(--s); height: var(--s); opacity: 0;
+  animation: b2b-rise var(--d, 14s) linear var(--dl, 0s) infinite; }
+.b2b-bubble i { display: block; width: 100%; height: 100%; background: url(/assets/img/b2b-bubble-a.webp) center / contain no-repeat;
+  animation: b2b-sway var(--sd, 3s) ease-in-out var(--dl, 0s) infinite alternate; }
+.b2b-bubble--b i { background-image: url(/assets/img/b2b-bubble-b.webp); }
+@keyframes b2b-rise {
+  0% { opacity: 0; transform: translateY(0); }
+  8% { opacity: var(--o, .9); }
+  82% { opacity: var(--o, .9); }
+  100% { opacity: 0; transform: translateY(-115vh); transform: translateY(calc(-100cqh - 130%)); }
+}
+@keyframes b2b-sway {
+  from { transform: translateX(calc(var(--sw, 14px) * -1)) scale(1.04, .96); }
+  to { transform: translateX(var(--sw, 14px)) scale(.96, 1.04); }
+}
+.b2b-story.is-idle .b2b-bubble, .b2b-story.is-idle .b2b-bubble i { animation-play-state: paused; }
+/* 장식: 매장 = 과녁 고리, 축제 = 반짝이는 별. 장면에 들어오면 튀어나온다 */
 .b2b-deco { position: absolute; left: var(--x); top: var(--y); width: calc(56px * var(--s)); height: calc(56px * var(--s)); opacity: 0; scale: 0; transition: opacity .3s ease, scale .6s cubic-bezier(.2, .9, .3, 1.5); }
 .b2b-story__stage[data-cat="shop"] .b2b-deco[data-cat="shop"],
-.b2b-story__stage[data-cat="festival"] .b2b-deco[data-cat="festival"],
-.b2b-story__stage[data-cat="tourism"] .b2b-deco[data-cat="tourism"] { opacity: 1; scale: 1; }
-.b2b-deco--ring { border-radius: 50%; border: 3px solid var(--accent); box-shadow: inset 0 0 0 9px var(--bg), inset 0 0 0 12px var(--accent), 0 0 24px rgba(255, 90, 71, .45); }
+.b2b-story__stage[data-cat="festival"] .b2b-deco[data-cat="festival"] { opacity: 1; scale: 1; }
+.b2b-deco--ring { border-radius: 50%; border: 3px solid var(--accent); box-shadow: inset 0 0 0 9px rgba(0, 0, 0, .55), inset 0 0 0 12px var(--accent), 0 0 24px rgba(255, 90, 71, .45); }
 .b2b-deco--star svg { width: 100%; height: 100%; fill: var(--accent); animation: b2b-twinkle 1.6s ease-in-out infinite alternate; }
 .b2b-deco--star:nth-of-type(odd) svg { animation-delay: -.8s; }
 @keyframes b2b-twinkle { from { opacity: .45; rotate: -8deg; } to { opacity: 1; rotate: 10deg; } }
-.b2b-deco--dot { border-radius: 50%; background: radial-gradient(circle at 35% 30%, #fff6c8 0 18%, #ffc21a 19% 100%); box-shadow: 0 10px 18px -8px rgba(160, 100, 0, .6); }
 /* 장면이 바뀔 때 카드 가운데서 터지는 종이 조각 (b2b.js 가 만들고 지운다) */
 .b2b-story__burst { position: absolute; left: 50%; top: 52%; width: 0; height: 0; }
 .b2b-confetti { position: absolute; left: 0; top: 0; width: var(--w, 10px); height: var(--h, 14px); border-radius: var(--br, 2px); background: var(--c);
@@ -381,5 +428,8 @@ html:not(.os-other) .b2b-done__alt { display: none; }   /* 폰은 OS 스토어�
   .b2b-story.is-live .b2b-scene__text { align-items: flex-start; text-align: left; margin: 0; }
   .b2b-scene__title { font-size: 48px; }
   .b2b-scene__desc { font-size: 17px; }
+  .b2b-tape { --ty: 74%; font-size: clamp(30px, 3.4vw, 50px); }
+  .b2b-tape--b { --ty: 87%; --tr: 3deg; }
+  .b2b-wall__col, .b2b-story__wall { gap: 16px; }
 }
 @media (prefers-reduced-motion: reduce) { .b2b-scene__play { transition: none; } }
