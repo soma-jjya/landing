@@ -8,6 +8,7 @@
                b2b_inquiry_invalid{fields, first_field}(빈 칸·형식 오류로 막힘) · b2b_inquiry_abandoned{last_field, filled_count, type}(입력 시작 후 미접수 이탈)
                b2b_more_opened(선택 칸 펼침) · cta_click{cta:'b2b_inquiry', placement: hero|proof|examples|how|faq|sticky}
                b2b_zoom_opened{src}(예시 사진 확대) · b2b_faq_opened{q}(자주 묻는 질문 펼침) — 2026-11-07
+               b2b_video_opened{video: yuja|gstar|frame|mirror}(현장 영상 재생) · section_viewed{section:'cases'} · cta_click placement=cases — 2026-11-23
       Meta     Lead{content_category: type} — 접수 성공 때만. 광고 세트 b2b_* 의 전환 이벤트 */
 (function () {
   'use strict';
@@ -57,22 +58,121 @@
     });
   });
 
-  // 예시 사진 확대 (히어로·실적·예시 섹션의 [data-zoom])
+  var calm = false;   // 모션 최소화·데이터 절약이면 컨베이어·미리보기 영상을 움직이지 않는다
+  try { calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches || !!(navigator.connection && navigator.connection.saveData); } catch (e) { /* 무시 */ }
+
+  // 예시 컨베이어 (2026-11-23, #examples): 줄마다 원래 항목을 화면 폭 이상이 되게 반복해 한 벌을 만들고, 같은 한 벌을 하나 더 붙여 -50% 를 반복 이동(css @keyframes b2b-belt).
+  // 복제본은 aria-hidden·포커스 없음. 화면 밖이면 멈춤(.is-paused). 속도는 폭과 상관없이 초당 일정 px
+  var belt = document.querySelector('.b2b-belt');
+  if (belt && !calm && 'IntersectionObserver' in window) {
+    var rows = Array.prototype.map.call(belt.querySelectorAll('.b2b-belt__row'), function (ul) {
+      return { ul: ul, items: Array.prototype.slice.call(ul.children) };
+    });
+    var beltW = 0;
+    var buildBelt = function () {
+      var w = belt.clientWidth;
+      if (!w || w === beltW) return;
+      beltW = w;
+      belt.classList.add('is-running');
+      var speed = w >= 900 ? 34 : 26;   // px/초
+      rows.forEach(function (r) {
+        r.ul.textContent = '';
+        r.items.forEach(function (li) { r.ul.appendChild(li); });
+        var one = r.ul.scrollWidth, sets = Math.max(1, Math.ceil(w / Math.max(one, 1)));
+        var frag = document.createDocumentFragment();
+        for (var k = 1; k < sets * 2; k++) {
+          r.items.forEach(function (li) {
+            var c = li.cloneNode(true);
+            c.setAttribute('aria-hidden', 'true');
+            c.setAttribute('data-clone', '');
+            var f = c.querySelector('[data-zoom]');
+            if (f) { f.removeAttribute('tabindex'); f.removeAttribute('role'); }
+            frag.appendChild(c);
+          });
+        }
+        r.ul.appendChild(frag);
+        r.ul.style.setProperty('--dur', Math.round(one * sets / speed) + 's');
+      });
+    };
+    buildBelt();
+    var beltTimer;
+    window.addEventListener('resize', function () { clearTimeout(beltTimer); beltTimer = setTimeout(buildBelt, 250); });
+    new IntersectionObserver(function (e) { belt.classList.toggle('is-paused', !e[0].isIntersecting); }, { rootMargin: '100px 0px' }).observe(belt);
+  }
+
+  // 현장 영상 (2026-11-23, #cases): 카드의 6초 미리보기는 화면에 보일 때만 받고 재생. 누르면 유튜브 플레이어 창(소리 켬), 닫으면 iframe 을 빼서 멈춘다
+  var cases = Array.prototype.slice.call(document.querySelectorAll('.b2b-case'));
+  if (cases.length && !calm && 'IntersectionObserver' in window) {
+    var previewIO = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        var v = en.target.querySelector('video'); if (!v) return;
+        if (en.isIntersecting && !document.querySelector('.b2b-video[open]')) {
+          if (!v.getAttribute('src')) { v.src = v.getAttribute('data-src'); v.preload = 'auto'; }
+          var p = v.play(); if (p && p.catch) p.catch(function () { /* 저전력 모드 등: 포스터 그대로 */ });
+        } else if (!v.paused) v.pause();
+      });
+    }, { threshold: 0.35 });
+    cases.forEach(function (a) { previewIO.observe(a); });
+  }
+  var player = document.querySelector('.b2b-video');
+  if (player && typeof player.showModal === 'function') {
+    var box = player.querySelector('.b2b-video__frame'), yt = player.querySelector('.b2b-video__yt');
+    var visible = [];
+    cases.forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        if (e.metaKey || e.ctrlKey || e.shiftKey) return;   // 새 탭으로 열기는 그대로
+        e.preventDefault();
+        var id = a.getAttribute('data-yt');
+        var f = document.createElement('iframe');
+        f.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&playsinline=1&rel=0';
+        f.title = (a.querySelector('b') || a).textContent + ' 영상';
+        f.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+        f.allowFullscreen = true;
+        box.textContent = '';
+        box.appendChild(f);
+        yt.href = a.href;
+        visible = cases.map(function (c) { return c.querySelector('video'); }).filter(function (v) { return v && !v.paused; });
+        visible.forEach(function (v) { v.pause(); });
+        player.showModal();
+        track('b2b_video_opened', { video: a.getAttribute('data-case') });
+      });
+    });
+    player.addEventListener('close', function () {
+      box.textContent = '';
+      visible.forEach(function (v) { var p = v.play(); if (p && p.catch) p.catch(function () {}); });
+      visible = [];
+    });
+    player.querySelector('.b2b-video__close').addEventListener('click', function () { player.close(); });
+    player.addEventListener('click', function (e) { if (e.target === player) player.close(); });
+  }
+  var casesSec = document.getElementById('cases');   // section_viewed 목록(js/analytics.js)은 공유 파일이라 이 섹션만 여기서
+  if (casesSec && 'IntersectionObserver' in window) {
+    var casesIO = new IntersectionObserver(function (e) {
+      if (e[0].isIntersecting) { track('section_viewed', { section: 'cases' }); casesIO.disconnect(); }
+    }, { threshold: 0.35 });
+    casesIO.observe(casesSec);
+  }
+
+  // 예시 사진 확대 (히어로·실적·예시 섹션의 [data-zoom]). 누르기는 문서 한 곳에서 받는다 — 컨베이어 복제본(창 크기가 바뀌면 다시 만든다)도 눌린다. 포커스는 원본만
   var zoom = document.querySelector('.b2b-zoom');
   if (zoom && typeof zoom.showModal === 'function') {
     var zimg = zoom.querySelector('img');
-    Array.prototype.forEach.call(document.querySelectorAll('[data-zoom]'), function (fig) {
+    var openZoom = function (fig) {
       var img = fig.querySelector('img'); if (!img) return;
+      zimg.src = img.currentSrc || img.src;
+      zimg.alt = img.alt;
+      zoom.showModal();
+      track('b2b_zoom_opened', { src: (img.getAttribute('src') || '').split('/').pop() });
+    };
+    Array.prototype.forEach.call(document.querySelectorAll('[data-zoom]'), function (fig) {
+      if (fig.closest('[data-clone]')) return;
       fig.setAttribute('role', 'button');
       fig.setAttribute('tabindex', '0');
-      var open = function () {
-        zimg.src = img.currentSrc || img.src;
-        zimg.alt = img.alt;
-        zoom.showModal();
-        track('b2b_zoom_opened', { src: (img.getAttribute('src') || '').split('/').pop() });
-      };
-      fig.addEventListener('click', open);
-      fig.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } });
+      fig.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openZoom(fig); } });
+    });
+    document.addEventListener('click', function (e) {
+      var fig = e.target.closest && e.target.closest('[data-zoom]');
+      if (fig) openZoom(fig);
     });
     zoom.querySelector('.b2b-zoom__close').addEventListener('click', function () { zoom.close(); });
     zoom.addEventListener('click', function (e) { if (e.target === zoom) zoom.close(); });   // 바깥(배경) 누르면 닫기

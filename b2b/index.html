@@ -25,7 +25,7 @@
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
   <link rel="stylesheet" href="/css/style.css?v=20261119b">
-  <link rel="stylesheet" href="/b2b/b2b.css?v=20261114">
+  <link rel="stylesheet" href="/b2b/b2b.css?v=20261123">
   <script>window.PEAKPIC_ANALYTICS = { key: 'phc_s3GaoSttixdo2SRtthMVFuatqAKc4tY6A2wF44iq7cJD', host: '/ingest', uiHost: 'https://us.posthog.com', metaPixelId: '1758731071879086', appStorePt: '129647718', variant: 'b2b' };</script>
   <script>(function(){var u=navigator.userAgent||'',i=/iPhone|iPad|iPod/.test(u)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);document.documentElement.classList.add(i?'os-ios':(/Android/.test(u)?'os-android':'os-other'));})();</script>
   <!-- 광고 소재(utm_content) → 문구 변형. b2b_event 는 2026-11-02 광고 세트 이름, b2b_festival 은 브리프 이름 — 둘 다 축제 -->
@@ -121,26 +121,71 @@
       </div>
     </section>
 
-    <!-- 예시: 눌러서 크게 (히어로 사진을 누르는 사람이 많았다 — 2026-11-07 PostHog dead click) -->
-    <section class="b2b-sec paper" id="examples" aria-labelledby="examples-title">
+    <!-- 현장 영상 (2026-11-23): 피크픽 유튜브 쇼츠 4편. 카드는 6초 미리보기(소리 없음, 화면에 보일 때만 재생 — assets/video/b2b-case-*.mp4, 원본 peakpic-ads/output/ver03-2),
+         누르면 유튜브 플레이어를 창으로 띄운다(b2b.js). JS 가 없으면 링크 그대로 유튜브로 간다 -->
+    <section class="b2b-sec paper" id="cases" aria-labelledby="cases-title">
+      <div class="container">
+        <span class="tag tag--outline" style="--r:-2deg">video</span>
+        <h2 id="cases-title" class="b2b-sec__title">현장에서 찍은 네컷,<br><span class="hl">영상으로 보세요</span><span class="dot">.</span></h2>
+        <p class="b2b-sec__desc">QR을 찍고 프레임을 고르고 네 컷을 채우기까지, 실제 축제와 행사에서 찍은 과정이에요.</p>
+        <ul class="b2b-cases">
+          <li><a class="b2b-case" href="https://www.youtube.com/shorts/14LqhWlCJBQ" target="_blank" rel="noopener" data-yt="14LqhWlCJBQ" data-case="yuja">
+            <span class="b2b-case__media"><video muted loop playsinline preload="none" poster="/assets/img/b2b-case-yuja.webp" data-src="/assets/video/b2b-case-yuja.mp4" aria-hidden="true"></video><span class="b2b-case__play" aria-hidden="true"></span></span>
+            <b>2026 고흥유자축제</b><span>QR로 찍는 축제 네컷</span>
+          </a></li>
+          <li><a class="b2b-case" href="https://www.youtube.com/shorts/K92Yyb5gD5o" target="_blank" rel="noopener" data-yt="K92Yyb5gD5o" data-case="gstar">
+            <span class="b2b-case__media"><video muted loop playsinline preload="none" poster="/assets/img/b2b-case-gstar.webp" data-src="/assets/video/b2b-case-gstar.mp4" aria-hidden="true"></video><span class="b2b-case__play" aria-hidden="true"></span></span>
+            <b>2026 지스타</b><span>캐릭터랑 같이 찍는 네컷</span>
+          </a></li>
+          <li><a class="b2b-case" href="https://www.youtube.com/shorts/fkU4YDQ4mHM" target="_blank" rel="noopener" data-yt="fkU4YDQ4mHM" data-case="frame">
+            <span class="b2b-case__media"><video muted loop playsinline preload="none" poster="/assets/img/b2b-case-frame.webp" data-src="/assets/video/b2b-case-frame.mp4" aria-hidden="true"></video><span class="b2b-case__play" aria-hidden="true"></span></span>
+            <b>프레임 직접 만들기</b><span>사진 한 장으로 네컷 프레임</span>
+          </a></li>
+          <li><a class="b2b-case" href="https://www.youtube.com/shorts/lt677Ki2Q28" target="_blank" rel="noopener" data-yt="lt677Ki2Q28" data-case="mirror">
+            <span class="b2b-case__media"><video muted loop playsinline preload="none" poster="/assets/img/b2b-case-mirror.webp" data-src="/assets/video/b2b-case-mirror.mp4" aria-hidden="true"></video><span class="b2b-case__play" aria-hidden="true"></span></span>
+            <b>원하는 구도 그대로</b><span>찍히는 화면을 내 폰으로</span>
+          </a></li>
+        </ul>
+        <a class="btn btn--dot b2b-jump" href="#inquiry" data-b2b-cta="cases"><span data-v="cafe">우리 가게 프레임 상담 받기</span><span data-v="festival tourism other">상담·견적 무료 문의</span> ↓</a>
+      </div>
+    </section>
+
+    <!-- 예시 (2026-11-23 컨베이어): 완성 네컷 두 줄이 서로 반대로 흐른다(윗줄 ←, 아랫줄 →). 누르면 크게(히어로 사진을 누르는 사람이 많았다 — 2026-11-07 PostHog dead click).
+         b2b.js 가 줄마다 화면 폭을 채울 만큼 복제해 이어 붙인다. 모션 최소화·JS 없음이면 줄마다 손으로 넘긴다. 모델 사진은 Figma·GPT AI 생성(scripts/compose-b2b.py 3) -->
+    <section class="b2b-sec" id="examples" aria-labelledby="examples-title">
       <div class="container">
         <span class="tag tag--outline" style="--r:-2deg">frame</span>
         <h2 id="examples-title" class="b2b-sec__title"><span data-v="cafe other">우리 가게 느낌 그대로,<br><span class="hl">전용 프레임</span><span class="dot">.</span></span><span data-v="festival tourism">행사 느낌 그대로,<br><span class="hl">전용 프레임</span><span class="dot">.</span></span></h2>
         <p class="b2b-sec__desc"><span data-v="cafe other">가게 이름·로고를 넣어 만들어 드려요. 원하는 느낌은 문의 내용에 적어 주세요.</span><span data-v="festival tourism">행사 이름·로고를 넣어 만들어 드려요. 원하는 느낌은 문의 내용에 적어 주세요.</span></p>
-        <ul class="b2b-gallery">
-          <li><figure data-zoom><img src="/assets/img/fourcut-dessert.webp" width="800" height="1000" alt="디저트 카페 프레임 예시" loading="lazy"><figcaption>디저트 카페 예시</figcaption></figure></li>
-          <li><figure data-zoom><img src="/assets/img/fourcut-vintage-model.webp?v=3" width="480" height="673" alt="빈티지 필름 프레임 예시" loading="lazy"><figcaption>빈티지 필름 예시</figcaption></figure></li>
-          <li><figure data-zoom><img src="/assets/img/frame-goheung-cat.webp" width="480" height="640" alt="2026 고흥유자축제 실제 프레임" loading="lazy"><figcaption>고흥유자축제 실제 프레임</figcaption></figure></li>
-          <li><figure data-zoom><img src="/assets/img/frame-goheung-classic.webp" width="480" height="640" alt="2026 고흥유자축제 실제 프레임 (다른 디자인)" loading="lazy"><figcaption>고흥유자축제 · 다른 디자인</figcaption></figure></li>
-          <li><figure data-zoom><img src="/assets/img/frame-chrome.webp" alt="Y2K 하트 스타일 프레임" loading="lazy"><figcaption>Y2K 하트 스타일</figcaption></figure></li>
-        </ul>
-        <p class="b2b-gallery__hint">옆으로 넘겨 보세요 · 누르면 크게 보여요</p>
-          <a class="btn btn--dot b2b-jump" href="#inquiry" data-b2b-cta="examples"><span data-v="cafe">우리 가게 프레임 상담 받기</span><span data-v="festival tourism other">상담·견적 무료 문의</span> ↓</a>
+      </div>
+      <div class="b2b-belt" aria-label="네컷 예시">
+        <div class="b2b-belt__lane">
+          <ul class="b2b-belt__row">
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-goheung-yuja.webp" width="480" height="640" alt="2026 고흥유자축제 실제 프레임으로 찍은 네컷 예시" loading="lazy"><span class="b2b-pin">고흥유자축제 실제 프레임</span></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-dessert.webp" width="800" height="1000" alt="디저트 카페 프레임 예시" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-chrome-model.webp" width="480" height="640" alt="Y2K 하트 프레임 예시" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-gyaru-friends.webp" width="480" height="669" alt="친구와 찍은 갸루 프레임 예시" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-vintage-model.webp?v=3" width="480" height="673" alt="빈티지 필름 프레임 예시" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-hearts-full.webp" width="800" height="944" alt="네 칸이 모여 하트가 되는 네컷 예시" loading="lazy"></figure></li>
+          </ul>
+        </div>
+        <div class="b2b-belt__lane">
+          <ul class="b2b-belt__row b2b-belt__row--rev">
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-goheung-classic-hearts.webp" width="480" height="640" alt="2026 고흥유자축제 실제 프레임(다른 디자인)으로 찍은 네컷 예시" loading="lazy"><span class="b2b-pin">고흥유자축제 실제 프레임</span></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-patchwork-model.webp" width="480" height="640" alt="패치워크 프레임 예시" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-dessert-model.webp" width="480" height="670" alt="디저트 프레임에 모델 사진을 넣은 예시" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cute-model.webp" width="480" height="670" alt="고양이 프레임 예시" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-vintage-friends.webp" width="480" height="673" alt="친구와 찍은 빈티지 필름 프레임 예시" loading="lazy"></figure></li>
+          </ul>
+        </div>
+      </div>
+      <div class="container">
+        <a class="btn btn--dot b2b-jump" href="#inquiry" data-b2b-cta="examples"><span data-v="cafe">우리 가게 프레임 상담 받기</span><span data-v="festival tourism other">상담·견적 무료 문의</span> ↓</a>
       </div>
     </section>
 
     <!-- 3단계: 사장님이 할 일 / 손님이 하는 일 (포스터와 같은 문장) -->
-    <section class="b2b-sec" id="b2b-how" aria-labelledby="how-title">
+    <section class="b2b-sec paper" id="b2b-how" aria-labelledby="how-title">
       <div class="container">
         <span class="tag" style="--r:-2deg">how it works</span>
         <h2 id="how-title" class="b2b-sec__title">사장님은 붙이기만,<br><span class="hl"><span data-v="cafe other">찍는 건 손님이</span><span data-v="festival tourism">찍는 건 방문객이</span></span><span class="dot">.</span></h2>
@@ -181,7 +226,7 @@
     </section>
 
     <!-- 자주 묻는 질문: 사실만 (가격·제작 기간처럼 정해지지 않은 건 쓰지 않는다) -->
-    <section class="b2b-sec paper" id="faq" aria-labelledby="faq-title">
+    <section class="b2b-sec" id="faq" aria-labelledby="faq-title">
       <div class="container b2b-faq">
         <span class="tag tag--outline" style="--r:-2deg">faq</span>
         <h2 id="faq-title" class="b2b-sec__title">자주 묻는 질문<span class="dot">.</span></h2>
@@ -340,6 +385,15 @@
     <button type="button" class="b2b-zoom__close" aria-label="닫기">닫기 ✕</button>
   </dialog>
 
+  <!-- 현장 영상 플레이어 (#cases 카드를 누르면, b2b.js 가 유튜브 iframe 을 넣고 닫으면 뺀다) -->
+  <dialog class="b2b-video" aria-label="영상 보기">
+    <div class="b2b-video__frame"></div>
+    <div class="b2b-video__bar">
+      <a class="b2b-video__yt" href="https://www.youtube.com/shorts/14LqhWlCJBQ" target="_blank" rel="noopener">YouTube에서 보기</a>
+      <button type="button" class="b2b-video__close">닫기 ✕</button>
+    </div>
+  </dialog>
+
   <!-- 모바일 고정 버튼: 히어로 버튼이 화면 밖이고 폼이 안 보일 때만 (b2b.js) -->
   <div class="b2b-sticky" aria-hidden="true">
     <a class="btn btn--dot" href="#inquiry" tabindex="-1" data-b2b-cta="sticky"><span data-v="cafe">우리 가게 프레임 상담 받기</span><span data-v="festival tourism other">상담·견적 무료 문의</span></a>
@@ -348,6 +402,6 @@
   <script src="/js/main.js?v=20261119b" defer></script>
   <!-- 페이지 전체 3D 무대(three.js) + 재생 막대: load 뒤에 동적 import, 실패하면 원래 페이지 그대로 -->
   <script type="module" src="/js/hero3d.js?v=20261111g"></script>
-  <script src="/b2b/b2b.js?v=20261107b" defer></script>
+  <script src="/b2b/b2b.js?v=20261123" defer></script>
 </body>
 </html>
