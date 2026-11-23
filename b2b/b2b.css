@@ -37,7 +37,7 @@ html:not([data-b2b]) [data-v~="other"] { display: inline; }
 /* 실제 사례로 보는 만드는 과정 (2026-11-23): 폰 화면 영상 + 단계 4개(영상 시간에 맞춰 켜짐). 모바일은 폰 왼쪽·단계 오른쪽 */
 .b2b-demo { position: relative; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 16px; align-items: center; padding: 12px 0 6px; }
 .b2b-demo__phone { position: relative; width: min(44vw, 188px); padding: 6px; border-radius: 26px; background: var(--black);
-  box-shadow: 0 24px 44px -22px rgba(0, 0, 0, .55), 0 0 0 1px rgba(0, 0, 0, .1); transform: rotate(-2deg); }
+  box-shadow: 0 24px 44px -22px rgba(0, 0, 0, .55), 0 0 0 1px rgba(0, 0, 0, .1); }   /* 기울이지 않는다(2026-11-23 사용자 요청: 0도 고정) */
 .b2b-demo__phone video { display: block; width: 100%; aspect-ratio: 432 / 936; border-radius: 20px; object-fit: cover; background: #fff6de; }
 .b2b-demo__pin { left: -10px; top: -16px; font-size: 11px; }
 .b2b-demo__steps { display: flex; flex-direction: column; gap: 8px; margin: 0; padding: 0; list-style: none; counter-reset: demo; }
