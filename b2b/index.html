@@ -25,7 +25,7 @@
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
   <link rel="stylesheet" href="/css/style.css?v=20261119b">
-  <link rel="stylesheet" href="/b2b/b2b.css?v=20261123f">
+  <link rel="stylesheet" href="/b2b/b2b.css?v=20261123g">
   <script>window.PEAKPIC_ANALYTICS = { key: 'phc_s3GaoSttixdo2SRtthMVFuatqAKc4tY6A2wF44iq7cJD', host: '/ingest', uiHost: 'https://us.posthog.com', metaPixelId: '1758731071879086', appStorePt: '129647718', variant: 'b2b' };</script>
   <script>(function(){var u=navigator.userAgent||'',i=/iPhone|iPad|iPod/.test(u)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);document.documentElement.classList.add(i?'os-ios':(/Android/.test(u)?'os-android':'os-other'));})();</script>
   <!-- 광고 소재(utm_content) → 문구 변형. b2b_event 는 2026-11-02 광고 세트 이름, b2b_festival 은 브리프 이름 — 둘 다 축제 -->
@@ -134,23 +134,80 @@
       </div>
     </section>
 
-    <!-- 현장 영상 (2026-11-23): 피크픽 유튜브 쇼츠 2편(지스타·고흥유자축제 — 프레임 만들기·미러링 2편은 B2B 와 관련 없어 같은 날 루트 / 의 기능 섹션으로 옮김). 카드는 6초 미리보기(소리 없음, 화면에 보일 때만 재생 — assets/video/b2b-case-*.mp4, 원본 peakpic-ads/output/ver03-2),
-         누르면 유튜브 플레이어를 창으로 띄운다(b2b.js). JS 가 없으면 링크 그대로 유튜브로 간다 -->
-    <section class="b2b-sec paper" id="cases" aria-labelledby="cases-title">
+    <!-- 업종별 실제 사례 (2026-11-23 사용자 요청: 폼의 '어디에 쓰시나요'와 같은 분류로 예시를 다르게, 스크롤할수록 다른 예시 + 화려한 효과):
+         카페·술집·매장 = 제주 88실탄사격장 인스타 릴스(https://www.instagram.com/p/Dfq-tjZhBxF/, 사용자가 받아서 쓰라고 함 — 미리보기 b2b-case-shop.mp4, 누르면 원본 b2b-case-shop-full.mp4 를 소리와 함께),
+         축제·행사 = 2026 지스타 쇼츠, 관광공사·지자체 = 2026 고흥유자축제 쇼츠(누르면 유튜브 창). 매장 이름은 글로 쓰지 않는다(영상 속에만).
+         JS 가 .is-live 를 붙이면 무대(.b2b-story__stage)가 화면에 붙고(sticky) 스크롤 위치로 장면이 바뀐다: 배경색·큰 글자 띠·장식이 바뀌고 카드가 3D 로 뒤집히며 종이 조각이 터진다.
+         JS 없음·모션 최소화면 세 장면이 차례로 그냥 놓인다 -->
+    <section class="b2b-sec paper b2b-story" id="cases" aria-labelledby="cases-title">
       <div class="container">
-        <span class="tag tag--outline" style="--r:-2deg">video</span>
-        <h2 id="cases-title" class="b2b-sec__title">현장에서 찍은 네컷,<br><span class="hl">영상으로 보세요</span><span class="dot">.</span></h2>
-        <p class="b2b-sec__desc">QR을 찍고 프레임을 고르고 네 컷을 채우기까지, 실제 축제와 행사에서 찍은 과정이에요.</p>
-        <ul class="b2b-cases">
-          <li><a class="b2b-case" href="https://www.youtube.com/shorts/K92Yyb5gD5o" target="_blank" rel="noopener" data-yt="K92Yyb5gD5o" data-case="gstar">
-            <span class="b2b-case__media"><video muted loop playsinline preload="none" poster="/assets/img/b2b-case-gstar.webp" data-src="/assets/video/b2b-case-gstar.mp4" aria-hidden="true"></video><span class="b2b-case__play" aria-hidden="true"></span></span>
-            <b>2026 지스타</b><span>캐릭터랑 같이 찍는 네컷</span>
-          </a></li>
-          <li><a class="b2b-case" href="https://www.youtube.com/shorts/14LqhWlCJBQ" target="_blank" rel="noopener" data-yt="14LqhWlCJBQ" data-case="yuja">
-            <span class="b2b-case__media"><video muted loop playsinline preload="none" poster="/assets/img/b2b-case-yuja.webp" data-src="/assets/video/b2b-case-yuja.mp4" aria-hidden="true"></video><span class="b2b-case__play" aria-hidden="true"></span></span>
-            <b>2026 고흥유자축제</b><span>QR로 찍는 축제 네컷</span>
-          </a></li>
-        </ul>
+        <span class="tag tag--outline" style="--r:-2deg">real case</span>
+        <h2 id="cases-title" class="b2b-sec__title">매장부터 지자체 축제까지,<br><span class="hl">이렇게 쓰고 있어요</span><span class="dot">.</span></h2>
+        <p class="b2b-sec__desc">업종마다 실제로 운영한 현장이에요.</p>
+      </div>
+      <div class="b2b-story__track">
+        <div class="b2b-story__stage" data-cat="shop">
+          <div class="b2b-story__fx" aria-hidden="true">
+            <span class="b2b-story__big" data-cat="shop">SHOP · CAFE · BAR · SHOP · CAFE · BAR ·</span>
+            <span class="b2b-story__big" data-cat="festival">GAME · FESTIVAL · GAME · FESTIVAL ·</span>
+            <span class="b2b-story__big" data-cat="tourism">LOCAL · FESTIVAL · LOCAL · FESTIVAL ·</span>
+            <span class="b2b-deco b2b-deco--ring" data-cat="shop" style="--x:6%;--y:14%;--s:1"></span>
+            <span class="b2b-deco b2b-deco--ring" data-cat="shop" style="--x:87%;--y:46%;--s:1.4"></span>
+            <span class="b2b-deco b2b-deco--ring" data-cat="shop" style="--x:76%;--y:7%;--s:.7"></span>
+            <span class="b2b-deco b2b-deco--star" data-cat="festival" style="--x:5%;--y:16%;--s:1.2"><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.6 7.1.7-5.4 4.8 1.6 7L12 17.4 5.8 21l1.6-7L2 9.3l7.1-.7z"/></svg></span>
+            <span class="b2b-deco b2b-deco--star" data-cat="festival" style="--x:88%;--y:12%;--s:.8"><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.6 7.1.7-5.4 4.8 1.6 7L12 17.4 5.8 21l1.6-7L2 9.3l7.1-.7z"/></svg></span>
+            <span class="b2b-deco b2b-deco--star" data-cat="festival" style="--x:90%;--y:50%;--s:1.3"><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.6 7.1.7-5.4 4.8 1.6 7L12 17.4 5.8 21l1.6-7L2 9.3l7.1-.7z"/></svg></span>
+            <span class="b2b-deco b2b-deco--star" data-cat="festival" style="--x:2%;--y:46%;--s:.7"><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.6 7.1.7-5.4 4.8 1.6 7L12 17.4 5.8 21l1.6-7L2 9.3l7.1-.7z"/></svg></span>
+            <span class="b2b-deco b2b-deco--dot" data-cat="tourism" style="--x:7%;--y:11%;--s:1.3"></span>
+            <span class="b2b-deco b2b-deco--dot" data-cat="tourism" style="--x:87%;--y:19%;--s:.8"></span>
+            <span class="b2b-deco b2b-deco--dot" data-cat="tourism" style="--x:90%;--y:52%;--s:1.4"></span>
+            <span class="b2b-deco b2b-deco--dot" data-cat="tourism" style="--x:2%;--y:46%;--s:.9"></span>
+            <span class="b2b-story__burst"></span>
+          </div>
+          <div class="b2b-story__tabs" role="tablist" aria-label="업종">
+            <button type="button" role="tab" data-go="0">카페·술집·매장<i></i></button>
+            <button type="button" role="tab" data-go="1">축제·행사<i></i></button>
+            <button type="button" role="tab" data-go="2">관광공사·지자체<i></i></button>
+          </div>
+          <article class="b2b-scene" data-cat="shop" aria-label="카페·술집·매장 사례">
+            <a class="b2b-scene__card" href="https://www.instagram.com/p/Dfq-tjZhBxF/" target="_blank" rel="noopener" data-play="local" data-full="/assets/video/b2b-case-shop-full.mp4" data-case="shop">
+              <span class="b2b-scene__media"><video muted loop playsinline preload="none" poster="/assets/img/b2b-case-shop.webp" data-src="/assets/video/b2b-case-shop.mp4" aria-hidden="true"></video><span class="b2b-scene__play" aria-hidden="true"></span></span>
+              <span class="b2b-scene__stamp" aria-hidden="true">SHOP</span>
+            </a>
+            <div class="b2b-scene__text">
+              <span class="b2b-scene__kicker">카페·술집·매장</span>
+              <h3 class="b2b-scene__title">카운터에 QR 한 장,<br>매장 이름 단 네컷</h3>
+              <p class="b2b-scene__desc">손님이 QR을 찍고 매장 이름이 들어간 프레임으로 네컷을 남겨요. 찍은 네컷은 손님 인스타로 그대로 퍼져요.</p>
+              <a class="b2b-scene__more" href="https://www.instagram.com/p/Dfq-tjZhBxF/" target="_blank" rel="noopener">인스타그램에서 보기 →</a>
+            </div>
+          </article>
+          <article class="b2b-scene" data-cat="festival" aria-label="축제·행사 사례">
+            <a class="b2b-scene__card" href="https://www.youtube.com/shorts/K92Yyb5gD5o" target="_blank" rel="noopener" data-yt="K92Yyb5gD5o" data-case="gstar">
+              <span class="b2b-scene__media"><video muted loop playsinline preload="none" poster="/assets/img/b2b-case-gstar.webp" data-src="/assets/video/b2b-case-gstar.mp4" aria-hidden="true"></video><span class="b2b-scene__play" aria-hidden="true"></span></span>
+              <span class="b2b-scene__stamp" aria-hidden="true">FESTIVAL</span>
+            </a>
+            <div class="b2b-scene__text">
+              <span class="b2b-scene__kicker">축제·행사 · 2026 지스타</span>
+              <h3 class="b2b-scene__title">부스 대신 배너 QR,<br>캐릭터 프레임 네컷</h3>
+              <p class="b2b-scene__desc">벡스코 곳곳에 세운 QR 배너로 관람객이 게임 캐릭터 프레임을 골라 네컷을 찍었어요. 칸마다 2초 움짤까지 남아요.</p>
+              
+            </div>
+          </article>
+          <article class="b2b-scene" data-cat="tourism" aria-label="관광공사·지자체 사례">
+            <a class="b2b-scene__card" href="https://www.youtube.com/shorts/14LqhWlCJBQ" target="_blank" rel="noopener" data-yt="14LqhWlCJBQ" data-case="yuja">
+              <span class="b2b-scene__media"><video muted loop playsinline preload="none" poster="/assets/img/b2b-case-yuja.webp" data-src="/assets/video/b2b-case-yuja.mp4" aria-hidden="true"></video><span class="b2b-scene__play" aria-hidden="true"></span></span>
+              <span class="b2b-scene__stamp" aria-hidden="true">LOCAL</span>
+            </a>
+            <div class="b2b-scene__text">
+              <span class="b2b-scene__kicker">관광공사·지자체 · 2026 고흥유자축제</span>
+              <h3 class="b2b-scene__title">30만 명이 찾는 축제,<br>지역 이름 단 네컷</h3>
+              <p class="b2b-scene__desc">축제 전용 프레임 7종을 QR 하나로 운영했어요. 방문객이 찍은 네컷이 그대로 지역 홍보가 돼요.</p>
+              
+            </div>
+          </article>
+        </div>
+      </div>
+      <div class="container">
         <a class="btn btn--dot b2b-jump" href="#inquiry" data-b2b-cta="cases"><span data-v="cafe">우리 가게 프레임 상담 받기</span><span data-v="festival tourism other">상담·견적 무료 문의</span> ↓</a>
       </div>
     </section>
@@ -447,7 +504,7 @@
     <button type="button" class="b2b-zoom__close" aria-label="닫기">닫기 ✕</button>
   </dialog>
 
-  <!-- 현장 영상 플레이어 (#cases 카드를 누르면, b2b.js 가 유튜브 iframe 을 넣고 닫으면 뺀다) -->
+  <!-- 현장 영상 플레이어 (#cases 카드를 누르면, b2b.js 가 유튜브 iframe 또는 원본 영상을 넣고 닫으면 뺀다) -->
   <dialog class="b2b-video" aria-label="영상 보기">
     <div class="b2b-video__frame"></div>
     <div class="b2b-video__bar">
@@ -464,6 +521,6 @@
   <script src="/js/main.js?v=20261119b" defer></script>
   <!-- 페이지 전체 3D 무대(three.js) + 재생 막대: load 뒤에 동적 import, 실패하면 원래 페이지 그대로 -->
   <script type="module" src="/js/hero3d.js?v=20261111g"></script>
-  <script src="/b2b/b2b.js?v=20261123d" defer></script>
+  <script src="/b2b/b2b.js?v=20261123e" defer></script>
 </body>
 </html>

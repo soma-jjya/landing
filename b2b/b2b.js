@@ -8,7 +8,7 @@
                b2b_inquiry_invalid{fields, first_field}(빈 칸·형식 오류로 막힘) · b2b_inquiry_abandoned{last_field, filled_count, type}(입력 시작 후 미접수 이탈)
                b2b_more_opened(선택 칸 펼침) · cta_click{cta:'b2b_inquiry', placement: hero|proof|examples|how|faq|sticky}
                b2b_zoom_opened{src}(예시 사진 확대) · b2b_faq_opened{q}(자주 묻는 질문 펼침) — 2026-11-07
-               b2b_video_opened{video: yuja|gstar|frame|mirror}(현장 영상 재생) · section_viewed{section:'cases'} · cta_click placement=cases — 2026-11-23
+               b2b_video_opened{video: shop|gstar|yuja}(업종별 사례 영상 재생) · b2b_case_scene{scene: shop|festival|tourism}(스크롤로 장면이 바뀜) · section_viewed{section:'cases'} · cta_click placement=cases — 2026-11-23
                b2b_demo_step{step: 1~4}(히어로 실제 과정의 단계를 누름) — 2026-11-23
       Meta     Lead{content_category: type} — 접수 성공 때만. 광고 세트 b2b_* 의 전환 이벤트 */
 (function () {
@@ -153,47 +153,118 @@
     new IntersectionObserver(function (e) { belt.classList.toggle('is-paused', !e[0].isIntersecting); }, { rootMargin: '100px 0px' }).observe(belt);
   }
 
-  // 현장 영상 (2026-11-23, #cases): 카드의 6초 미리보기는 화면에 보일 때만 받고 재생. 누르면 유튜브 플레이어 창(소리 켬), 닫으면 iframe 을 빼서 멈춘다
-  var cases = Array.prototype.slice.call(document.querySelectorAll('.b2b-case'));
-  if (cases.length && !calm && 'IntersectionObserver' in window) {
-    var previewIO = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) {
-        var v = en.target.querySelector('video'); if (!v) return;
-        if (en.isIntersecting && !document.querySelector('.b2b-video[open]')) {
-          if (!v.getAttribute('src')) { v.src = v.getAttribute('data-src'); v.preload = 'auto'; }
-          var p = v.play(); if (p && p.catch) p.catch(function () { /* 저전력 모드 등: 포스터 그대로 */ });
-        } else if (!v.paused) v.pause();
-      });
-    }, { threshold: 0.35 });
-    cases.forEach(function (a) { previewIO.observe(a); });
-  }
+  // 업종별 실제 사례 (2026-11-23, #cases): 스크롤 무대. 모션 최소화·데이터 절약·IntersectionObserver 없음이면 .is-live 를 안 붙여 세 장면이 그냥 놓인다.
+  // 무대가 화면에 붙어 있는 동안 스크롤 진행률(0~1)로 장면(0 매장 · 1 축제 · 2 지자체)을 고르고, 바뀔 때 종이 조각을 터뜨린다.
+  // 카드 미리보기는 지금 장면 것만 받아 재생. 누르면: 매장 = 원본 영상(소리 켬), 나머지 = 유튜브 창. 닫으면 멈춘다
+  var story = document.querySelector('.b2b-story');
+  var scenes = story ? Array.prototype.slice.call(story.querySelectorAll('.b2b-scene')) : [];
+  var cards = scenes.map(function (sc) { return sc.querySelector('.b2b-scene__card'); });
   var player = document.querySelector('.b2b-video');
-  if (player && typeof player.showModal === 'function') {
+  var playPreview = function (i) {
+    scenes.forEach(function (sc, k) {
+      var v = sc.querySelector('video'); if (!v) return;
+      if (k === i && !(player && player.open)) {
+        if (!v.getAttribute('src')) { v.src = v.getAttribute('data-src'); v.preload = 'auto'; }
+        var p = v.play(); if (p && p.catch) p.catch(function () { /* 저전력 모드 등: 포스터 그대로 */ });
+      } else if (!v.paused) v.pause();
+    });
+  };
+  if (story && scenes.length && !calm && 'IntersectionObserver' in window) {
+    story.classList.add('is-live');
+    var stage = story.querySelector('.b2b-story__stage'), stTrack = story.querySelector('.b2b-story__track');   // 이름 track 은 지표 함수라 쓰지 않는다
+    var tabs = Array.prototype.slice.call(story.querySelectorAll('.b2b-story__tabs button'));
+    var bigs = Array.prototype.slice.call(story.querySelectorAll('.b2b-story__big'));
+    var burst = story.querySelector('.b2b-story__burst');
+    var cur = -1, visible = false, rafS = 0;
+    var COLORS = { shop: ['#ff5a47', '#ffffff', '#ffb4a8', '#ff2d55'], festival: ['#ffd400', '#5ec8ff', '#ffffff', '#ff5ab4'], tourism: ['#ff5a47', '#ffffff', '#ff9f1a', '#2bb673'] };
+    var pop = function (cat) {
+      if (!burst) return;
+      var cs = COLORS[cat] || COLORS.shop;
+      for (var k = 0; k < 46; k++) {
+        var el = document.createElement('i'); el.className = 'b2b-confetti';
+        var ang = Math.random() * Math.PI * 2, dist = 140 + Math.random() * Math.min(window.innerWidth, 900) * 0.42;
+        el.style.setProperty('--dx', Math.round(Math.cos(ang) * dist) + 'px');
+        el.style.setProperty('--dy', Math.round(Math.sin(ang) * dist * 0.8 + 60) + 'px');
+        el.style.setProperty('--r', Math.round((Math.random() - 0.5) * 900) + 'deg');
+        el.style.setProperty('--c', cs[k % cs.length]);
+        var round = k % 3 === 0;
+        el.style.setProperty('--w', (round ? 10 : 7 + Math.random() * 8) + 'px');
+        el.style.setProperty('--h', (round ? 10 : 10 + Math.random() * 10) + 'px');
+        el.style.setProperty('--br', round ? '50%' : '2px');
+        el.style.animationDelay = (Math.random() * 0.12).toFixed(2) + 's';
+        burst.appendChild(el);
+        setTimeout(function (n) { return function () { if (n.parentNode) n.parentNode.removeChild(n); }; }(el), 1500);
+      }
+    };
+    var show = function (i, quiet) {
+      if (i === cur) return;
+      var prev = cur; cur = i;
+      var cat = scenes[i].getAttribute('data-cat');
+      stage.setAttribute('data-cat', cat);
+      scenes.forEach(function (sc, k) { sc.classList.toggle('is-on', k === i); sc.classList.toggle('is-past', k < i); sc.setAttribute('aria-hidden', k === i ? 'false' : 'true'); });
+      cards.forEach(function (c, k) { if (k === i) c.removeAttribute('tabindex'); else c.setAttribute('tabindex', '-1'); });
+      tabs.forEach(function (t, k) { t.setAttribute('aria-selected', k === i ? 'true' : 'false'); });
+      if (visible) playPreview(i);
+      if (!quiet && prev !== -1) pop(cat);
+      if (!quiet) track('b2b_case_scene', { scene: cat });
+    };
+    var measure = function () {
+      rafS = 0;
+      var r = stTrack.getBoundingClientRect(), span = stTrack.offsetHeight - stage.offsetHeight;
+      var p = span > 0 ? Math.min(1, Math.max(0, -r.top / span)) : 0;
+      var n = scenes.length, f = p * n, i = Math.min(n - 1, Math.floor(f));
+      show(i);
+      tabs.forEach(function (t, k) { t.style.setProperty('--p', k < i ? 1 : (k === i ? Math.min(1, f - i).toFixed(3) : 0)); });
+      bigs.forEach(function (b) { b.style.setProperty('--x', (-p * 0.9 * b.offsetWidth * 0.45).toFixed(1) + 'px'); });
+      var sub = Math.min(1, f - i);
+      scenes[i].style.setProperty('--tilt', ((sub - 0.5) * -14).toFixed(2) + 'deg');
+      scenes[i].style.setProperty('--rot', ((sub - 0.5) * 4 - 1).toFixed(2) + 'deg');
+    };
+    var onScroll = function () { if (!rafS) rafS = requestAnimationFrame(measure); };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    new IntersectionObserver(function (e) {
+      visible = e[0].isIntersecting;
+      if (visible) playPreview(cur); else playPreview(-1);
+    }, { threshold: 0.2 }).observe(stage);
+    show(0, true); measure();
+    tabs.forEach(function (t, k) {
+      t.addEventListener('click', function () {   // 그 장면이 보이는 스크롤 위치로
+        var span = stTrack.offsetHeight - stage.offsetHeight, top = stTrack.getBoundingClientRect().top + window.scrollY;
+        window.scrollTo({ top: top + span * ((k + 0.5) / scenes.length), behavior: 'smooth' });
+      });
+    });
+  }
+  if (player && typeof player.showModal === 'function' && cards.length) {
     var box = player.querySelector('.b2b-video__frame'), yt = player.querySelector('.b2b-video__yt');
-    var visible = [];
-    cases.forEach(function (a) {
+    cards.forEach(function (a) {
       a.addEventListener('click', function (e) {
-        if (e.metaKey || e.ctrlKey || e.shiftKey) return;   // 새 탭으로 열기는 그대로
+        if (e.metaKey || e.ctrlKey || e.shiftKey) return;
         e.preventDefault();
-        var id = a.getAttribute('data-yt');
-        var f = document.createElement('iframe');
-        f.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&playsinline=1&rel=0';
-        f.title = (a.querySelector('b') || a).textContent + ' 영상';
-        f.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
-        f.allowFullscreen = true;
         box.textContent = '';
-        box.appendChild(f);
+        if (a.getAttribute('data-play') === 'local') {   // 매장: 받아 둔 원본 영상을 소리와 함께
+          var v = document.createElement('video');
+          v.src = a.getAttribute('data-full'); v.controls = true; v.autoplay = true; v.playsInline = true; v.setAttribute('playsinline', '');
+          box.appendChild(v);
+          yt.textContent = '인스타그램에서 보기';
+        } else {
+          var f = document.createElement('iframe');
+          f.src = 'https://www.youtube-nocookie.com/embed/' + a.getAttribute('data-yt') + '?autoplay=1&playsinline=1&rel=0';
+          f.title = '현장 영상';
+          f.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+          f.allowFullscreen = true;
+          box.appendChild(f);
+          yt.textContent = 'YouTube에서 보기';
+        }
         yt.href = a.href;
-        visible = cases.map(function (c) { return c.querySelector('video'); }).filter(function (v) { return v && !v.paused; });
-        visible.forEach(function (v) { v.pause(); });
+        playPreview(-1);
         player.showModal();
         track('b2b_video_opened', { video: a.getAttribute('data-case') });
       });
     });
     player.addEventListener('close', function () {
       box.textContent = '';
-      visible.forEach(function (v) { var p = v.play(); if (p && p.catch) p.catch(function () {}); });
-      visible = [];
+      if (story && story.classList.contains('is-live')) { var on = scenes.findIndex ? scenes.findIndex(function (sc) { return sc.classList.contains('is-on'); }) : 0; playPreview(on); }
     });
     player.querySelector('.b2b-video__close').addEventListener('click', function () { player.close(); });
     player.addEventListener('click', function (e) { if (e.target === player) player.close(); });
@@ -202,7 +273,7 @@
   if (casesSec && 'IntersectionObserver' in window) {
     var casesIO = new IntersectionObserver(function (e) {
       if (e[0].isIntersecting) { track('section_viewed', { section: 'cases' }); casesIO.disconnect(); }
-    }, { threshold: 0.35 });
+    }, { threshold: 0.1 });
     casesIO.observe(casesSec);
   }
 
