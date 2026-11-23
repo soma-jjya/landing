@@ -116,4 +116,13 @@ fill_auto(app_frame('frame-patchwork'), M + 'vintage-grid-natural.png', 'fourcut
 fill_auto(app_frame('frame-vintage'), M + 'yuja-friends-grid.png', 'fourcut-vintage-friends.png')
 fill_auto(goheung_cutout('goheung-classic'), 'assets/raw/ph/ph-hearts-grid.png', 'fourcut-goheung-classic-hearts.png', centering=(0.5, 0.3))
 Image.open(RAW + 'goheung-filled-yuja.png').convert('RGB').resize((480, 640), Image.LANCZOS).save(os.path.join(out, 'fourcut-goheung-yuja.png'))
+
+# 2026 지스타 실제 프레임 7종(2026-11-23 사용자 요청으로 컨베이어에 추가). 원본은 운영 중이던 2026gstar 프로젝트의 프레임 그림
+# (GET https://api.peakpic.app/b2b/projects/2026gstar 의 frames[].imageUrl, 폭 1200 으로 줄여 assets/raw/b2b/gstar-2026-11/ 에 보관). 칸은 투명
+G = RAW + 'gstar-2026-11/'
+for frame_name, grid_path in (('main', M + 'vintage-grid-gemini-v3.png'), ('owcs', M + 'vintage-grid-gpt-v3.png'), ('yumi', 'assets/raw/ph/ph-hearts-grid.png'),
+                              ('dnf', M + 'vintage-grid-natural.png'), ('krafton', M + 'vintage-grid-gemini-v3.png'), ('genshin', M + 'dessert-grid.png'),
+                              ('maple', M + 'vintage-grid-gpt-v3.png')):
+    fill_auto(Image.open(G + frame_name + '.png').convert('RGBA'), grid_path, 'fourcut-gstar-%s.png' % frame_name,
+              centering=(0.5, 0.3) if 'hearts' in grid_path else (0.5, 0.35))
 print('ok 3')
