@@ -9,6 +9,7 @@
                b2b_more_opened(선택 칸 펼침) · cta_click{cta:'b2b_inquiry', placement: hero|proof|examples|how|faq|sticky}
                b2b_zoom_opened{src}(예시 사진 확대) · b2b_faq_opened{q}(자주 묻는 질문 펼침) — 2026-11-07
                b2b_video_opened{video: yuja|gstar|frame|mirror}(현장 영상 재생) · section_viewed{section:'cases'} · cta_click placement=cases — 2026-11-23
+               b2b_demo_step{step: 1~4}(히어로 실제 과정의 단계를 누름) — 2026-11-23
       Meta     Lead{content_category: type} — 접수 성공 때만. 광고 세트 b2b_* 의 전환 이벤트 */
 (function () {
   'use strict';
@@ -60,6 +61,58 @@
 
   var calm = false;   // 모션 최소화·데이터 절약이면 컨베이어·미리보기 영상을 움직이지 않는다
   try { calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches || !!(navigator.connection && navigator.connection.saveData); } catch (e) { /* 무시 */ }
+
+  // 히어로 실제 과정 (2026-11-23, .b2b-demo): 페이지가 다 뜬 뒤 영상을 받아 재생하고(첫 로드 예산 밖), 영상 시간에 맞춰 단계를 켠다(--p = 그 단계 진행률).
+  // 단계를 누르면 그 장면으로. 히어로가 화면 밖이면 멈춤. 모션 최소화·데이터 절약이면 영상 없이 포스터(완성 장면) + 마지막 단계만 켬
+  var demo = document.querySelector('.b2b-demo');
+  if (demo) {
+    var dv = demo.querySelector('video');
+    var steps = Array.prototype.slice.call(demo.querySelectorAll('.b2b-demo__steps button'));
+    var at = steps.map(function (b) { return parseFloat(b.getAttribute('data-at')) || 0; });
+    var total = parseFloat(demo.getAttribute('data-total')) || 16;
+    var shown = -1;
+    var mark = function (t) {
+      var i = 0;
+      for (var k = 0; k < at.length; k++) if (t >= at[k] - 0.05) i = k;
+      if (i !== shown) {
+        steps.forEach(function (b, k) { b.classList.toggle('is-on', k === i); if (k === i) b.setAttribute('aria-current', 'step'); else b.removeAttribute('aria-current'); });
+        shown = i;
+      }
+      var end = i + 1 < at.length ? at[i + 1] : total;
+      steps[i].style.setProperty('--p', Math.min(1, Math.max(0, (t - at[i]) / (end - at[i]))).toFixed(3));
+    };
+    mark(at[at.length - 1]);
+    steps[steps.length - 1].style.setProperty('--p', '1');
+    if (dv && !calm) {
+      var heroOn = true, raf = 0;
+      var tick = function () { mark(dv.currentTime); raf = (!dv.paused && heroOn) ? requestAnimationFrame(tick) : 0; };
+      dv.addEventListener('playing', function () { if (!raf) raf = requestAnimationFrame(tick); });
+      var startDemo = function () {
+        if (dv.getAttribute('src')) return;
+        dv.src = dv.getAttribute('data-src'); dv.preload = 'auto';
+        var p = dv.play(); if (p && p.catch) p.catch(function () { /* 저전력 모드 등: 포스터 그대로 */ });
+      };
+      if (document.readyState === 'complete') setTimeout(startDemo, 150);
+      else window.addEventListener('load', function () { setTimeout(startDemo, 150); });
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (e) {
+          heroOn = e[0].isIntersecting;
+          if (!dv.getAttribute('src')) return;
+          if (heroOn) { var p = dv.play(); if (p && p.catch) p.catch(function () {}); } else dv.pause();
+        }, { threshold: 0.15 }).observe(demo);
+      }
+      steps.forEach(function (b, k) {
+        b.addEventListener('click', function () {
+          startDemo();
+          if (dv.readyState >= 1) dv.currentTime = at[k];
+          else dv.addEventListener('loadedmetadata', function () { dv.currentTime = at[k]; }, { once: true });
+          var p = dv.play(); if (p && p.catch) p.catch(function () {});
+          mark(at[k]);
+          track('b2b_demo_step', { step: k + 1 });
+        });
+      });
+    }
+  }
 
   // 예시 컨베이어 (2026-11-23, #examples): 줄마다 원래 항목을 화면 폭 이상이 되게 반복해 한 벌을 만들고, 같은 한 벌을 하나 더 붙여 -50% 를 반복 이동(css @keyframes b2b-belt).
   // 복제본은 aria-hidden·포커스 없음. 화면 밖이면 멈춤(.is-paused). 속도는 폭과 상관없이 초당 일정 px
