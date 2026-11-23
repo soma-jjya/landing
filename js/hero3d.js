@@ -113,9 +113,18 @@ async function init() {
       if (anchor.contains(im)) return;                       // 히어로 그림에 이미 나온 사진은 둘레에 또 띄우지 않는다
       own.push({ name, url: im.src, kind: /^(fourcut-(?!cut)|frame-)|hearts/.test(name) ? 's' : 'p' });
     });
-    const rest = CLOUD.filter((c) => !seen[c.src] && !(isB2b && /^(couple|onboarding)/.test(c.src))).map((c) => ({ name: c.src, url: IMG + c.src, kind: c.kind }));
+    // 페이지가 따로 준 사진 묶음(data-float-pool, 공백으로 나눈 주소): 본문에 사진이 적은 페이지용. /b2b/ = 코스어 네컷(2026-11-24 예시 컨베이어가 빠져서)
+    const poolEl = document.querySelector('[data-float-pool]');
+    if (poolEl) poolEl.getAttribute('data-float-pool').split(/\s+/).filter(Boolean).forEach((u) => {
+      const name = u.split('/').pop();
+      if (seen[name]) return;
+      seen[name] = 1;
+      own.push({ name, url: new URL(u, location.href).href, kind: /^(fourcut-(?!cut)|frame-)|hearts/.test(name) ? 's' : 'p' });
+    });
+    // 기본 사진으로 채우기. /b2b/ 는 AI 사진을 쓰지 않으므로(2026-11-23 사용자) 기본 사진 없이 그 페이지 사진만 돌려 쓴다
+    const rest = isB2b ? [] : CLOUD.filter((c) => !seen[c.src]).map((c) => ({ name: c.src, url: IMG + c.src, kind: c.kind }));
     const pick = own.concat(rest);
-    CLOUD.forEach((c, i) => { const o = pick[i % pick.length]; c.src = o.name; c.url = o.url; c.kind = o.kind; });
+    if (pick.length) CLOUD.forEach((c, i) => { const o = pick[i % pick.length]; c.src = o.name; c.url = o.url; c.kind = o.kind; });
   }
   const K = 22, C = 5.5;     // 카드 스프링(탄성·감쇠)
   const T = 4;               // 폴라로이드 두께(px)

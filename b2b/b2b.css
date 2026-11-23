@@ -264,44 +264,52 @@ html:not(.os-other) .b2b-done__alt { display: none; }   /* 폰은 OS 스토어�
 .b2b-video__bar > * { flex: 1; display: flex; align-items: center; justify-content: center; border: 0; background: none; font: inherit; font-size: 15px; font-weight: 800; color: var(--black); text-decoration: none; cursor: pointer; }
 .b2b-video__yt { border-right: 1.5px solid var(--ink-12) !important; }
 
-/* ---------- 예시 컨베이어 (2026-11-23, #examples): 두 줄이 반대로 흐른다. 줄 안 항목은 b2b.js 가 화면 폭을 채울 만큼 복제해 두 벌로 만든다 → -50% 이동이 이음매 없이 반복 ---------- */
-.b2b-belt { display: flex; flex-direction: column; gap: 6px; margin-top: 14px;
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent); mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent); }
-.has-stage .b2b-belt { position: relative; z-index: 2; }   /* 3D 무대(카드)보다 위 — style.css 의 .has-stage main .container 와 같은 층 */
-.b2b-belt__lane { overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
-.b2b-belt__lane::-webkit-scrollbar { display: none; }
-.b2b-belt__row { display: flex; width: max-content; margin: 0; padding: 16px var(--gutter) 22px; list-style: none; }
-.b2b-belt__row > li { flex: none; padding-right: 14px; }   /* gap 대신 오른쪽 여백: 한 벌 폭이 정확히 절반이 되게 */
-.b2b-belt__item { position: relative; height: 184px; margin: 0; }
-.b2b-belt__item img { display: block; width: auto; height: 100%; border-radius: 6px; border: 4px solid var(--white); background: var(--white); box-shadow: 0 12px 26px -14px rgba(0, 0, 0, .45), 0 1px 0 rgba(0, 0, 0, .05); }
-.b2b-belt .b2b-pin { left: 6px; top: -11px; padding: 5px 9px; font-size: 11px; }
-.b2b-belt.is-running .b2b-belt__lane { overflow: hidden; }
-.b2b-belt.is-running .b2b-belt__row { padding-inline: 0; animation: b2b-belt var(--dur, 40s) linear infinite; will-change: transform; }
-.b2b-belt.is-running .b2b-belt__row--rev { animation-direction: reverse; }
-.b2b-belt.is-paused .b2b-belt__row, .b2b-belt:has(:focus-visible) .b2b-belt__row { animation-play-state: paused; }   /* 마우스를 올려도 계속 흐른다(2026-11-23 사용자 요청). 키보드로 고를 때만 멈춤 */
-@keyframes b2b-belt { to { transform: translateX(-50%); } }
-@media (min-width: 900px) {
-  .b2b-belt { margin-top: 20px; gap: 10px; }
-  .b2b-belt__row > li { padding-right: 20px; }
-  .b2b-belt__item { height: 232px; }
-}
 @media (prefers-reduced-motion: reduce) { .b2b-demo__steps button, .b2b-demo__steps button::before { transition: none; } }
 
-/* ---------- 업종별 실제 사례 (2026-11-23, #cases): 스크롤 무대 ----------
-   기본(JS 없음·모션 최소화) = 세 장면이 차례로 놓인다. b2b.js 가 .b2b-story 에 .is-live 를 붙이면 무대가 화면에 붙고(sticky) 장면이 겹쳐 바뀐다.
-   장면마다 그 업종의 실제 사진이 벽처럼 깔리고 반투명 검정이 덮는다(셋 다 어두운 무대, 강조색만 다르다: shop 빨강 · festival 노랑 · tourism 유자색).
-   무대 data-cat 이 바뀌면 사진 벽·글자 테이프·장식·카드·글이 함께 바뀐다. 비눗방울은 장면과 상관없이 계속 떠오른다 */
-.b2b-story { padding-bottom: 40px; }
-.b2b-story__track { margin-top: 20px; }
-.b2b-story__stage { --bg: #1c0b10; --fg: #fff; --sub: rgba(255, 255, 255, .72); --accent: #ff5a47; --line: rgba(255, 255, 255, .22);
-  position: relative; display: flex; flex-direction: column; gap: 28px; padding: 28px var(--gutter) 36px; background: var(--bg); color: var(--fg); }
-.b2b-story__stage[data-cat="festival"] { --bg: #0c1846; --accent: #ffd400; --line: rgba(255, 255, 255, .2); }
-.b2b-story__stage[data-cat="tourism"] { --bg: #241a02; --accent: #ffc21a; --line: rgba(255, 255, 255, .2); }
-.b2b-story__fx, .b2b-story__tabs { display: none; }
-.b2b-scene { display: grid; gap: 16px; justify-items: center; }
-.b2b-scene__card { position: relative; display: block; width: min(64vw, 260px); color: inherit; text-decoration: none; }
-.b2b-scene__media { position: relative; display: block; aspect-ratio: 9 / 16; border-radius: 22px; overflow: hidden; background: #000; border: 3px solid var(--fg);
-  box-shadow: 0 30px 60px -28px rgba(0, 0, 0, .7); }
+/* ---------- 업종별 실제 사례 (#cases) ----------
+   2026-11-23 스크롤로 바뀌는 무대 → 2026-11-24 사용자 요청으로 세 업종을 한 열로 이어 붙임. 글·영상 자리는 번갈아(매장 글-영상 · 축제 영상-글 · 지자체 글-영상).
+   장면마다 그 업종 실제 사진 벽(b2b.js 가 data-imgs 로 기둥을 만든다) + 반투명 검정. 위아래 끝은 같은 검정으로 녹여 이음매가 안 보이고, 이음매마다 굵은 글자 테이프 두 줄이 엇갈려 지나간다.
+   .is-live(b2b.js, 모션 최소화·데이터 절약이면 안 붙음) = 화면에 들어오면 카드가 3D 로 뒤집혀 들어오고 도장·종이 조각, 비눗방울이 떠오르고, 스크롤에 따라 카드가 살짝 돌고 사진 벽이 흐른다 */
+.b2b-story { padding-bottom: 44px; }
+.b2b-story__list { --seam: #0d0c0f; margin-top: 64px; background: var(--seam); }
+.has-stage .b2b-story__list { position: relative; z-index: 2; }   /* 3D 무대(떠다니는 카드)보다 위 */
+.b2b-scene { --bg: #1c0b10; --fg: #fff; --sub: rgba(255, 255, 255, .74); --accent: #ff5a47; --line: rgba(255, 255, 255, .24);
+  position: relative; padding: 104px var(--gutter) 96px; color: var(--fg); }
+.b2b-scene[data-cat="festival"] { --bg: #0c1846; --accent: #ffd400; }
+.b2b-scene[data-cat="tourism"] { --bg: #241a02; --accent: #ffc21a; }
+.b2b-scene__bg { position: absolute; inset: 0; overflow: hidden; background: var(--bg); }
+/* 사진 벽: 비스듬한 기둥들이 위아래로 엇갈려 천천히 흐르고, 스크롤에 따라 벽 전체가 조금 밀린다(--py) */
+.b2b-scene__wall { position: absolute; inset: -30% -18%; display: flex; gap: 12px; rotate: -8deg; translate: 0 calc(var(--py, 0) * 1px); }
+.b2b-wall__col { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 12px; }
+.b2b-wall__col img { display: block; width: 100%; height: auto; border-radius: 10px; background: #222; }
+/* 반투명 검정: 가운데는 조금 밝게, 위아래 끝은 이음매 색으로 녹인다 */
+.b2b-scene__shade { position: absolute; inset: 0;
+  background: linear-gradient(180deg, var(--seam) 0%, transparent 18%, transparent 78%, var(--seam) 100%),
+    radial-gradient(120% 80% at 50% 50%, transparent 35%, rgba(0, 0, 0, .45) 100%), rgba(0, 0, 0, .62); }
+.b2b-deco { position: absolute; left: var(--x); top: var(--y); width: calc(56px * var(--s)); height: calc(56px * var(--s)); }
+.b2b-deco--ring { border-radius: 50%; border: 3px solid var(--accent); box-shadow: inset 0 0 0 9px rgba(0, 0, 0, .55), inset 0 0 0 12px var(--accent), 0 0 24px rgba(255, 90, 71, .45); }
+.b2b-deco--star svg { width: 100%; height: 100%; fill: var(--accent); }
+/* 이음매 테이프: 장면 윗변을 가운데로 두 줄(강조색 띠 · 흰 띠)이 엇갈린다. 상자가 가로를 잘라 페이지가 옆으로 안 밀린다 */
+.b2b-scene__tapes { position: absolute; z-index: 3; left: 0; right: 0; top: 0; height: 300px; translate: 0 -50%; overflow: hidden; pointer-events: none; }
+.b2b-tape { position: absolute; left: -10%; right: -10%; top: 50%; display: block; overflow: hidden; padding: .16em 0 .2em; white-space: nowrap;
+  font-size: clamp(22px, 6vw, 28px); font-weight: 900; line-height: 1.1; letter-spacing: -0.01em; color: #111;
+  background: var(--accent); box-shadow: 0 16px 34px -14px rgba(0, 0, 0, .75), inset 0 3px 0 rgba(0, 0, 0, .14), inset 0 -3px 0 rgba(0, 0, 0, .14);
+  translate: 0 -105%; rotate: -4deg; transition: opacity .4s ease, transform .8s cubic-bezier(.2, .9, .25, 1.1); }
+.b2b-tape--b { translate: 0 5%; rotate: 3deg; background: #fff; }
+.b2b-tape:empty { display: none; }
+.b2b-tape > span { display: inline-block; animation: b2b-tape 26s linear infinite paused; }
+.b2b-tape--b > span { animation-duration: 32s; animation-direction: reverse; }
+.b2b-tape b { font-weight: 900; }
+.b2b-tape b::after { content: ""; display: inline-block; width: .62em; height: .62em; margin: 0 .55em; vertical-align: .08em; background: currentColor;
+  clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%); }
+@keyframes b2b-tape { to { transform: translateX(-50%); } }
+/* 카드·글 */
+.b2b-scene__inner { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 28px; max-width: calc(var(--container) - 2 * var(--gutter)); margin: 0 auto; }
+.b2b-scene__text { order: 1; display: flex; flex-direction: column; align-items: center; gap: 10px; max-width: 520px; width: 100%; text-align: center; }
+.b2b-scene__card { order: 2; position: relative; display: block; width: min(66vw, 280px); color: inherit; text-decoration: none; perspective: 1200px; }
+.b2b-scene[data-cat="festival"] .b2b-scene__card { order: 0; }   /* 가운데 장면은 영상이 먼저 */
+.b2b-scene__media { position: relative; display: block; aspect-ratio: 9 / 16; border-radius: 22px; overflow: hidden; background: #000; border: 3px solid #fff;
+  box-shadow: 0 30px 60px -28px rgba(0, 0, 0, .8); }
 .b2b-scene__media video { display: block; width: 100%; height: 100%; object-fit: cover; }
 .b2b-scene__play { position: absolute; left: 50%; top: 50%; width: 58px; height: 58px; margin: -29px 0 0 -29px; border-radius: 50%; background: rgba(0, 0, 0, .7); border: 2px solid #fff; transition: scale .15s ease, background .15s ease; }
 .b2b-scene__play::after { content: ""; position: absolute; left: 50%; top: 50%; margin: -10px 0 0 -6px; border-style: solid; border-width: 10px 0 10px 17px; border-color: transparent transparent transparent #fff; }
@@ -310,85 +318,47 @@ html:not(.os-other) .b2b-done__alt { display: none; }   /* 폰은 OS 스토어�
 .b2b-scene__card:focus-visible .b2b-scene__media { outline: 3px solid var(--accent); outline-offset: 4px; }
 .b2b-scene__stamp { position: absolute; right: -16px; top: 18px; padding: 8px 14px; border-radius: 10px; background: var(--accent); color: #111; font-size: 15px; font-weight: 900; letter-spacing: .08em;
   transform: rotate(9deg); box-shadow: 0 8px 18px -8px rgba(0, 0, 0, .55); }
-.b2b-scene__text { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; max-width: 520px; width: 100%; }
-.b2b-scene__kicker { display: inline-flex; align-items: center; gap: 7px; padding: 6px 12px; border-radius: 999px; border: 1.5px solid var(--line); font-size: 13px; font-weight: 800; color: var(--fg); }
+.b2b-scene[data-cat="festival"] .b2b-scene__stamp { right: auto; left: -16px; transform: rotate(-9deg); }
+.b2b-scene__kicker { display: inline-flex; align-items: center; gap: 7px; padding: 6px 12px; border-radius: 999px; border: 1.5px solid var(--line); font-size: 13px; font-weight: 800; color: var(--fg); background: rgba(0, 0, 0, .25); }
 .b2b-scene__kicker::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
-.b2b-scene__title { font-size: clamp(24px, 6.6vw, 40px); font-weight: 900; line-height: 1.2; letter-spacing: -0.04em; color: var(--fg); }
-.b2b-scene__desc { font-size: 15px; line-height: 1.6; color: var(--sub); }
+.b2b-scene__title { font-size: clamp(26px, 7vw, 40px); font-weight: 900; line-height: 1.2; letter-spacing: -0.04em; color: var(--fg); }
+.b2b-scene__desc { font-size: 15px; line-height: 1.65; color: var(--sub); }
 .b2b-scene__more { font-size: 14px; font-weight: 800; color: var(--fg); text-decoration: underline; text-underline-offset: 4px; }
-.b2b-story .b2b-jump { margin-top: 28px; }
-/* JS 없음·모션 최소화: 장면별로 제 색을 쓴다 */
-.b2b-story:not(.is-live) .b2b-scene { padding: 8px 0 24px; }
-.b2b-story:not(.is-live) .b2b-scene[data-cat="festival"] { --fg: #fff; }
+.b2b-story .b2b-jump { margin-top: 36px; }
 
-/* ---- 살아 있는 무대 ---- */
-.b2b-story.is-live { padding-bottom: 48px; }
-/* 장면 하나에 스크롤 210svh(무대가 붙어 있는 동안 세 장면이 똑같이 나눈다). 2026-11-24 사용자 요청으로 70svh → 3배.
-   트랙 = 무대 높이(100svh - 헤더) + 3 × 210svh */
-.b2b-story.is-live .b2b-story__track { --per: 210vh; height: calc(100vh - var(--header-h) + 3 * var(--per)); }
-@supports (height: 1svh) { .b2b-story.is-live .b2b-story__track { --per: 210svh; height: calc(100svh - var(--header-h) + 3 * var(--per)); } }
-.b2b-story.is-live .b2b-story__stage { position: sticky; top: var(--header-h); height: calc(100svh - var(--header-h)); overflow: hidden; padding: 14px var(--gutter) 90px;
-  display: grid; grid-template-rows: auto 1fr; gap: 10px; transition: background-color .6s ease, color .6s ease; }
-.has-stage .b2b-story__stage { z-index: 2; }   /* 3D 무대(떠다니는 카드)보다 위 */
-.b2b-story.is-live .b2b-story__fx { display: block; position: absolute; inset: 0; pointer-events: none; }
-.b2b-story.is-live .b2b-story__tabs { display: flex; gap: 6px; position: relative; z-index: 3; justify-content: center; flex-wrap: wrap; }
-.b2b-story__tabs button { position: relative; overflow: hidden; padding: 9px 14px 11px; border-radius: 999px; border: 1.5px solid var(--line); background: transparent; color: var(--fg);
-  font: inherit; font-size: 13px; font-weight: 800; cursor: pointer; transition: background .3s ease, color .3s ease, border-color .3s ease; }
-.b2b-story__tabs button i { position: absolute; left: 0; bottom: 0; height: 3px; width: calc(var(--p, 0) * 100%); background: var(--accent); }
-.b2b-story__tabs button[aria-selected="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
-.b2b-story__tabs button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-/* 장면 겹치기: 같은 칸에 셋을 포개고 지금 장면만 보인다 */
-.b2b-story.is-live .b2b-scene { grid-row: 2; grid-column: 1; align-content: center; gap: 12px; perspective: 1200px; pointer-events: none; }
-.b2b-story.is-live .b2b-scene.is-on { pointer-events: auto; }
-.b2b-story.is-live .b2b-scene__card { width: auto; height: min(52svh, 520px); aspect-ratio: 9 / 16; }
-.b2b-story.is-live .b2b-scene__media { height: 100%; }
-.b2b-story.is-live .b2b-scene__card { opacity: 0; transform: translateX(var(--from, 60%)) rotateY(var(--ry, -75deg)) scale(.8); transition: transform .8s cubic-bezier(.2, .9, .25, 1.15), opacity .45s ease; }
-.b2b-story.is-live .b2b-scene.is-past .b2b-scene__card { --from: -60%; --ry: 75deg; }
-.b2b-story.is-live .b2b-scene.is-on .b2b-scene__card { opacity: 1; transform: translateX(0) rotateY(var(--tilt, 0deg)) rotate(var(--rot, -2deg)) scale(1); }
-.b2b-story.is-live .b2b-scene__text { opacity: 0; translate: 0 26px; transition: opacity .4s ease, translate .5s cubic-bezier(.2, .9, .25, 1.1); align-items: center; text-align: center; margin: 0 auto; }
-.b2b-story.is-live .b2b-scene.is-on .b2b-scene__text { opacity: 1; translate: 0 0; transition-delay: .18s; }
-.b2b-story.is-live .b2b-scene.is-on .b2b-scene__stamp { animation: b2b-stamp .7s cubic-bezier(.2, .9, .3, 1.4) .25s both; }
-@keyframes b2b-stamp { 0% { scale: 0; rotate: -40deg; } 70% { scale: 1.25; rotate: 6deg; } 100% { scale: 1; rotate: 0deg; } }
-/* 사진 벽: 비스듬한 기둥들이 위아래로 엇갈려 천천히 흐른다(b2b.js 가 기둥을 만든다). 지금 장면 것만 보이고 나머지는 멈춘다 */
-.b2b-story__wall { position: absolute; inset: -30% -18%; display: flex; gap: 12px; rotate: -8deg; opacity: 0; visibility: hidden; scale: 1.12;
-  transition: opacity .8s ease, scale 1.2s cubic-bezier(.2, .8, .2, 1), visibility 0s linear .8s; }
-.b2b-story__wall.is-on { opacity: 1; visibility: visible; scale: 1; transition: opacity .8s ease, scale 1.2s cubic-bezier(.2, .8, .2, 1), visibility 0s; }
-.b2b-wall__col { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 12px; animation: b2b-wall var(--wd, 60s) linear var(--wdl, 0s) infinite; }
-.b2b-wall__col:nth-child(even) { animation-direction: reverse; }
-.b2b-wall__col img { display: block; width: 100%; height: auto; border-radius: 10px; background: #222; }
-.b2b-wall__col img:last-child { margin-bottom: 0; }
+/* ---- 움직임 (.is-live) ---- */
+.b2b-story.is-live .b2b-wall__col { animation: b2b-wall var(--wd, 60s) linear var(--wdl, 0s) infinite; }
+.b2b-story.is-live .b2b-wall__col:nth-child(even) { animation-direction: reverse; }
 @keyframes b2b-wall { to { transform: translateY(calc(-50% - 6px)); } }   /* 같은 목록 두 벌, 한 벌 + 간격 반만큼 */
-.b2b-story__wall:not(.is-on) .b2b-wall__col, .b2b-story.is-idle .b2b-wall__col { animation-play-state: paused; }
-/* 사진 위 반투명 검정: 가운데는 조금 밝고 가장자리·아래는 더 어둡게, 아래쪽에만 업종 색을 살짝 */
-.b2b-story__shade { position: absolute; inset: 0;
-  background: radial-gradient(120% 85% at 60% 45%, transparent 30%, rgba(0, 0, 0, .5) 100%), linear-gradient(0deg, var(--bg) 0%, transparent 45%), rgba(0, 0, 0, .64);
-  transition: background-color .6s ease; }
-/* 굵은 글자 테이프 두 줄: 강조색 띠(검은 글자)와 흰 띠(검은 글자)가 엇갈려 반대로 흐른다. 지금 장면 것만 펴진다 */
-.b2b-tape { position: absolute; left: -10%; right: -10%; top: var(--ty, 27%); display: block; overflow: hidden; padding: .16em 0 .2em; white-space: nowrap;
-  font-size: clamp(24px, 6.4vw, 30px); font-weight: 900; line-height: 1.1; letter-spacing: -0.01em; color: #111;
-  background: var(--accent); box-shadow: 0 16px 34px -14px rgba(0, 0, 0, .75), inset 0 3px 0 rgba(0, 0, 0, .14), inset 0 -3px 0 rgba(0, 0, 0, .14);
-  rotate: var(--tr, -5deg); opacity: 0; transform: scaleX(.4); transition: opacity .35s ease, transform .7s cubic-bezier(.2, .9, .25, 1.1); }
-.b2b-tape--b { --ty: 47%; --tr: 4deg; background: #fff; }   /* 폰: 두 줄 모두 카드 뒤로 지나가 글과 안 겹친다 */
-.b2b-tape > span { display: inline-block; animation: b2b-tape 26s linear infinite paused; }
-.b2b-tape--b > span { animation-duration: 32s; animation-direction: reverse; }
-.b2b-tape b { font-weight: 900; }
-.b2b-tape b::after { content: ""; display: inline-block; width: .62em; height: .62em; margin: 0 .55em; vertical-align: .08em; background: currentColor;
-  clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%); }
-@keyframes b2b-tape { to { transform: translateX(-50%); } }
-.b2b-story__stage[data-cat="shop"] .b2b-tape[data-cat="shop"],
-.b2b-story__stage[data-cat="festival"] .b2b-tape[data-cat="festival"],
-.b2b-story__stage[data-cat="tourism"] .b2b-tape[data-cat="tourism"] { opacity: 1; transform: none; }
-.b2b-story__stage[data-cat="shop"] .b2b-tape--b[data-cat="shop"],
-.b2b-story__stage[data-cat="festival"] .b2b-tape--b[data-cat="festival"],
-.b2b-story__stage[data-cat="tourism"] .b2b-tape--b[data-cat="tourism"] { transition-delay: .08s; }
-.b2b-story__stage[data-cat="shop"] .b2b-tape[data-cat="shop"] > span,
-.b2b-story__stage[data-cat="festival"] .b2b-tape[data-cat="festival"] > span,
-.b2b-story__stage[data-cat="tourism"] .b2b-tape[data-cat="tourism"] > span { animation-play-state: running; }
-.b2b-story.is-idle .b2b-story__stage .b2b-tape > span { animation-play-state: paused; }
+.b2b-story.is-live .b2b-scene.is-vis .b2b-tape > span { animation-play-state: running; }
+.b2b-story.is-live .b2b-scene:not(.is-vis) .b2b-wall__col, .b2b-story.is-live .b2b-scene:not(.is-vis) .b2b-bubble,
+.b2b-story.is-live .b2b-scene:not(.is-vis) .b2b-bubble i { animation-play-state: paused; }   /* 화면 밖 장면은 멈춘다 */
+/* 테이프: 이음매가 화면에 들어오면 쭉 펴진다 */
+.b2b-story.is-live .b2b-scene:not(.is-seen) .b2b-tape { opacity: 0; transform: scaleX(.3); }
+.b2b-story.is-live .b2b-scene.is-seen .b2b-tape--b { transition-delay: .1s; }
+/* 카드: 들어올 때 3D 로 뒤집히며(영상 쪽에서), 들어온 뒤엔 스크롤(--tilt·--rot)에 따라 살짝 돈다 */
+.b2b-story.is-live .b2b-scene__card { opacity: 0; transform: translateX(var(--from, 40%)) rotateY(var(--ry, -70deg)) scale(.82);
+  transition: transform .9s cubic-bezier(.2, .9, .25, 1.12), opacity .45s ease; }
+.b2b-story.is-live .b2b-scene[data-cat="festival"] .b2b-scene__card { --from: -40%; --ry: 70deg; }
+.b2b-story.is-live .b2b-scene.is-on .b2b-scene__card { opacity: 1; transform: translateX(0) rotateY(var(--tilt, 0deg)) rotate(var(--rot, -2deg)) scale(1); }
+.b2b-story.is-live .b2b-scene.is-on.is-settled .b2b-scene__card { transition: transform .25s ease-out, opacity .45s ease; }
+.b2b-story.is-live .b2b-scene__text > * { opacity: 0; translate: 0 26px; transition: opacity .45s ease, translate .6s cubic-bezier(.2, .9, .25, 1.1); }
+.b2b-story.is-live .b2b-scene.is-on .b2b-scene__text > * { opacity: 1; translate: 0 0; }
+.b2b-story.is-live .b2b-scene.is-on .b2b-scene__text > :nth-child(1) { transition-delay: .12s; }
+.b2b-story.is-live .b2b-scene.is-on .b2b-scene__text > :nth-child(2) { transition-delay: .2s; }
+.b2b-story.is-live .b2b-scene.is-on .b2b-scene__text > :nth-child(3) { transition-delay: .28s; }
+.b2b-story.is-live .b2b-scene.is-on .b2b-scene__text > :nth-child(4) { transition-delay: .36s; }
+.b2b-story.is-live .b2b-scene.is-on .b2b-scene__stamp { animation: b2b-stamp .7s cubic-bezier(.2, .9, .3, 1.4) .35s both; }
+@keyframes b2b-stamp { 0% { scale: 0; rotate: -40deg; } 70% { scale: 1.25; rotate: 6deg; } 100% { scale: 1; rotate: 0deg; } }
+/* 장식: 들어오면 튀어나오고, 별은 반짝인다 */
+.b2b-story.is-live .b2b-deco { opacity: 0; scale: 0; transition: opacity .3s ease, scale .6s cubic-bezier(.2, .9, .3, 1.5); }
+.b2b-story.is-live .b2b-scene.is-on .b2b-deco { opacity: 1; scale: 1; transition-delay: .2s; }
+.b2b-story.is-live .b2b-deco--star svg { animation: b2b-twinkle 1.6s ease-in-out infinite alternate; }
+.b2b-story.is-live .b2b-deco--star:nth-of-type(odd) svg { animation-delay: -.8s; }
+@keyframes b2b-twinkle { from { opacity: .45; rotate: -8deg; } to { opacity: 1; rotate: 10deg; } }
 /* 비눗방울: 아래에서 흔들리며 떠오르고 위에서 사라진다(b2b.js 가 크기·위치·속도를 섞어 만든다). 에셋은 수식으로 그린 투명 PNG */
-.b2b-story__bubbles { position: absolute; inset: 0; container-type: size; }
-.b2b-bubble { position: absolute; left: var(--x); top: 100%; width: var(--s); height: var(--s); opacity: 0;
-  animation: b2b-rise var(--d, 14s) linear var(--dl, 0s) infinite; }
+.b2b-scene__bubbles { position: absolute; inset: 0; container-type: size; }
+.b2b-bubble { position: absolute; left: var(--x); top: 100%; width: var(--s); height: var(--s); opacity: 0; animation: b2b-rise var(--d, 14s) linear var(--dl, 0s) infinite; }
 .b2b-bubble i { display: block; width: 100%; height: 100%; background: url(/assets/img/b2b-bubble-a.webp) center / contain no-repeat;
   animation: b2b-sway var(--sd, 3s) ease-in-out var(--dl, 0s) infinite alternate; }
 .b2b-bubble--b i { background-image: url(/assets/img/b2b-bubble-b.webp); }
@@ -398,21 +368,9 @@ html:not(.os-other) .b2b-done__alt { display: none; }   /* 폰은 OS 스토어�
   82% { opacity: var(--o, .9); }
   100% { opacity: 0; transform: translateY(-115vh); transform: translateY(calc(-100cqh - 130%)); }
 }
-@keyframes b2b-sway {
-  from { transform: translateX(calc(var(--sw, 14px) * -1)) scale(1.04, .96); }
-  to { transform: translateX(var(--sw, 14px)) scale(.96, 1.04); }
-}
-.b2b-story.is-idle .b2b-bubble, .b2b-story.is-idle .b2b-bubble i { animation-play-state: paused; }
-/* 장식: 매장 = 과녁 고리, 축제 = 반짝이는 별. 장면에 들어오면 튀어나온다 */
-.b2b-deco { position: absolute; left: var(--x); top: var(--y); width: calc(56px * var(--s)); height: calc(56px * var(--s)); opacity: 0; scale: 0; transition: opacity .3s ease, scale .6s cubic-bezier(.2, .9, .3, 1.5); }
-.b2b-story__stage[data-cat="shop"] .b2b-deco[data-cat="shop"],
-.b2b-story__stage[data-cat="festival"] .b2b-deco[data-cat="festival"] { opacity: 1; scale: 1; }
-.b2b-deco--ring { border-radius: 50%; border: 3px solid var(--accent); box-shadow: inset 0 0 0 9px rgba(0, 0, 0, .55), inset 0 0 0 12px var(--accent), 0 0 24px rgba(255, 90, 71, .45); }
-.b2b-deco--star svg { width: 100%; height: 100%; fill: var(--accent); animation: b2b-twinkle 1.6s ease-in-out infinite alternate; }
-.b2b-deco--star:nth-of-type(odd) svg { animation-delay: -.8s; }
-@keyframes b2b-twinkle { from { opacity: .45; rotate: -8deg; } to { opacity: 1; rotate: 10deg; } }
-/* 장면이 바뀔 때 카드 가운데서 터지는 종이 조각 (b2b.js 가 만들고 지운다) */
-.b2b-story__burst { position: absolute; left: 50%; top: 52%; width: 0; height: 0; }
+@keyframes b2b-sway { from { transform: translateX(calc(var(--sw, 14px) * -1)) scale(1.04, .96); } to { transform: translateX(var(--sw, 14px)) scale(.96, 1.04); } }
+/* 장면이 들어올 때 카드 자리에서 터지는 종이 조각 (b2b.js 가 자리를 잡고 만들고 지운다) */
+.b2b-scene__burst { position: absolute; left: var(--bx, 50%); top: var(--by, 50%); width: 0; height: 0; }
 .b2b-confetti { position: absolute; left: 0; top: 0; width: var(--w, 10px); height: var(--h, 14px); border-radius: var(--br, 2px); background: var(--c);
   animation: b2b-confetti 1.15s cubic-bezier(.15, .7, .3, 1) forwards; }
 @keyframes b2b-confetti {
@@ -421,18 +379,18 @@ html:not(.os-other) .b2b-done__alt { display: none; }   /* 폰은 OS 스토어�
   100% { translate: var(--dx) var(--dy); rotate: var(--r); opacity: 0; scale: 1; }
 }
 @media (min-width: 900px) {
-  .b2b-scene { grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 48px; justify-items: start; }
-  .b2b-scene__card { order: 2; width: 280px; }
-  .b2b-story.is-live .b2b-story__stage { padding: 26px max(var(--gutter), calc((100vw - var(--container)) / 2 + var(--gutter))) 34px; gap: 14px; }
-  .b2b-story.is-live .b2b-story__tabs { justify-content: flex-start; }
-  .b2b-story__tabs button { font-size: 15px; padding: 11px 18px 13px; }
-  .b2b-story.is-live .b2b-scene { align-content: center; justify-items: start; }
-  .b2b-story.is-live .b2b-scene__card { height: min(68svh, 640px); }
-  .b2b-story.is-live .b2b-scene__text { align-items: flex-start; text-align: left; margin: 0; }
+  .b2b-story__list { margin-top: 84px; }
+  .b2b-scene { display: flex; align-items: center; min-height: min(100vh, 900px); padding: 150px var(--gutter) 140px; }
+  .b2b-scene__inner { flex-direction: row; align-items: center; justify-content: space-between; gap: 64px; width: 100%; }
+  .b2b-scene__text { flex: 1; align-items: flex-start; text-align: left; max-width: 540px; }
+  .b2b-scene[data-cat="festival"] .b2b-scene__text { padding-left: 24px; }
+  .b2b-scene__card { flex: none; width: auto; height: min(68vh, 620px); aspect-ratio: 9 / 16; }
+  .b2b-scene__media { height: 100%; }
   .b2b-scene__title { font-size: 48px; }
   .b2b-scene__desc { font-size: 17px; }
-  .b2b-tape { --ty: 74%; font-size: clamp(30px, 3.4vw, 50px); }
-  .b2b-tape--b { --ty: 87%; --tr: 3deg; }
-  .b2b-wall__col, .b2b-story__wall { gap: 16px; }
+  .b2b-scene__tapes { height: 360px; }
+  .b2b-tape { font-size: clamp(30px, 3.4vw, 50px); rotate: -3deg; }
+  .b2b-tape--b { rotate: 2.4deg; }
+  .b2b-scene__wall, .b2b-wall__col { gap: 16px; }
 }
 @media (prefers-reduced-motion: reduce) { .b2b-scene__play { transition: none; } }
