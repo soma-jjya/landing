@@ -323,7 +323,10 @@ html:not(.os-other) .b2b-done__alt { display: none; }   /* 폰은 OS 스토어�
 
 /* ---- 살아 있는 무대 ---- */
 .b2b-story.is-live { padding-bottom: 48px; }
-.b2b-story.is-live .b2b-story__track { height: calc(310svh); }
+/* 장면 하나에 스크롤 210svh(무대가 붙어 있는 동안 세 장면이 똑같이 나눈다). 2026-11-24 사용자 요청으로 70svh → 3배.
+   트랙 = 무대 높이(100svh - 헤더) + 3 × 210svh */
+.b2b-story.is-live .b2b-story__track { --per: 210vh; height: calc(100vh - var(--header-h) + 3 * var(--per)); }
+@supports (height: 1svh) { .b2b-story.is-live .b2b-story__track { --per: 210svh; height: calc(100svh - var(--header-h) + 3 * var(--per)); } }
 .b2b-story.is-live .b2b-story__stage { position: sticky; top: var(--header-h); height: calc(100svh - var(--header-h)); overflow: hidden; padding: 14px var(--gutter) 90px;
   display: grid; grid-template-rows: auto 1fr; gap: 10px; transition: background-color .6s ease, color .6s ease; }
 .has-stage .b2b-story__stage { z-index: 2; }   /* 3D 무대(떠다니는 카드)보다 위 */
