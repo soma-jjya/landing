@@ -23,6 +23,7 @@
   <link rel="preload" as="image" href="assets/img/onboarding-4.webp" fetchpriority="high">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
   <link rel="stylesheet" href="css/style.css?v=20261119b">
+  <link rel="stylesheet" href="css/home.css?v=20261123">
   <!-- PostHog: key 를 넣으면 js/analytics.js 가 켜진다. host 는 vercel.json 의 /ingest 리라이트(광고 차단 우회). EU 프로젝트면 vercel.json 과 uiHost 를 eu 로 -->
   <script>window.PEAKPIC_ANALYTICS = { key: 'phc_s3GaoSttixdo2SRtthMVFuatqAKc4tY6A2wF44iq7cJD', host: '/ingest', uiHost: 'https://us.posthog.com', metaPixelId: '1758731071879086', appStorePt: '129647718', variant: 'main' };</script>
   <!-- 방문자 OS 를 <html> 클래스로 (os-android / os-ios / os-other). 단일 "앱 다운로드" 버튼이 어느 스토어로 갈지 CSS·JS 가 이걸 본다 -->
@@ -188,6 +189,11 @@
             <li>역할 바꾸기</li>
             <li>플래시·타이머·비율 원격 설정</li>
           </ul>
+          <!-- 쇼츠 카드 (2026-11-23, /b2b/ 에서 옮김): 6초 미리보기 + 누르면 유튜브 창 (js/home.js) -->
+          <a class="vcard" href="https://www.youtube.com/shorts/lt677Ki2Q28" target="_blank" rel="noopener" data-yt="lt677Ki2Q28" data-vcard="mirror">
+            <span class="vcard__media"><video muted loop playsinline preload="none" poster="/assets/img/b2b-case-mirror.webp" data-src="/assets/video/b2b-case-mirror.mp4" aria-hidden="true"></video><span class="vcard__play" aria-hidden="true"></span></span>
+            <span class="vcard__text"><small>영상으로 보기</small><b>친구가 찍어줄 때 원하는 구도 알려주기</b><span>미러링으로 실제로 찍어 봤어요 · 29초</span></span>
+          </a>
         </div>
       </div>
     </section>
@@ -239,6 +245,11 @@
             <li>최애 누끼 스티커</li>
             <li>저장 · 공유</li>
           </ul>
+          <!-- 쇼츠 카드 (2026-11-23, /b2b/ 에서 옮김): 6초 미리보기 + 누르면 유튜브 창 (js/home.js) -->
+          <a class="vcard" href="https://www.youtube.com/shorts/fkU4YDQ4mHM" target="_blank" rel="noopener" data-yt="fkU4YDQ4mHM" data-vcard="frame">
+            <span class="vcard__media"><video muted loop playsinline preload="none" poster="/assets/img/b2b-case-frame.webp" data-src="/assets/video/b2b-case-frame.mp4" aria-hidden="true"></video><span class="vcard__play" aria-hidden="true"></span></span>
+            <span class="vcard__text"><small>영상으로 보기</small><b>사진 한 장으로 네컷 프레임 직접 만들기</b><span>닭갈비 사진이 프레임이 되기까지 · 17초</span></span>
+          </a>
         </div>
       </div>
     </section>
@@ -269,6 +280,119 @@
             <li>길거리 · 셀카 · 광각 포즈</li>
             <li class="is-orange">장소·구도에 맞는 추천</li>
             <li>가이드 보며 바로 적용</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 3-4. 실제 사례 (2026-11-23): 2026 지스타 코스어 네컷(모자이크 없음 — 코스어분들께 촬영·배포 허락을 받음) + 2026 고흥유자축제 방문객 네컷(모자이크본) 두 줄 컨베이어.
+         코스어 네컷은 "코스어분들과 만든 네컷" — 방문객이 찍었다고 쓰지 않는다. AI 사진 없음. 같은 목록을 두 번 넣어(뒤 벌 aria-hidden) css/home.css 가 -50% 를 반복 이동 ===== -->
+    <section class="real paper" id="real" aria-labelledby="real-title">
+      <div class="container real__copy">
+        <span class="tag tag--outline" style="--r:-2deg">real case</span>
+        <h2 id="real-title" class="headline">지스타부터 축제까지,<br><span class="hl">피크픽 네컷</span>이 쌓이는 중<span class="dot">.</span></h2>
+        <p class="lede">2026 지스타에서 코스어분들과 함께 만든 네컷,<br class="br-desktop"> 2026 고흥유자축제 방문객이 QR로 찍은 네컷이에요.</p>
+        <a class="real__link" href="/b2b/">우리 행사·가게 전용 프레임 문의하기 →</a>
+      </div>
+      <div class="real-belt" aria-label="지스타 코스어와 축제 방문객의 네컷">
+        <div class="real-belt__lane">
+          <ul class="real-belt__row" style="--dur:120s">
+            <li><img src="/assets/img/fourcut-cos-egstk5.webp" width="300" height="409" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy" decoding="async"></li>
+            <li><img src="/assets/img/fourcut-cos-jh54zq.webp" width="300" height="375" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy" decoding="async"></li>
+            <li><img src="/assets/img/fourcut-cos-p78f9w.webp" width="300" height="420" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy" decoding="async"></li>
+            <li><img src="/assets/img/fourcut-cos-hz72b9.webp" width="300" height="421" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy" decoding="async"></li>
+            <li><img src="/assets/img/fourcut-cos-kfycac.webp" width="300" height="426" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy" decoding="async"></li>
+            <li><img src="/assets/img/fourcut-cos-ptnpnn.webp" width="300" height="420" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy" decoding="async"></li>
+            <li><img src="/assets/img/fourcut-real-yuja-tuxzrx.webp" width="400" height="533" alt="2026 고흥유자축제 방문객이 찍은 네컷" loading="lazy" decoding="async"></li>
+            <li><img src="/assets/img/fourcut-cos-cy7hlg.webp" width="300" height="421" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy" decoding="async"></li>
+            <li><img src="/assets/img/fourcut-cos-c78j37.webp" width="300" height="409" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy" decoding="async"></li>
+            <li><img src="/assets/img/fourcut-cos-pn6kql.webp" width="300" height="375" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy" decoding="async"></li>
+            <li><img src="/assets/img/fourcut-cos-xkl5dn.webp" width="300" height="420" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy" decoding="async"></li>
+            <li><img src="/assets/img/fourcut-cos-6eczme.webp" width="300" height="409" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy" decoding="async"></li>
+            <li><img src="/assets/img/fourcut-cos-tfdt22.webp" width="300" height="409" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy" decoding="async"></li>
+            <li><img src="/assets/img/fourcut-cos-yjfuvg.webp" width="300" height="409" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy" decoding="async"></li>
+            <li><img src="/assets/img/fourcut-cos-8zamue.webp" width="300" height="420" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy" decoding="async"></li>
+            <li><img src="/assets/img/fourcut-cos-gqunv5.webp" width="300" height="426" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy" decoding="async"></li>
+            <li><img src="/assets/img/fourcut-real-yuja-3y55w6.webp" width="400" height="533" alt="2026 고흥유자축제 방문객이 찍은 네컷" loading="lazy" decoding="async"></li>
+            <li><img src="/assets/img/fourcut-cos-dwq82q.webp" width="300" height="420" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy" decoding="async"></li>
+            <li><img src="/assets/img/fourcut-cos-ee25j5.webp" width="300" height="420" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy" decoding="async"></li>
+            <li><img src="/assets/img/fourcut-cos-36ld9j.webp" width="300" height="421" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy" decoding="async"></li>
+            <li><img src="/assets/img/fourcut-cos-nmbmcs.webp" width="300" height="426" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy" decoding="async"></li>
+            <li><img src="/assets/img/fourcut-cos-vadzeg.webp" width="300" height="420" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy" decoding="async"></li>
+            <li><img src="/assets/img/fourcut-cos-urlsg9.webp" width="300" height="421" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy" decoding="async"></li>
+            <li aria-hidden="true"><img src="/assets/img/fourcut-cos-egstk5.webp" width="300" height="409" alt="" loading="lazy" decoding="async"></li>
+            <li aria-hidden="true"><img src="/assets/img/fourcut-cos-jh54zq.webp" width="300" height="375" alt="" loading="lazy" decoding="async"></li>
+            <li aria-hidden="true"><img src="/assets/img/fourcut-cos-p78f9w.webp" width="300" height="420" alt="" loading="lazy" decoding="async"></li>
+            <li aria-hidden="true"><img src="/assets/img/fourcut-cos-hz72b9.webp" width="300" height="421" alt="" loading="lazy" decoding="async"></li>
+            <li aria-hidden="true"><img src="/assets/img/fourcut-cos-kfycac.webp" width="300" height="426" alt="" loading="lazy" decoding="async"></li>
+            <li aria-hidden="true"><img src="/assets/img/fourcut-cos-ptnpnn.webp" width="300" height="420" alt="" loading="lazy" decoding="async"></li>
+            <li aria-hidden="true"><img src="/assets/img/fourcut-real-yuja-tuxzrx.webp" width="400" height="533" alt="" loading="lazy" decoding="async"></li>
+            <li aria-hidden="true"><img src="/assets/img/fourcut-cos-cy7hlg.webp" width="300" height="421" alt="" loading="lazy" decoding="async"></li>
+            <li aria-hidden="true"><img src="/assets/img/fourcut-cos-c78j37.webp" width="300" height="409" alt="" loading="lazy" decoding="async"></li>
+            <li aria-hidden="true"><img src="/assets/img/fourcut-cos-pn6kql.webp" width="300" height="375" alt="" loading="lazy" decoding="async"></li>
+            <li aria-hidden="true"><img src="/assets/img/fourcut-cos-xkl5dn.webp" width="300" height="420" alt="" loading="lazy" decoding="async"></li>
+            <li aria-hidden="true"><img src="/assets/img/fourcut-cos-6eczme.webp" width="300" height="409" alt="" loading="lazy" decoding="async"></li>
+            <li aria-hidden="true"><img src="/assets/img/fourcut-cos-tfdt22.webp" width="300" height="409" alt="" loading="lazy" decoding="async"></li>
+            <li aria-hidden="true"><img src="/assets/img/fourcut-cos-yjfuvg.webp" width="300" height="409" alt="" loading="lazy" decoding="async"></li>
+            <li aria-hidden="true"><img src="/assets/img/fourcut-cos-8zamue.webp" width="300" height="420" alt="" loading="lazy" decoding="async"></li>
+            <li aria-hidden="true"><img src="/assets/img/fourcut-cos-gqunv5.webp" width="300" height="426" alt="" loading="lazy" decoding="async"></li>
+            <li aria-hidden="true"><img src="/assets/img/fourcut-real-yuja-3y55w6.webp" width="400" height="533" alt="" loading="lazy" decoding="async"></li>
+            <li aria-hidden="true"><img src="/assets/img/fourcut-cos-dwq82q.webp" width="300" height="420" alt="" loading="lazy" decoding="async"></li>
+            <li aria-hidden="true"><img src="/assets/img/fourcut-cos-ee25j5.webp" width="300" height="420" alt="" loading="lazy" decoding="async"></li>
+            <li aria-hidden="true"><img src="/assets/img/fourcut-cos-36ld9j.webp" width="300" height="421" alt="" loading="lazy" decoding="async"></li>
+            <li aria-hidden="true"><img src="/assets/img/fourcut-cos-nmbmcs.webp" width="300" height="426" alt="" loading="lazy" decoding="async"></li>
+            <li aria-hidden="true"><img src="/assets/img/fourcut-cos-vadzeg.webp" width="300" height="420" alt="" loading="lazy" decoding="async"></li>
+            <li aria-hidden="true"><img src="/assets/img/fourcut-cos-urlsg9.webp" width="300" height="421" alt="" loading="lazy" decoding="async"></li>
+          </ul>
+        </div>
+        <div class="real-belt__lane">
+          <ul class="real-belt__row real-belt__row--rev" style="--dur:110s">
+            <li><img src="/assets/img/fourcut-cos-65sccx.webp" width="300" height="426" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy" decoding="async"></li>
+            <li><img src="/assets/img/fourcut-cos-ktps8y.webp" width="300" height="420" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy" decoding="async"></li>
+            <li><img src="/assets/img/fourcut-cos-pcvf9d.webp" width="300" height="421" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy" decoding="async"></li>
+            <li><img src="/assets/img/fourcut-cos-fdp8gp.webp" width="300" height="409" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy" decoding="async"></li>
+            <li><img src="/assets/img/fourcut-real-yuja-bbagu7.webp" width="400" height="533" alt="2026 고흥유자축제 방문객이 찍은 네컷" loading="lazy" decoding="async"></li>
+            <li><img src="/assets/img/fourcut-cos-b28d4p.webp" width="300" height="375" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy" decoding="async"></li>
+            <li><img src="/assets/img/fourcut-cos-ewu26k.webp" width="300" height="420" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy" decoding="async"></li>
+            <li><img src="/assets/img/fourcut-cos-ghv3mh.webp" width="300" height="421" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy" decoding="async"></li>
+            <li><img src="/assets/img/fourcut-cos-lrtk9j.webp" width="300" height="426" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy" decoding="async"></li>
+            <li><img src="/assets/img/fourcut-cos-ra24vs.webp" width="300" height="420" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy" decoding="async"></li>
+            <li><img src="/assets/img/fourcut-cos-rjrpck.webp" width="300" height="421" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy" decoding="async"></li>
+            <li><img src="/assets/img/fourcut-cos-fab44q.webp" width="300" height="426" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy" decoding="async"></li>
+            <li><img src="/assets/img/fourcut-cos-fyt24q.webp" width="300" height="426" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy" decoding="async"></li>
+            <li><img src="/assets/img/fourcut-cos-xalp2c.webp" width="300" height="426" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy" decoding="async"></li>
+            <li><img src="/assets/img/fourcut-real-yuja-s78vq9.webp" width="400" height="533" alt="2026 고흥유자축제 방문객이 찍은 네컷" loading="lazy" decoding="async"></li>
+            <li><img src="/assets/img/fourcut-cos-q4ldfy.webp" width="300" height="409" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy" decoding="async"></li>
+            <li><img src="/assets/img/fourcut-cos-kf4hhc.webp" width="300" height="420" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy" decoding="async"></li>
+            <li><img src="/assets/img/fourcut-cos-ylujtb.webp" width="300" height="409" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy" decoding="async"></li>
+            <li><img src="/assets/img/fourcut-cos-hrl8wc.webp" width="300" height="421" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy" decoding="async"></li>
+            <li><img src="/assets/img/fourcut-cos-gvmbh7.webp" width="300" height="409" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy" decoding="async"></li>
+            <li><img src="/assets/img/fourcut-cos-l6vuvg.webp" width="300" height="375" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy" decoding="async"></li>
+            <li><img src="/assets/img/fourcut-cos-lmanxv.webp" width="300" height="420" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy" decoding="async"></li>
+            <li><img src="/assets/img/fourcut-cos-fs3mql.webp" width="300" height="421" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy" decoding="async"></li>
+            <li aria-hidden="true"><img src="/assets/img/fourcut-cos-65sccx.webp" width="300" height="426" alt="" loading="lazy" decoding="async"></li>
+            <li aria-hidden="true"><img src="/assets/img/fourcut-cos-ktps8y.webp" width="300" height="420" alt="" loading="lazy" decoding="async"></li>
+            <li aria-hidden="true"><img src="/assets/img/fourcut-cos-pcvf9d.webp" width="300" height="421" alt="" loading="lazy" decoding="async"></li>
+            <li aria-hidden="true"><img src="/assets/img/fourcut-cos-fdp8gp.webp" width="300" height="409" alt="" loading="lazy" decoding="async"></li>
+            <li aria-hidden="true"><img src="/assets/img/fourcut-real-yuja-bbagu7.webp" width="400" height="533" alt="" loading="lazy" decoding="async"></li>
+            <li aria-hidden="true"><img src="/assets/img/fourcut-cos-b28d4p.webp" width="300" height="375" alt="" loading="lazy" decoding="async"></li>
+            <li aria-hidden="true"><img src="/assets/img/fourcut-cos-ewu26k.webp" width="300" height="420" alt="" loading="lazy" decoding="async"></li>
+            <li aria-hidden="true"><img src="/assets/img/fourcut-cos-ghv3mh.webp" width="300" height="421" alt="" loading="lazy" decoding="async"></li>
+            <li aria-hidden="true"><img src="/assets/img/fourcut-cos-lrtk9j.webp" width="300" height="426" alt="" loading="lazy" decoding="async"></li>
+            <li aria-hidden="true"><img src="/assets/img/fourcut-cos-ra24vs.webp" width="300" height="420" alt="" loading="lazy" decoding="async"></li>
+            <li aria-hidden="true"><img src="/assets/img/fourcut-cos-rjrpck.webp" width="300" height="421" alt="" loading="lazy" decoding="async"></li>
+            <li aria-hidden="true"><img src="/assets/img/fourcut-cos-fab44q.webp" width="300" height="426" alt="" loading="lazy" decoding="async"></li>
+            <li aria-hidden="true"><img src="/assets/img/fourcut-cos-fyt24q.webp" width="300" height="426" alt="" loading="lazy" decoding="async"></li>
+            <li aria-hidden="true"><img src="/assets/img/fourcut-cos-xalp2c.webp" width="300" height="426" alt="" loading="lazy" decoding="async"></li>
+            <li aria-hidden="true"><img src="/assets/img/fourcut-real-yuja-s78vq9.webp" width="400" height="533" alt="" loading="lazy" decoding="async"></li>
+            <li aria-hidden="true"><img src="/assets/img/fourcut-cos-q4ldfy.webp" width="300" height="409" alt="" loading="lazy" decoding="async"></li>
+            <li aria-hidden="true"><img src="/assets/img/fourcut-cos-kf4hhc.webp" width="300" height="420" alt="" loading="lazy" decoding="async"></li>
+            <li aria-hidden="true"><img src="/assets/img/fourcut-cos-ylujtb.webp" width="300" height="409" alt="" loading="lazy" decoding="async"></li>
+            <li aria-hidden="true"><img src="/assets/img/fourcut-cos-hrl8wc.webp" width="300" height="421" alt="" loading="lazy" decoding="async"></li>
+            <li aria-hidden="true"><img src="/assets/img/fourcut-cos-gvmbh7.webp" width="300" height="409" alt="" loading="lazy" decoding="async"></li>
+            <li aria-hidden="true"><img src="/assets/img/fourcut-cos-l6vuvg.webp" width="300" height="375" alt="" loading="lazy" decoding="async"></li>
+            <li aria-hidden="true"><img src="/assets/img/fourcut-cos-lmanxv.webp" width="300" height="420" alt="" loading="lazy" decoding="async"></li>
+            <li aria-hidden="true"><img src="/assets/img/fourcut-cos-fs3mql.webp" width="300" height="421" alt="" loading="lazy" decoding="async"></li>
           </ul>
         </div>
       </div>
@@ -335,12 +459,22 @@
     </div>
   </footer>
 
+  <!-- 쇼츠 플레이어 (.vcard 를 누르면, js/home.js 가 유튜브 iframe 을 넣고 닫으면 뺀다) -->
+  <dialog class="yt-dialog" aria-label="영상 보기">
+    <div class="yt-dialog__frame"></div>
+    <div class="yt-dialog__bar">
+      <a class="yt-dialog__yt" href="https://www.youtube.com/shorts/lt677Ki2Q28" target="_blank" rel="noopener">YouTube에서 보기</a>
+      <button type="button" class="yt-dialog__close">닫기 ✕</button>
+    </div>
+  </dialog>
+
   <!-- 모바일 고정 CTA: 히어로 CTA가 화면 밖으로 나가면 나타남 -->
   <div class="sticky-cta" aria-hidden="true">
     <a class="btn btn--dot btn-store" href="#install" tabindex="-1">앱 다운로드</a>
   </div>
 
   <script src="js/main.js?v=20261119b" defer></script>
+  <script src="js/home.js?v=20261123" defer></script>
   <!-- 페이지 전체 3D 무대(three.js) + 재생 막대: load 뒤에 동적 import, 실패하면 원래 페이지 그대로 -->
   <script type="module" src="js/hero3d.js?v=20261111g"></script>
 </body>
