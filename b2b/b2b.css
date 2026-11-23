@@ -292,8 +292,7 @@ html:not(.os-other) .b2b-done__alt { display: none; }   /* 폰은 OS 스토어�
 .b2b-belt.is-running .b2b-belt__lane { overflow: hidden; }
 .b2b-belt.is-running .b2b-belt__row { padding-inline: 0; animation: b2b-belt var(--dur, 40s) linear infinite; will-change: transform; }
 .b2b-belt.is-running .b2b-belt__row--rev { animation-direction: reverse; }
-.b2b-belt.is-paused .b2b-belt__row, .b2b-belt:focus-within .b2b-belt__row { animation-play-state: paused; }
-@media (hover: hover) { .b2b-belt:hover .b2b-belt__row { animation-play-state: paused; } }
+.b2b-belt.is-paused .b2b-belt__row, .b2b-belt:has(:focus-visible) .b2b-belt__row { animation-play-state: paused; }   /* 마우스를 올려도 계속 흐른다(2026-11-23 사용자 요청). 키보드로 고를 때만 멈춤 */
 @keyframes b2b-belt { to { transform: translateX(-50%); } }
 @media (min-width: 900px) {
   .b2b-cases { grid-auto-flow: row; grid-template-columns: repeat(2, minmax(0, 300px)); gap: 28px; margin: 26px 0 0; padding: 4px 0 0; overflow: visible; }
