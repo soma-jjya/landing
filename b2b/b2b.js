@@ -115,7 +115,7 @@
   }
 
   // 예시 컨베이어 (2026-11-23, #examples): 줄마다 원래 항목을 화면 폭 이상이 되게 반복해 한 벌을 만들고, 같은 한 벌을 하나 더 붙여 -50% 를 반복 이동(css @keyframes b2b-belt).
-  // 복제본은 aria-hidden·포커스 없음. 화면 밖이면 멈춤(.is-paused). 속도는 폭과 상관없이 초당 일정 px
+  // 복제본은 aria-hidden·포커스 없음. 화면 밖이면 멈춤(.is-paused), 마우스를 올려도 멈추지 않는다. 속도는 폭과 상관없이 초당 일정 px
   var belt = document.querySelector('.b2b-belt');
   if (belt && !calm && 'IntersectionObserver' in window) {
     var rows = Array.prototype.map.call(belt.querySelectorAll('.b2b-belt__row'), function (ul) {
@@ -127,7 +127,7 @@
       if (!w || w === beltW) return;
       beltW = w;
       belt.classList.add('is-running');
-      var speed = w >= 900 ? 34 : 26;   // px/초
+      var speed = w >= 900 ? 41 : 31;   // px/초 (2026-11-23 사용자 요청으로 1.2배: 34·26 → 41·31)
       rows.forEach(function (r) {
         r.ul.textContent = '';
         r.items.forEach(function (li) { r.ul.appendChild(li); });

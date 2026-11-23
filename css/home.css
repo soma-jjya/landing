@@ -47,7 +47,7 @@
   .real-belt__lane { overflow: hidden; }
   .real-belt__row { padding-inline: 0; animation: real-belt var(--dur, 120s) linear infinite; }
   .real-belt__row--rev { animation-direction: reverse; }
-  .real-belt:hover .real-belt__row, .real-belt.is-paused .real-belt__row { animation-play-state: paused; }
+  .real-belt.is-paused .real-belt__row { animation-play-state: paused; }   /* 마우스를 올려도 계속 흐른다(2026-11-23) */
 }
 @keyframes real-belt { to { transform: translateX(-50%); } }
 
