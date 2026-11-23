@@ -45,4 +45,4 @@ directory = "."
 binding = "ASSETS"
 html_handling = "auto-trailing-slash"
 not_found_handling = "none"
-run_worker_first = ["/ingest/*"]
+run_worker_first = ["/ingest/*", "/assets/video/*"]   # 영상은 Range(206) 처리 때문에 코드를 거친다 (cloudflare/worker.js)

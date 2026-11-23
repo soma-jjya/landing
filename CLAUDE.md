@@ -191,7 +191,7 @@ B2B 문의 폼(2026-11-03, 브리프 docs/b2b-inquiry-form-brief.md): `/b2b/`(va
 - 배포: **Cloudflare Worker `peakpic-landing`**(2026-11-22~, main push 시 .github/workflows/deploy.yml 이 `wrangler deploy`, 레포 시크릿 CLOUDFLARE_API_TOKEN 필요).
   2026-11-21 16:28 KST 부터 Vercel 프로젝트(landing-pi-umber.vercel.app)가 402 DEPLOYMENT_DISABLED 로 꺼져 랜딩 전체가 안 열려서 옮겼다. Vercel 은 더 쓰지 않는다(vercel.json 삭제)
   빌드 없음: 레포 루트를 그대로 정적 파일로 올린다(wrangler.toml [assets] directory = "."). **올리면 안 되는 파일은 .assetsignore 에 추가**(지금: CLAUDE.md·docs·scripts·cloudflare·assets/raw·설정 파일)
-  정적 파일 요청은 Worker 코드를 거치지 않는다(무료·무제한). 코드(cloudflare/worker.js)는 /ingest/* PostHog 프록시에서만 돈다. 캐시 헤더는 _headers(css·js·assets 4시간)
+  정적 파일 요청은 Worker 코드를 거치지 않는다(무료·무제한). 코드(cloudflare/worker.js)는 /ingest/* PostHog 프록시와 **/assets/video/* Range 처리**(2026-11-23 — 정적 파일은 Range 를 무시하고 200 전체를 줘서 iOS Safari 가 영상을 못 틀고 Chrome 은 장면 이동이 안 됨 → 코드가 잘라서 206)에서만 돈다(wrangler.toml run_worker_first). 캐시 헤더는 _headers(css·js·assets 4시간)
   수동 배포: 레포 루트에서 `npx wrangler deploy`(팀 Cloudflare 계정 로그인). 로컬 확인: `npx wrangler dev` → http://localhost:8787/ (PostHog·픽셀은 peakpic.app 에서만 켜짐)
 - 도메인 peakpic.app: 존은 팀 Cloudflare 계정. `peakpic.app/*` 는 Worker `peakpic-app-site`(soma-jjya/peakpic.app 레포)가 받아 /fill/·/pair/·/f/·/.well-known/·/privacy/·/terms/ 를 서빙하고,
   /admin·/go·/_next 는 `peakpic-admin`. 랜딩 경로(/, /index.html, /couple, /fourcut, /b2b, /css, /js, /assets, /ingest)는 **이 레포 wrangler.toml 의 routes** 가 더 구체적인 패턴이라 이 Worker 로 온다(peakpic.app·www 둘 다).
