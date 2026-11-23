@@ -25,7 +25,7 @@
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
   <link rel="stylesheet" href="/css/style.css?v=20261119b">
-  <link rel="stylesheet" href="/b2b/b2b.css?v=20261123b">
+  <link rel="stylesheet" href="/b2b/b2b.css?v=20261123c">
   <script>window.PEAKPIC_ANALYTICS = { key: 'phc_s3GaoSttixdo2SRtthMVFuatqAKc4tY6A2wF44iq7cJD', host: '/ingest', uiHost: 'https://us.posthog.com', metaPixelId: '1758731071879086', appStorePt: '129647718', variant: 'b2b' };</script>
   <script>(function(){var u=navigator.userAgent||'',i=/iPhone|iPad|iPod/.test(u)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);document.documentElement.classList.add(i?'os-ios':(/Android/.test(u)?'os-android':'os-other'));})();</script>
   <!-- 광고 소재(utm_content) → 문구 변형. b2b_event 는 2026-11-02 광고 세트 이름, b2b_festival 은 브리프 이름 — 둘 다 축제 -->
@@ -66,20 +66,20 @@
           </p>
         </div>
 
-        <!-- 실제 사례로 보는 만드는 과정 (2026-11-23 사용자 요청 "첫 화면에서 인생네컷이 어떻게 만들어지는지 실제 사례로"):
-             폰 화면 영상 assets/video/b2b-hero-flow.mp4(16초 반복) = 고흥유자축제 현장 QR 포스터(얼굴 모자이크 원본 촬영본) → 참여 페이지 실제 녹화(프레임 고르기·시작·카메라)
-             → 실제 완성본(VSFUKT, 얼굴 모자이크)의 칸이 하나씩 채워지고 → 그 GIF 가 움직임. 만드는 법은 CLAUDE.md. 단계 시각(초)은 data-at, b2b.js 가 영상 시간에 맞춰 단계를 켠다.
-             클래스 b2b-frames 는 js/hero3d.js 가 히어로 무대 중심으로 찾으므로 남겨 둔다 -->
-        <div class="b2b-frames b2b-demo" data-total="16.07" role="group" aria-label="2026 고흥유자축제에서 손님이 네컷을 만든 실제 과정">
+        <!-- 실제 사례로 보는 만드는 과정 (2026-11-23 사용자 요청 "첫 화면에서 인생네컷이 어떻게 만들어지는지 실제 사례로" → 같은 날 지스타판으로 교체):
+             폰 화면 영상 assets/video/b2b-hero-gstar.mp4(14초 반복) = 벡스코 현장 네컷 QR 배너(얼굴 모자이크본 촬영본, QR 위치 추적) → 참여 페이지 실제 녹화(프레임 고르기·시작)
+             → 실제 참여 화면(유미의 세포 프레임)에 코스어 네컷 HRL8WC 의 칸이 하나씩(칸 수 표시·저장 버튼도 실제 화면처럼) → 칸 클립이 움직임. 만드는 법은 CLAUDE.md.
+             단계 시각(초)은 data-at, b2b.js 가 영상 시간에 맞춰 단계를 켠다. 클래스 b2b-frames 는 js/hero3d.js 가 히어로 무대 중심으로 찾으므로 남겨 둔다 -->
+        <div class="b2b-frames b2b-demo" data-total="14.23" role="group" aria-label="2026 지스타에서 네컷을 만드는 실제 과정">
           <div class="b2b-demo__phone">
-            <video muted playsinline loop preload="none" poster="/assets/img/b2b-hero-flow.webp" data-src="/assets/video/b2b-hero-flow.mp4" aria-hidden="true"></video>
-            <span class="b2b-pin b2b-demo__pin">2026 고흥유자축제 실제 화면</span>
+            <video muted playsinline loop preload="none" poster="/assets/img/b2b-hero-gstar.webp" data-src="/assets/video/b2b-hero-gstar.mp4" aria-hidden="true"></video>
+            <span class="b2b-pin b2b-demo__pin">2026 지스타 현장</span>
           </div>
           <ol class="b2b-demo__steps">
             <li><button type="button" data-at="0"><b>QR 찍기</b><span>현장 포스터를 폰 카메라로</span><i aria-hidden="true"></i></button></li>
-            <li><button type="button" data-at="3"><b>프레임 고르기</b><span>앱 설치 없이 웹에서 바로</span><i aria-hidden="true"></i></button></li>
-            <li><button type="button" data-at="8.47"><b>한 칸씩 찍기</b><span>친구와 한 컷씩 채워요</span><i aria-hidden="true"></i></button></li>
-            <li><button type="button" data-at="12.07"><b>네컷 완성</b><span>사진과 움직이는 GIF로 저장</span><i aria-hidden="true"></i></button></li>
+            <li><button type="button" data-at="3.3"><b>프레임 고르기</b><span>앱 설치 없이 웹에서 바로</span><i aria-hidden="true"></i></button></li>
+            <li><button type="button" data-at="7.3"><b>한 칸씩 찍기</b><span>친구와 한 컷씩 채워요</span><i aria-hidden="true"></i></button></li>
+            <li><button type="button" data-at="10.03"><b>네컷 완성</b><span>사진과 움직이는 GIF로 저장</span><i aria-hidden="true"></i></button></li>
           </ol>
         </div>
 
@@ -123,12 +123,12 @@
         </div>
         <div class="b2b-proof__pair">
           <figure class="b2b-proof__img" data-zoom>
-            <img src="/assets/img/fourcut-real-yuja-swdr2x.webp" width="400" height="560" alt="2026 고흥유자축제에서 방문객이 만든 네컷" loading="lazy">
-            <span class="b2b-pin">2026 고흥유자축제</span>
+            <img src="/assets/img/fourcut-cos-3ryh9f.webp" data-full="/assets/img/fourcut-cos-3ryh9f-l.webp" width="300" height="420" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy">
+            <span class="b2b-pin">2026 지스타</span>
           </figure>
           <figure class="b2b-proof__img b2b-proof__img--b" data-zoom>
-            <img src="/assets/img/fourcut-real-gstar-dl9suw.webp" width="400" height="545" alt="2026 지스타에서 방문객이 만든 네컷" loading="lazy">
-            <span class="b2b-pin">2026 지스타</span>
+            <img src="/assets/img/fourcut-real-yuja-tuxzrx.webp" width="400" height="533" alt="2026 고흥유자축제에서 방문객이 만든 네컷" loading="lazy">
+            <span class="b2b-pin">2026 고흥유자축제</span>
           </figure>
         </div>
       </div>
@@ -142,13 +142,13 @@
         <h2 id="cases-title" class="b2b-sec__title">현장에서 찍은 네컷,<br><span class="hl">영상으로 보세요</span><span class="dot">.</span></h2>
         <p class="b2b-sec__desc">QR을 찍고 프레임을 고르고 네 컷을 채우기까지, 실제 축제와 행사에서 찍은 과정이에요.</p>
         <ul class="b2b-cases">
-          <li><a class="b2b-case" href="https://www.youtube.com/shorts/14LqhWlCJBQ" target="_blank" rel="noopener" data-yt="14LqhWlCJBQ" data-case="yuja">
-            <span class="b2b-case__media"><video muted loop playsinline preload="none" poster="/assets/img/b2b-case-yuja.webp" data-src="/assets/video/b2b-case-yuja.mp4" aria-hidden="true"></video><span class="b2b-case__play" aria-hidden="true"></span></span>
-            <b>2026 고흥유자축제</b><span>QR로 찍는 축제 네컷</span>
-          </a></li>
           <li><a class="b2b-case" href="https://www.youtube.com/shorts/K92Yyb5gD5o" target="_blank" rel="noopener" data-yt="K92Yyb5gD5o" data-case="gstar">
             <span class="b2b-case__media"><video muted loop playsinline preload="none" poster="/assets/img/b2b-case-gstar.webp" data-src="/assets/video/b2b-case-gstar.mp4" aria-hidden="true"></video><span class="b2b-case__play" aria-hidden="true"></span></span>
             <b>2026 지스타</b><span>캐릭터랑 같이 찍는 네컷</span>
+          </a></li>
+          <li><a class="b2b-case" href="https://www.youtube.com/shorts/14LqhWlCJBQ" target="_blank" rel="noopener" data-yt="14LqhWlCJBQ" data-case="yuja">
+            <span class="b2b-case__media"><video muted loop playsinline preload="none" poster="/assets/img/b2b-case-yuja.webp" data-src="/assets/video/b2b-case-yuja.mp4" aria-hidden="true"></video><span class="b2b-case__play" aria-hidden="true"></span></span>
+            <b>2026 고흥유자축제</b><span>QR로 찍는 축제 네컷</span>
           </a></li>
           <li><a class="b2b-case" href="https://www.youtube.com/shorts/fkU4YDQ4mHM" target="_blank" rel="noopener" data-yt="fkU4YDQ4mHM" data-case="frame">
             <span class="b2b-case__media"><video muted loop playsinline preload="none" poster="/assets/img/b2b-case-frame.webp" data-src="/assets/video/b2b-case-frame.mp4" aria-hidden="true"></video><span class="b2b-case__play" aria-hidden="true"></span></span>
@@ -163,46 +163,89 @@
       </div>
     </section>
 
-    <!-- 예시 (2026-11-23 컨베이어 → 같은 날 실제 완성본으로): 두 줄이 서로 반대로 흐른다(윗줄 ←, 아랫줄 →). 누르면 크게(히어로 사진을 누르는 사람이 많았다 — 2026-11-07 PostHog dead click).
-         사진은 전부 실제 방문객 완성본의 얼굴 모자이크본: 고흥유자축제 18장(2026-11-20 모자이크 결과물) · 2026 지스타 6장(실제 참여 중 4칸을 다 채운 것, 사무실 테스트 제외). AI 사진은 넣지 않는다(2026-11-23 사용자 결정).
-         b2b.js 가 줄마다 화면 폭을 채울 만큼 복제해 이어 붙인다. 모션 최소화·JS 없음이면 줄마다 손으로 넘긴다 -->
+    <!-- 예시 (2026-11-23 컨베이어, 같은 날 두 번 바뀜): 두 줄이 서로 반대로 흐른다(윗줄 ←, 아랫줄 →). 누르면 크게(data-full 이 있으면 큰 그림).
+         사진: 2026 지스타 코스어 네컷 63장(모자이크 없음 — 사용자: 코스어분들께 촬영·배포 허락을 받음) + 고흥유자축제 방문객 네컷 4장(모자이크본, 일반인이라 줄임). AI 사진은 넣지 않는다.
+         코스어 네컷은 같은 프레임이 이웃하지 않게 섞었다. b2b.js 가 줄마다 화면 폭을 채울 만큼 복제해 이어 붙인다. 모션 최소화·JS 없음이면 줄마다 손으로 넘긴다 -->
     <section class="b2b-sec" id="examples" aria-labelledby="examples-title">
       <div class="container">
         <span class="tag tag--outline" style="--r:-2deg">results</span>
-        <h2 id="examples-title" class="b2b-sec__title"><span data-v="cafe other">손님이 직접 찍은 네컷,<br><span class="hl">이렇게 쌓여요</span><span class="dot">.</span></span><span data-v="festival tourism">방문객이 직접 찍은 네컷,<br><span class="hl">이렇게 쌓여요</span><span class="dot">.</span></span></h2>
-        <p class="b2b-sec__desc"><span data-v="cafe other">2026 고흥유자축제와 2026 지스타에서 실제로 만들어진 네컷이에요. 우리 가게 이름·로고를 넣은 프레임도 이렇게 만들어 드려요.</span><span data-v="festival tourism">2026 고흥유자축제와 2026 지스타에서 실제로 만들어진 네컷이에요. 행사 이름·로고를 넣은 전용 프레임으로 이렇게 남아요.</span></p>
+        <h2 id="examples-title" class="b2b-sec__title"><span data-v="cafe other">지스타 코스어부터 축제까지,<br><span class="hl">이렇게 남아요</span><span class="dot">.</span></span><span data-v="festival tourism">지스타 코스어부터 축제까지,<br><span class="hl">이렇게 남아요</span><span class="dot">.</span></span></h2>
+        <p class="b2b-sec__desc"><span data-v="cafe other">2026 지스타에서 코스어분들과 만든 네컷, 고흥유자축제 방문객이 찍은 네컷이에요. 우리 가게 이름·로고를 넣은 프레임도 이렇게 만들어 드려요.</span><span data-v="festival tourism">2026 지스타에서 코스어분들과 만든 네컷, 고흥유자축제 방문객이 찍은 네컷이에요. 행사 이름·로고를 넣은 전용 프레임으로 이렇게 남아요.</span></p>
       </div>
-      <div class="b2b-belt" aria-label="방문객이 만든 실제 네컷">
+      <div class="b2b-belt" aria-label="지스타 코스어와 축제 방문객의 네컷">
         <div class="b2b-belt__lane">
           <ul class="b2b-belt__row">
-            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-real-yuja-qn8v56.webp" width="400" height="533" alt="2026 고흥유자축제에서 방문객이 만든 네컷" loading="lazy"></figure></li>
-            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-real-yuja-5dugr2.webp" width="400" height="533" alt="2026 고흥유자축제에서 방문객이 만든 네컷" loading="lazy"></figure></li>
-            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-real-gstar-jcjjcw.webp" width="400" height="560" alt="2026 지스타에서 방문객이 만든 네컷" loading="lazy"></figure></li>
-            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-real-yuja-tuxzrx.webp" width="400" height="533" alt="2026 고흥유자축제에서 방문객이 만든 네컷" loading="lazy"></figure></li>
-            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-real-yuja-duh5fp.webp" width="400" height="533" alt="2026 고흥유자축제에서 방문객이 만든 네컷" loading="lazy"></figure></li>
-            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-real-gstar-dl9suw.webp" width="400" height="545" alt="2026 지스타에서 방문객이 만든 네컷" loading="lazy"></figure></li>
-            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-real-yuja-bbagu7.webp" width="400" height="533" alt="2026 고흥유자축제에서 방문객이 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-egstk5.webp" data-full="/assets/img/fourcut-cos-egstk5-l.webp" width="300" height="409" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-65sccx.webp" data-full="/assets/img/fourcut-cos-65sccx-l.webp" width="300" height="426" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-jh54zq.webp" data-full="/assets/img/fourcut-cos-jh54zq-l.webp" width="300" height="375" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-ktps8y.webp" data-full="/assets/img/fourcut-cos-ktps8y-l.webp" width="300" height="420" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-p78f9w.webp" data-full="/assets/img/fourcut-cos-p78f9w-l.webp" width="300" height="420" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-pcvf9d.webp" data-full="/assets/img/fourcut-cos-pcvf9d-l.webp" width="300" height="421" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-hz72b9.webp" data-full="/assets/img/fourcut-cos-hz72b9-l.webp" width="300" height="421" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-fdp8gp.webp" data-full="/assets/img/fourcut-cos-fdp8gp-l.webp" width="300" height="409" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-kfycac.webp" data-full="/assets/img/fourcut-cos-kfycac-l.webp" width="300" height="426" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-b28d4p.webp" data-full="/assets/img/fourcut-cos-b28d4p-l.webp" width="300" height="375" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
             <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-real-yuja-3y55w6.webp" width="400" height="533" alt="2026 고흥유자축제에서 방문객이 만든 네컷" loading="lazy"></figure></li>
-            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-real-gstar-7j38ks.webp" width="400" height="500" alt="2026 지스타에서 방문객이 만든 네컷" loading="lazy"></figure></li>
-            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-real-yuja-2dr7c4.webp" width="400" height="600" alt="2026 고흥유자축제에서 방문객이 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-ptnpnn.webp" data-full="/assets/img/fourcut-cos-ptnpnn-l.webp" width="300" height="420" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-ewu26k.webp" data-full="/assets/img/fourcut-cos-ewu26k-l.webp" width="300" height="420" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-cy7hlg.webp" data-full="/assets/img/fourcut-cos-cy7hlg-l.webp" width="300" height="421" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-ghv3mh.webp" data-full="/assets/img/fourcut-cos-ghv3mh-l.webp" width="300" height="421" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-c78j37.webp" data-full="/assets/img/fourcut-cos-c78j37-l.webp" width="300" height="409" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-lrtk9j.webp" data-full="/assets/img/fourcut-cos-lrtk9j-l.webp" width="300" height="426" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-pn6kql.webp" data-full="/assets/img/fourcut-cos-pn6kql-l.webp" width="300" height="375" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-ra24vs.webp" data-full="/assets/img/fourcut-cos-ra24vs-l.webp" width="300" height="420" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-xkl5dn.webp" data-full="/assets/img/fourcut-cos-xkl5dn-l.webp" width="300" height="420" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-rjrpck.webp" data-full="/assets/img/fourcut-cos-rjrpck-l.webp" width="300" height="421" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-6eczme.webp" data-full="/assets/img/fourcut-cos-6eczme-l.webp" width="300" height="409" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-fab44q.webp" data-full="/assets/img/fourcut-cos-fab44q-l.webp" width="300" height="426" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-tfdt22.webp" data-full="/assets/img/fourcut-cos-tfdt22-l.webp" width="300" height="409" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
             <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-real-yuja-s78vq9.webp" width="400" height="533" alt="2026 고흥유자축제에서 방문객이 만든 네컷" loading="lazy"></figure></li>
-            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-real-yuja-sbbq4s.webp" width="400" height="560" alt="2026 고흥유자축제에서 방문객이 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-fyt24q.webp" data-full="/assets/img/fourcut-cos-fyt24q-l.webp" width="300" height="426" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-yjfuvg.webp" data-full="/assets/img/fourcut-cos-yjfuvg-l.webp" width="300" height="409" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-xalp2c.webp" data-full="/assets/img/fourcut-cos-xalp2c-l.webp" width="300" height="426" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-8zamue.webp" data-full="/assets/img/fourcut-cos-8zamue-l.webp" width="300" height="420" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-q4ldfy.webp" data-full="/assets/img/fourcut-cos-q4ldfy-l.webp" width="300" height="409" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-gqunv5.webp" data-full="/assets/img/fourcut-cos-gqunv5-l.webp" width="300" height="426" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-kf4hhc.webp" data-full="/assets/img/fourcut-cos-kf4hhc-l.webp" width="300" height="420" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-dwq82q.webp" data-full="/assets/img/fourcut-cos-dwq82q-l.webp" width="300" height="420" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-ylujtb.webp" data-full="/assets/img/fourcut-cos-ylujtb-l.webp" width="300" height="409" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
           </ul>
         </div>
         <div class="b2b-belt__lane">
           <ul class="b2b-belt__row b2b-belt__row--rev">
-            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-real-yuja-swdr2x.webp" width="400" height="560" alt="2026 고흥유자축제에서 방문객이 만든 네컷" loading="lazy"></figure></li>
-            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-real-gstar-lsezes.webp" width="400" height="545" alt="2026 지스타에서 방문객이 만든 네컷" loading="lazy"></figure></li>
-            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-real-yuja-jn8qp5.webp" width="400" height="560" alt="2026 고흥유자축제에서 방문객이 만든 네컷" loading="lazy"></figure></li>
-            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-real-yuja-byznte.webp" width="400" height="560" alt="2026 고흥유자축제에서 방문객이 만든 네컷" loading="lazy"></figure></li>
-            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-real-gstar-ursvwd.webp" width="400" height="560" alt="2026 지스타에서 방문객이 만든 네컷" loading="lazy"></figure></li>
-            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-real-yuja-fs2lkd.webp" width="400" height="533" alt="2026 고흥유자축제에서 방문객이 만든 네컷" loading="lazy"></figure></li>
-            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-real-yuja-z2xkhm.webp" width="400" height="533" alt="2026 고흥유자축제에서 방문객이 만든 네컷" loading="lazy"></figure></li>
-            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-real-gstar-79cw3l.webp" width="400" height="545" alt="2026 지스타에서 방문객이 만든 네컷" loading="lazy"></figure></li>
-            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-real-yuja-h9ms8w.webp" width="400" height="560" alt="2026 고흥유자축제에서 방문객이 만든 네컷" loading="lazy"></figure></li>
-            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-real-yuja-kqylgj.webp" width="400" height="560" alt="2026 고흥유자축제에서 방문객이 만든 네컷" loading="lazy"></figure></li>
-            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-real-yuja-xpbrbr.webp" width="400" height="560" alt="2026 고흥유자축제에서 방문객이 만든 네컷" loading="lazy"></figure></li>
-            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-real-yuja-uxnrc9.webp" width="400" height="560" alt="2026 고흥유자축제에서 방문객이 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-ee25j5.webp" data-full="/assets/img/fourcut-cos-ee25j5-l.webp" width="300" height="420" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-hrl8wc.webp" data-full="/assets/img/fourcut-cos-hrl8wc-l.webp" width="300" height="421" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-36ld9j.webp" data-full="/assets/img/fourcut-cos-36ld9j-l.webp" width="300" height="421" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-gvmbh7.webp" data-full="/assets/img/fourcut-cos-gvmbh7-l.webp" width="300" height="409" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-nmbmcs.webp" data-full="/assets/img/fourcut-cos-nmbmcs-l.webp" width="300" height="426" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-l6vuvg.webp" data-full="/assets/img/fourcut-cos-l6vuvg-l.webp" width="300" height="375" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-vadzeg.webp" data-full="/assets/img/fourcut-cos-vadzeg-l.webp" width="300" height="420" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-real-yuja-bbagu7.webp" width="400" height="533" alt="2026 고흥유자축제에서 방문객이 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-lmanxv.webp" data-full="/assets/img/fourcut-cos-lmanxv-l.webp" width="300" height="420" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-urlsg9.webp" data-full="/assets/img/fourcut-cos-urlsg9-l.webp" width="300" height="421" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-fs3mql.webp" data-full="/assets/img/fourcut-cos-fs3mql-l.webp" width="300" height="421" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-bmhemu.webp" data-full="/assets/img/fourcut-cos-bmhemu-l.webp" width="300" height="409" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-mlvv8j.webp" data-full="/assets/img/fourcut-cos-mlvv8j-l.webp" width="300" height="426" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-8v5xu8.webp" data-full="/assets/img/fourcut-cos-8v5xu8-l.webp" width="300" height="375" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-f3vb9e.webp" data-full="/assets/img/fourcut-cos-f3vb9e-l.webp" width="300" height="420" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-3ryh9f.webp" data-full="/assets/img/fourcut-cos-3ryh9f-l.webp" width="300" height="420" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-zulzzb.webp" data-full="/assets/img/fourcut-cos-zulzzb-l.webp" width="300" height="421" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-pzs2mj.webp" data-full="/assets/img/fourcut-cos-pzs2mj-l.webp" width="300" height="421" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-mpxn2n.webp" data-full="/assets/img/fourcut-cos-mpxn2n-l.webp" width="300" height="409" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-wd83uq.webp" data-full="/assets/img/fourcut-cos-wd83uq-l.webp" width="300" height="426" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-9jhnem.webp" data-full="/assets/img/fourcut-cos-9jhnem-l.webp" width="300" height="375" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-real-yuja-duh5fp.webp" width="400" height="533" alt="2026 고흥유자축제에서 방문객이 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-ywm9z9.webp" data-full="/assets/img/fourcut-cos-ywm9z9-l.webp" width="300" height="420" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-nthlqa.webp" data-full="/assets/img/fourcut-cos-nthlqa-l.webp" width="300" height="421" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-lwqm4s.webp" data-full="/assets/img/fourcut-cos-lwqm4s-l.webp" width="300" height="420" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-jlchmz.webp" data-full="/assets/img/fourcut-cos-jlchmz-l.webp" width="300" height="421" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-maf9j7.webp" data-full="/assets/img/fourcut-cos-maf9j7-l.webp" width="300" height="420" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-lfhqj3.webp" data-full="/assets/img/fourcut-cos-lfhqj3-l.webp" width="300" height="409" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-nwcbl9.webp" data-full="/assets/img/fourcut-cos-nwcbl9-l.webp" width="300" height="426" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-lrzkws.webp" data-full="/assets/img/fourcut-cos-lrzkws-l.webp" width="300" height="420" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-cjwkuf.webp" data-full="/assets/img/fourcut-cos-cjwkuf-l.webp" width="300" height="409" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-p2nw6m.webp" data-full="/assets/img/fourcut-cos-p2nw6m-l.webp" width="300" height="409" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
+            <li><figure class="b2b-belt__item" data-zoom><img src="/assets/img/fourcut-cos-tuzk4p.webp" data-full="/assets/img/fourcut-cos-tuzk4p-l.webp" width="300" height="409" alt="2026 지스타에서 코스어와 만든 네컷" loading="lazy"></figure></li>
           </ul>
         </div>
       </div>
@@ -227,19 +270,19 @@
           </div>
           <div>
             <h3 class="b2b-how__title"><span data-v="cafe other">손님은 이렇게 찍어요</span><span data-v="festival tourism">방문객은 이렇게 찍어요</span></h3>
-            <!-- 그림(2026-11-23 실제 현장으로 교체): 1 고흥유자축제 QR 포스터, 2 부스 앞 방문객(얼굴 모자이크), 3 실제 완성본(얼굴 모자이크) -->
+            <!-- 그림(2026-11-23 실제 현장 → 지스타로): 1 벡스코 네컷 QR 배너, 2 지스타 코스어 칸 사진, 3 같은 코스어의 완성 네컷(P78F9W) -->
             <ol class="b2b-flow">
               <li>
-                <figure class="b2b-flow__pic"><img src="/assets/img/b2b-how-qr-real.webp" width="720" height="720" alt="2026 고흥유자축제 현장에 세운 네컷 QR 포스터" loading="lazy"></figure>
+                <figure class="b2b-flow__pic"><img src="/assets/img/b2b-how-qr-gstar.webp" width="720" height="720" alt="2026 지스타 벡스코에 세운 네컷 QR 배너" loading="lazy"></figure>
                 <b>QR 찍기</b><span><span data-v="cafe other">테이블·벽에 붙인 QR을 폰으로</span><span data-v="festival tourism">부스에 붙인 QR을 폰으로</span></span>
               </li>
               <li>
-                <figure class="b2b-flow__pic"><img src="/assets/img/b2b-how-shoot-real.webp" width="720" height="720" alt="2026 고흥유자축제 부스 앞에서 자기 폰으로 네컷을 찍는 방문객들" loading="lazy"></figure>
+                <figure class="b2b-flow__pic"><img src="/assets/img/b2b-how-shoot-gstar.webp" width="720" height="720" alt="2026 지스타에서 찍은 코스어 사진" loading="lazy"></figure>
                 <b><span data-v="cafe other">손님 폰으로 촬영</span><span data-v="festival tourism">방문객 폰으로 촬영</span></b><span>내 폰으로 네 컷 완성</span>
               </li>
               <li>
                 <figure class="b2b-flow__pic b2b-flow__pic--phone">
-                  <span class="b2b-phone"><img src="/assets/img/fourcut-real-yuja-vsfukt.webp" width="480" height="672" alt="2026 고흥유자축제 프레임으로 완성된 실제 네컷" loading="lazy"></span>
+                  <span class="b2b-phone"><img src="/assets/img/fourcut-cos-p78f9w.webp" width="300" height="420" alt="2026 지스타 프레임으로 완성된 코스어 네컷" loading="lazy"></span>
                   <span class="sticker sticker--orange b2b-flow__sticker" style="--r:8deg" aria-hidden="true">SNS<br>업로드</span>
                 </figure>
                 <b><span data-v="cafe other">가게 이름 달고 업로드</span><span data-v="festival tourism">행사 이름 달고 업로드</span></b><span><span data-v="cafe other">우리 가게 프레임 그대로 SNS로</span><span data-v="festival tourism">행사 프레임 그대로 SNS로</span></span>
@@ -429,6 +472,6 @@
   <script src="/js/main.js?v=20261119b" defer></script>
   <!-- 페이지 전체 3D 무대(three.js) + 재생 막대: load 뒤에 동적 import, 실패하면 원래 페이지 그대로 -->
   <script type="module" src="/js/hero3d.js?v=20261111g"></script>
-  <script src="/b2b/b2b.js?v=20261123b" defer></script>
+  <script src="/b2b/b2b.js?v=20261123c" defer></script>
 </body>
 </html>
