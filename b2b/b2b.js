@@ -6,9 +6,9 @@
       PostHog  b2b_inquiry_started{type, field}(첫 입력) · b2b_inquiry_submitted{type, utm_content, contact_method, has_message} · b2b_inquiry_failed{status, contact_method}
                b2b_contact_method{method}(연락 방법 바꿈, 2026-11-07)
                b2b_inquiry_invalid{fields, first_field}(빈 칸·형식 오류로 막힘) · b2b_inquiry_abandoned{last_field, filled_count, type}(입력 시작 후 미접수 이탈)
-               b2b_more_opened(선택 칸 펼침) · cta_click{cta:'b2b_inquiry', placement: hero|proof|examples|how|faq|sticky}
+               b2b_more_opened(선택 칸 펼침) · cta_click{cta:'b2b_inquiry', placement: hero|proof|how|faq|sticky} (examples 는 2026-11-24 섹션과 함께 빠짐)
                b2b_zoom_opened{src}(예시 사진 확대) · b2b_faq_opened{q}(자주 묻는 질문 펼침) — 2026-11-07
-               b2b_video_opened{video: shop|gstar|yuja}(업종별 사례 영상 재생) · b2b_case_scene{scene: shop|festival|tourism}(스크롤로 장면이 바뀜) · section_viewed{section:'cases'} · cta_click placement=cases — 2026-11-23
+               b2b_video_opened{video: shop|gstar|yuja}(업종별 사례 영상 재생) · b2b_case_scene{scene: shop|festival|tourism}(그 장면이 화면에 들어옴, 2026-11-24부터 장면마다 한 번) · section_viewed{section:'cases'} · cta_click placement=cases — 2026-11-23
                b2b_demo_step{step: 1~4}(히어로 실제 과정의 단계를 누름) — 2026-11-23
       Meta     Lead{content_category: type} — 접수 성공 때만. 광고 세트 b2b_* 의 전환 이벤트 */
 (function () {
@@ -59,7 +59,7 @@
     });
   });
 
-  var calm = false;   // 모션 최소화·데이터 절약이면 컨베이어·미리보기 영상을 움직이지 않는다
+  var calm = false;   // 모션 최소화·데이터 절약이면 사례 장면의 움직임·미리보기 자동재생을 하지 않는다
   try { calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches || !!(navigator.connection && navigator.connection.saveData); } catch (e) { /* 무시 */ }
 
   // 히어로 실제 과정 (2026-11-23, .b2b-demo): 페이지가 다 뜬 뒤 영상을 받아 재생하고(첫 로드 예산 밖), 영상 시간에 맞춰 단계를 켠다(--p = 그 단계 진행률).
@@ -114,107 +114,79 @@
     }
   }
 
-  // 예시 컨베이어 (2026-11-23, #examples): 줄마다 원래 항목을 화면 폭 이상이 되게 반복해 한 벌을 만들고, 같은 한 벌을 하나 더 붙여 -50% 를 반복 이동(css @keyframes b2b-belt).
-  // 복제본은 aria-hidden·포커스 없음. 화면 밖이면 멈춤(.is-paused), 마우스를 올려도 멈추지 않는다. 속도는 폭과 상관없이 초당 일정 px
-  var belt = document.querySelector('.b2b-belt');
-  if (belt && !calm && 'IntersectionObserver' in window) {
-    var rows = Array.prototype.map.call(belt.querySelectorAll('.b2b-belt__row'), function (ul) {
-      return { ul: ul, items: Array.prototype.slice.call(ul.children) };
-    });
-    var beltW = 0;
-    var buildBelt = function () {
-      var w = belt.clientWidth;
-      if (!w || w === beltW) return;
-      beltW = w;
-      belt.classList.add('is-running');
-      var speed = w >= 900 ? 41 : 31;   // px/초 (2026-11-23 사용자 요청으로 1.2배: 34·26 → 41·31)
-      rows.forEach(function (r) {
-        r.ul.textContent = '';
-        r.items.forEach(function (li) { r.ul.appendChild(li); });
-        var one = r.ul.scrollWidth, sets = Math.max(1, Math.ceil(w / Math.max(one, 1)));
-        var frag = document.createDocumentFragment();
-        for (var k = 1; k < sets * 2; k++) {
-          r.items.forEach(function (li) {
-            var c = li.cloneNode(true);
-            c.setAttribute('aria-hidden', 'true');
-            c.setAttribute('data-clone', '');
-            var f = c.querySelector('[data-zoom]');
-            if (f) { f.removeAttribute('tabindex'); f.removeAttribute('role'); }
-            frag.appendChild(c);
-          });
-        }
-        r.ul.appendChild(frag);
-        r.ul.style.setProperty('--dur', Math.round(one * sets / speed) + 's');
-      });
-    };
-    buildBelt();
-    var beltTimer;
-    window.addEventListener('resize', function () { clearTimeout(beltTimer); beltTimer = setTimeout(buildBelt, 250); });
-    new IntersectionObserver(function (e) { belt.classList.toggle('is-paused', !e[0].isIntersecting); }, { rootMargin: '100px 0px' }).observe(belt);
-  }
-
-  // 업종별 실제 사례 (2026-11-23, #cases): 스크롤 무대. 모션 최소화·데이터 절약·IntersectionObserver 없음이면 .is-live 를 안 붙여 세 장면이 그냥 놓인다.
-  // 무대가 화면에 붙어 있는 동안 스크롤 진행률(0~1)로 장면(0 매장 · 1 축제 · 2 지자체)을 고르고, 바뀔 때 종이 조각을 터뜨린다.
-  // 장면마다 그 업종 실제 사진 벽(.b2b-story__wall, 반투명 검정을 씌움)과 굵은 글자 테이프가 바뀌고, 비눗방울은 계속 떠오른다.
-  // 카드 미리보기는 지금 장면 것만 받아 재생. 누르면: 매장 = 원본 영상(소리 켬), 나머지 = 유튜브 창. 닫으면 멈춘다
+  // 업종별 실제 사례 (#cases): 2026-11-24 세 업종을 한 열로 이어 붙임(그전엔 화면에 붙은 무대에서 스크롤로 장면을 바꿨다).
+  // 장면마다: 실제 사진 벽(data-imgs → 비스듬한 기둥, 데이터 절약이면 안 만듦) · 이음매 글자 테이프 · 비눗방울(모션 최소화·데이터 절약이면 없음).
+  // .is-live(모션 최소화·데이터 절약·IntersectionObserver 없음이면 안 붙음): 화면에 들어오면(.is-on, 한 번) 카드가 3D 로 뒤집혀 들어오고 도장·종이 조각,
+  // 보이는 동안(.is-vis) 벽·테이프·방울이 움직이고 미리보기 재생, 스크롤에 따라 카드가 살짝 돌고(--tilt·--rot) 벽이 밀린다(--py).
+  // 카드를 누르면: 매장 = 원본 영상(소리 켬), 나머지 = 유튜브 창
   var story = document.querySelector('.b2b-story');
   var scenes = story ? Array.prototype.slice.call(story.querySelectorAll('.b2b-scene')) : [];
   var cards = scenes.map(function (sc) { return sc.querySelector('.b2b-scene__card'); });
   var player = document.querySelector('.b2b-video');
-  var playPreview = function (i) {
-    scenes.forEach(function (sc, k) {
+  var saveData = false;
+  try { saveData = !!(navigator.connection && navigator.connection.saveData); } catch (e) { /* 무시 */ }
+  var syncPreviews = function () {   // 카드가 보이는 장면(.is-play) 미리보기만 재생(영상 창이 열려 있으면 모두 멈춤)
+    scenes.forEach(function (sc) {
       var v = sc.querySelector('video'); if (!v) return;
-      if (k === i && !(player && player.open)) {
+      if (sc.classList.contains('is-play') && !(player && player.open)) {
         if (!v.getAttribute('src')) { v.src = v.getAttribute('data-src'); v.preload = 'auto'; }
         var p = v.play(); if (p && p.catch) p.catch(function () { /* 저전력 모드 등: 포스터 그대로 */ });
       } else if (!v.paused) v.pause();
     });
   };
-  if (story && scenes.length && !calm && 'IntersectionObserver' in window) {
-    story.classList.add('is-live');
-    var stage = story.querySelector('.b2b-story__stage'), stTrack = story.querySelector('.b2b-story__track');   // 이름 track 은 지표 함수라 쓰지 않는다
-    var tabs = Array.prototype.slice.call(story.querySelectorAll('.b2b-story__tabs button'));
-    var walls = Array.prototype.slice.call(story.querySelectorAll('.b2b-story__wall'));
-    // 사진 벽: 기둥 수는 화면 너비로, 기둥마다 목록을 다른 자리부터 돌려 옆 기둥과 겹치지 않게. 같은 목록 두 벌이라 -50% 이동이 이음매 없이 반복된다
-    var buildWalls = function () {
-      var W = stage.offsetWidth * 1.36, H = stage.offsetHeight * 1.6;
+  // 사진 벽: 기둥 수는 화면 너비로, 기둥마다 목록을 다른 자리부터 돌려 옆 기둥과 겹치지 않게. 같은 목록 두 벌이라 -50% 이동이 이음매 없이 반복된다
+  var buildWalls = function () {
+    scenes.forEach(function (sc) {
+      var wall = sc.querySelector('.b2b-scene__wall'); if (!wall) return;
+      var imgs = (wall.getAttribute('data-imgs') || '').split(/\s+/).filter(Boolean); if (!imgs.length) return;
+      var W = sc.offsetWidth * 1.36, H = sc.offsetHeight * 1.6;
       var cols = Math.max(4, Math.min(9, Math.round(W / (W >= 1100 ? 210 : 120))));
       var colW = W / cols, per = Math.max(5, Math.ceil(H / (colW * 1.25)) + 1);
-      walls.forEach(function (wall) {
-        var imgs = (wall.getAttribute('data-imgs') || '').split(/\s+/).filter(Boolean); if (!imgs.length) return;
-        var html = '', stride = Math.max(1, Math.round(imgs.length / cols)) + 1;
-        for (var c = 0; c < cols; c++) {
-          var list = '';
-          for (var j = 0; j < per; j++) list += '<img src="' + imgs[(c * stride + j) % imgs.length] + '" alt="" loading="lazy" decoding="async">';
-          html += '<div class="b2b-wall__col" style="--wd:' + (54 + (c * 7) % 26) + 's;--wdl:-' + ((c * 13) % 40) + 's">' + list + list + '</div>';
-        }
-        wall.innerHTML = html;
+      var html = '', stride = Math.max(1, Math.round(imgs.length / cols)) + 1;
+      for (var c = 0; c < cols; c++) {
+        var list = '';
+        for (var j = 0; j < per; j++) list += '<img src="' + imgs[(c * stride + j) % imgs.length] + '" alt="" loading="lazy" decoding="async">';
+        html += '<div class="b2b-wall__col" style="--wd:' + (54 + (c * 7) % 26) + 's;--wdl:-' + ((c * 13) % 40) + 's">' + list + list + '</div>';
+      }
+      wall.innerHTML = html;
+    });
+  };
+  if (story && scenes.length) {
+    if (!saveData) {
+      buildWalls();
+      var wallW = window.innerWidth, wallTimer;
+      window.addEventListener('resize', function () {   // 너비가 크게 바뀌면(회전 등) 기둥 수를 다시
+        clearTimeout(wallTimer);
+        wallTimer = setTimeout(function () { if (Math.abs(window.innerWidth - wallW) > 120) { wallW = window.innerWidth; buildWalls(); } }, 300);
       });
-    };
-    buildWalls();
+    }
     // 글자 테이프: 단어 사이에 반짝이 모양, 같은 줄 두 벌이라 -50% 흐름이 이어진다
     Array.prototype.slice.call(story.querySelectorAll('.b2b-tape')).forEach(function (t) {
       var words = (t.getAttribute('data-words') || '').split(' ').map(function (w) { return '<b>' + w + '</b>'; }).join('');
       var line = ''; for (var k = 0; k < 6; k++) line += words;
       t.innerHTML = '<span>' + line + line + '</span>';
     });
-    // 비눗방울: 크기·위치·속도·흔들림을 섞어서. 작은 화면은 적게
-    var bubbles = story.querySelector('.b2b-story__bubbles');
-    if (bubbles) {
-      var nB = window.innerWidth >= 900 ? 16 : 10, bh = '';
+  }
+  if (story && scenes.length && !calm && 'IntersectionObserver' in window) {
+    story.classList.add('is-live');
+    // 비눗방울: 장면마다 크기·위치·속도·흔들림을 섞어서. 작은 화면은 적게
+    scenes.forEach(function (sc) {
+      var box = sc.querySelector('.b2b-scene__bubbles'); if (!box) return;
+      var nB = window.innerWidth >= 900 ? 12 : 8, bh = '';
       for (var bi = 0; bi < nB; bi++) {
-        var big = bi % 5 === 0, size = big ? 70 + Math.random() * 60 : 18 + Math.random() * 44, dur = 9 + Math.random() * 9 + (big ? 4 : 0);
+        var big = bi % 4 === 0, size = big ? 70 + Math.random() * 60 : 18 + Math.random() * 44, dur = 9 + Math.random() * 9 + (big ? 4 : 0);
         bh += '<span class="b2b-bubble' + (bi % 2 ? ' b2b-bubble--b' : '') + '" style="--x:' + (2 + ((bi * 37) % 92) + Math.random() * 4).toFixed(1) + '%;--s:' + size.toFixed(0) + 'px;--d:' + dur.toFixed(1) +
           's;--dl:-' + (Math.random() * dur).toFixed(1) + 's;--o:' + (0.55 + Math.random() * 0.4).toFixed(2) + ';--sw:' + (6 + Math.random() * 14).toFixed(0) + 'px;--sd:' + (2.2 + Math.random() * 2).toFixed(1) + 's"><i></i></span>';
       }
-      bubbles.innerHTML = bh;
-    }
-    var burst = story.querySelector('.b2b-story__burst');
-    var cur = -1, visible = false, rafS = 0;
+      box.innerHTML = bh;
+    });
     var COLORS = { shop: ['#ff5a47', '#ffffff', '#ffb4a8', '#ff2d55'], festival: ['#ffd400', '#5ec8ff', '#ffffff', '#ff5ab4'], tourism: ['#ffc21a', '#ffffff', '#ff9f1a', '#2bb673'] };
-    var pop = function (cat) {
-      if (!burst) return;
-      var cs = COLORS[cat] || COLORS.shop;
+    var pop = function (sc) {   // 카드 자리에서 종이 조각
+      var burst = sc.querySelector('.b2b-scene__burst'), card = sc.querySelector('.b2b-scene__card'); if (!burst || !card) return;
+      var r = sc.getBoundingClientRect(), c = card.getBoundingClientRect();
+      burst.style.setProperty('--bx', (c.left + c.width / 2 - r.left).toFixed(0) + 'px');
+      burst.style.setProperty('--by', (c.top + c.height / 2 - r.top).toFixed(0) + 'px');
+      var cs = COLORS[sc.getAttribute('data-cat')] || COLORS.shop;
       for (var k = 0; k < 46; k++) {
         var el = document.createElement('i'); el.className = 'b2b-confetti';
         var ang = Math.random() * Math.PI * 2, dist = 140 + Math.random() * Math.min(window.innerWidth, 900) * 0.42;
@@ -226,56 +198,52 @@
         el.style.setProperty('--w', (round ? 10 : 7 + Math.random() * 8) + 'px');
         el.style.setProperty('--h', (round ? 10 : 10 + Math.random() * 10) + 'px');
         el.style.setProperty('--br', round ? '50%' : '2px');
-        el.style.animationDelay = (Math.random() * 0.12).toFixed(2) + 's';
+        el.style.animationDelay = (0.25 + Math.random() * 0.12).toFixed(2) + 's';
         burst.appendChild(el);
-        setTimeout(function (n) { return function () { if (n.parentNode) n.parentNode.removeChild(n); }; }(el), 1500);
+        setTimeout(function (n) { return function () { if (n.parentNode) n.parentNode.removeChild(n); }; }(el), 1800);
       }
     };
-    var show = function (i, quiet) {
-      if (i === cur) return;
-      var prev = cur; cur = i;
-      var cat = scenes[i].getAttribute('data-cat');
-      stage.setAttribute('data-cat', cat);
-      walls.forEach(function (w) { w.classList.toggle('is-on', w.getAttribute('data-cat') === cat); });
-      scenes.forEach(function (sc, k) { sc.classList.toggle('is-on', k === i); sc.classList.toggle('is-past', k < i); sc.setAttribute('aria-hidden', k === i ? 'false' : 'true'); });
-      cards.forEach(function (c, k) { if (k === i) c.removeAttribute('tabindex'); else c.setAttribute('tabindex', '-1'); });
-      tabs.forEach(function (t, k) { t.setAttribute('aria-selected', k === i ? 'true' : 'false'); });
-      if (visible) playPreview(i);
-      if (!quiet && prev !== -1) pop(cat);
-      if (!quiet) track('b2b_case_scene', { scene: cat });
-    };
-    var measure = function () {
+    var rafS = 0;
+    var measure = function () {   // 보이는 장면만: 화면 가운데와의 거리(-1~1)로 카드 기울기·벽 밀림
       rafS = 0;
-      var r = stTrack.getBoundingClientRect(), span = stTrack.offsetHeight - stage.offsetHeight;
-      var p = span > 0 ? Math.min(1, Math.max(0, -r.top / span)) : 0;
-      var n = scenes.length, f = p * n, i = Math.min(n - 1, Math.floor(f));
-      show(i);
-      tabs.forEach(function (t, k) { t.style.setProperty('--p', k < i ? 1 : (k === i ? Math.min(1, f - i).toFixed(3) : 0)); });
-      var sub = Math.min(1, f - i);
-      scenes[i].style.setProperty('--tilt', ((sub - 0.5) * -14).toFixed(2) + 'deg');
-      scenes[i].style.setProperty('--rot', ((sub - 0.5) * 4 - 1).toFixed(2) + 'deg');
+      var vh = window.innerHeight;
+      scenes.forEach(function (sc) {
+        if (!sc.classList.contains('is-vis')) return;
+        var r = sc.getBoundingClientRect();
+        var q = Math.max(-1, Math.min(1, (r.top + r.height / 2 - vh / 2) / (vh / 2 + r.height / 2)));
+        var side = sc.getAttribute('data-cat') === 'festival' ? -1 : 1;
+        sc.style.setProperty('--tilt', (q * -12 * side).toFixed(2) + 'deg');
+        sc.style.setProperty('--rot', (q * 3 * side - side).toFixed(2) + 'deg');
+        sc.style.setProperty('--py', (q * 90).toFixed(1));
+      });
     };
     var onScroll = function () { if (!rafS) rafS = requestAnimationFrame(measure); };
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll);
-    story.classList.add('is-idle');
-    new IntersectionObserver(function (e) {
-      visible = e[0].isIntersecting;
-      story.classList.toggle('is-idle', !visible);   // 화면 밖이면 사진 벽·테이프·비눗방울을 멈춘다
-      if (visible) playPreview(cur); else playPreview(-1);
-    }, { threshold: 0.2 }).observe(stage);
-    var wallW = window.innerWidth, wallTimer;
-    window.addEventListener('resize', function () {   // 너비가 크게 바뀌면(회전 등) 기둥 수를 다시
-      clearTimeout(wallTimer);
-      wallTimer = setTimeout(function () { if (Math.abs(window.innerWidth - wallW) > 120) { wallW = window.innerWidth; buildWalls(); } }, 300);
-    });
-    show(0, true); measure();
-    tabs.forEach(function (t, k) {
-      t.addEventListener('click', function () {   // 그 장면이 보이는 스크롤 위치로
-        var span = stTrack.offsetHeight - stage.offsetHeight, top = stTrack.getBoundingClientRect().top + window.scrollY;
-        window.scrollTo({ top: top + span * ((k + 0.5) / scenes.length), behavior: 'smooth' });
+    var visIO = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        en.target.classList.toggle('is-vis', en.isIntersecting);
+        if (en.isIntersecting) en.target.classList.add('is-seen');
       });
-    });
+      syncPreviews(); onScroll();
+    }, { rootMargin: '120px 0px' });
+    var onIO = new IntersectionObserver(function (entries) {   // 장면의 30% 가 보이면 한 번 들어온다
+      entries.forEach(function (en) {
+        if (!en.isIntersecting || en.target.classList.contains('is-on')) return;
+        var sc = en.target;
+        sc.classList.add('is-on'); pop(sc);
+        setTimeout(function () { sc.classList.add('is-settled'); }, 1000);   // 들어온 뒤엔 스크롤 기울기를 빠르게 따라간다
+        track('b2b_case_scene', { scene: sc.getAttribute('data-cat') });
+        onIO.unobserve(sc);
+      });
+    }, { threshold: 0.3 });
+    var playIO = new IntersectionObserver(function (entries) {   // 카드가 40% 이상 보일 때만 미리보기 재생
+      entries.forEach(function (en) { en.target.closest('.b2b-scene').classList.toggle('is-play', en.isIntersecting); });
+      syncPreviews();
+    }, { threshold: 0.4 });
+    scenes.forEach(function (sc) { visIO.observe(sc); onIO.observe(sc); var cd = sc.querySelector('.b2b-scene__card'); if (cd) playIO.observe(cd); });
+  } else if (scenes.length) {
+    scenes.forEach(function (sc) { sc.classList.add('is-vis'); });   // 움직임 없이: 미리보기는 자동재생하지 않고 포스터만
   }
   if (player && typeof player.showModal === 'function' && cards.length) {
     var box = player.querySelector('.b2b-video__frame'), yt = player.querySelector('.b2b-video__yt');
@@ -299,14 +267,14 @@
           yt.textContent = 'YouTube에서 보기';
         }
         yt.href = a.href;
-        playPreview(-1);
         player.showModal();
+        syncPreviews();
         track('b2b_video_opened', { video: a.getAttribute('data-case') });
       });
     });
     player.addEventListener('close', function () {
       box.textContent = '';
-      if (story && story.classList.contains('is-live')) { var on = scenes.findIndex ? scenes.findIndex(function (sc) { return sc.classList.contains('is-on'); }) : 0; playPreview(on); }
+      if (story && story.classList.contains('is-live')) syncPreviews();
     });
     player.querySelector('.b2b-video__close').addEventListener('click', function () { player.close(); });
     player.addEventListener('click', function (e) { if (e.target === player) player.close(); });
