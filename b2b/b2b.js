@@ -212,7 +212,7 @@
     var zimg = zoom.querySelector('img');
     var openZoom = function (fig) {
       var img = fig.querySelector('img'); if (!img) return;
-      zimg.src = img.currentSrc || img.src;
+      zimg.src = img.getAttribute('data-full') || img.currentSrc || img.src;   // 컨베이어 그림은 작게 싣고 크게 볼 때만 큰 그림(data-full)
       zimg.alt = img.alt;
       zoom.showModal();
       track('b2b_zoom_opened', { src: (img.getAttribute('src') || '').split('/').pop() });
